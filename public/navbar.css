@@ -37,6 +37,13 @@
 .dropdown-content a:hover {
     background-color: #9B9A9A;
 }
+.dropdown-content .sfondoscuro{
+    background-color: #9B9A9A;
+}
+.dropdown-content .sfondochiaro{
+    background-color: #f1f1f1;
+}
+
 
 .dropdown-content .group {
     display: flex;
@@ -95,7 +102,6 @@ hr {
     height: 50px;
     width: 220px;
     max-width: 220px;
-    background-color: #f1f1f1;
     border-left: 2px solid #000;
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
@@ -117,7 +123,6 @@ hr {
 .taskContainer {
     display: grid;
     grid-template-columns: auto auto auto;
-    min-height: 100%;
 }
 
 .aggiungiBtn {
@@ -136,15 +141,34 @@ hr {
 .containerTFS {
     height: 90%;
     text-align: left;
+    overflow: auto;
 }
 .rimuoviBtn{
-    background-image: url("src/assets/rimuovi.PNG");
+    background-image: url("rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     width: 20px;
     height: 20px;
 }
+.rimuoviBtnIncorso{
+    background-image: url("src\assets\rimuovi.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 20px;
+    height: 20px;
+    z-index: 999;
+    position: relative;
+}
 li{
     margin-bottom: 10px;
+}
+li.rmStyle{
+    list-style-type: none;
+    margin-left: -17.5px;
+}
+.checkbox{
+    z-index: 999;
+    position: relative;
 }
