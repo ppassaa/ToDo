@@ -1,0 +1,110 @@
+/* bottone */
+.dropbtn {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 16px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+/* div contenente la tendina */
+.dropdown {
+    position: relative;
+}
+
+/* tendina */
+.dropdown-content {
+    right: 0;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    overflow: hidden;
+    width: 470px;
+}
+
+
+/* collegamenti dentro la tendina */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* cambia il colore quando si è sopra */
+.dropdown-content a:hover {
+    background-color: #9B9A9A;
+}
+
+.dropdown-content .group {
+    display: flex;
+    align-items: center;
+    
+}
+
+.dropdown-content .group a:first-child {
+    flex-grow: 1;
+    padding-right: 8px;
+}
+
+.dropdown-content .group a:last-child {
+    flex-grow: 1;
+    padding-left: 8px;
+}
+
+.fattoBtnPrimo {
+    border-top: 2px solid #000;
+}
+
+.fattoBtn {
+    background-color: #9B9A9A;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000;
+    height: 50px;
+    width: 70px;
+    max-width: 70px;
+}
+
+.riduci{
+    margin-left: 250px;
+}
+
+.riduciBottone{
+    margin-left: 180px;
+}
+
+.riduciAggiungi{
+    margin-top: -50px;
+}
+
+.riduciRimuovi{
+    margin-top: -50px;
+}
+
+.bordoIntero {
+    height: 50px;
+    width: 220px;
+    max-width: 220px;
+    background-color: #f1f1f1;
+    border-left: 2px solid #000;
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+}
+/* scheda aggiungi */
+.aggiungiScd{
+    background-color: #9B9A9A;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000;
+    height: 100px;
+    width: 250px;
+    max-width: 250px;
+}
+/* container di tutte le task e del loro stato */
+.taskContainer{
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
