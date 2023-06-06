@@ -1,15 +1,15 @@
 <template>
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 
-    <a href="#close"><img width="30" height="30" src="src\assets\closeimg.PNG" alt="close"></a>
+    <a href="#close"><img width="30" height="30" src="closeImg.png" alt="close"></a>
     <p style="color: white; margin-top: 15px; margin-left: 15px;">To-Do List</p>
     <div class="dropdown ml-auto">
       <button @click="tendina()" :style="{ backgroundImage: 'url(' + imageURL + ')' }" class="dropbtn"></button>
       <div v-if="tendinaShow" class="dropdown-content">
 
         <div class="group">
-          <a v-if="aggiungiBool" class="aggiungiScd" href="#"> <br>
-            <input class="taskInp" v-model="task" placeholder="task">
+          <a v-if="aggiungiBool" class="aggiungiScd" href="#">
+            <input class="taskInp" v-model="task" placeholder="Task"> <br>
             <button class="aggiungiBtn">Aggiungi</button>
           </a>
           <a @click="aggiungiPuls()" class="bordoIntero" :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }"
@@ -38,20 +38,29 @@
   </nav>
 
   <div class="taskContainer">
-    <div style="width: 250px; margin-top: 4%; text-align: center; height:750;color: white;">
+    <div style="margin-top: 10px; text-align: center; height:750;color: white;">
       DA FARE
-      <hr style="height:2px; color:#424c57; background-color:#424c57;margin-top: 4%;">
+      <hr>
+      <div class="containerTFS">
+
+      </div>
     </div>
 
     <div
-      style=" margin-top: 4%;border-left: 3px solid #424c57; border-right: 3px solid #424c57; width: 250px; float:left; text-align: center; height:750px;color: white;">
+      style=" margin-top: 9px;border-left: 3px solid #424c57; border-right: 3px solid #424c57;text-align: center; height:750px;color: white;">
       IN CORSO
-      <hr style="height:2px; color:#424c57; background-color:#424c57;margin-top: 4%;">
+      <hr>
+      <div class="containerTFS">
+
+      </div>
     </div>
 
-    <div style="width: 250px; float:left; margin-top: 4%; text-align: center; height:750;color: white;">
+    <div style="margin-top: 8.5px; text-align: center; height:750;color: white;">
       COMPLETATI
-      <hr style="height:2px; color:#424c57; background-color:#424c57;margin-top: 4%;">
+      <hr>
+      <div class="containerTFS">
+
+      </div>
     </div>
   </div>
 </template>

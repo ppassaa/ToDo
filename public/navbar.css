@@ -83,7 +83,11 @@
 .riduciRimuovi{
     margin-top: -50px;
 }
-
+hr{
+    height:2px; color:#424c57;
+    background-color:#424c57;
+    margin-top: 4%;
+}
 .bordoIntero {
     height: 50px;
     width: 220px;
@@ -102,9 +106,27 @@
     height: 100px;
     width: 250px;
     max-width: 250px;
+    text-align: center;
 }
 /* container di tutte le task e del loro stato */
 .taskContainer{
     display: grid;
     grid-template-columns: auto auto auto;
+}
+
+.aggiungiBtn{
+    color: white;
+    background-color: #424C57;
+    margin-right: 4px;
+    margin-top: 5px;
+}
+
+.taskInp{
+    margin-top: 5px;
+    margin-right: 4px;
+}
+/* contenitore di task for state */
+.containerTFS{
+    border: 2px solid magenta;
+    height: 80%;
 }
