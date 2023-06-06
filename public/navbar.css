@@ -41,7 +41,7 @@
 .dropdown-content .group {
     display: flex;
     align-items: center;
-    
+
 }
 
 .dropdown-content .group a:first-child {
@@ -68,26 +68,29 @@
     max-width: 70px;
 }
 
-.riduci{
+.riduci {
     margin-left: 250px;
 }
 
-.riduciBottone{
+.riduciBottone {
     margin-left: 180px;
 }
 
-.riduciAggiungi{
+.riduciAggiungi {
     margin-top: -50px;
 }
 
-.riduciRimuovi{
+.riduciRimuovi {
     margin-top: -50px;
 }
-hr{
-    height:2px; color:#424c57;
-    background-color:#424c57;
+
+hr {
+    height: 2px;
+    color: #424c57;
+    background-color: #424c57;
     margin-top: 4%;
 }
+
 .bordoIntero {
     height: 50px;
     width: 220px;
@@ -97,8 +100,9 @@ hr{
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
 }
+
 /* scheda aggiungi */
-.aggiungiScd{
+.aggiungiScd {
     background-color: #9B9A9A;
     border-left: 2px solid #000;
     border-bottom: 2px solid #000;
@@ -108,25 +112,28 @@ hr{
     max-width: 250px;
     text-align: center;
 }
+
 /* container di tutte le task e del loro stato */
-.taskContainer{
+.taskContainer {
     display: grid;
     grid-template-columns: auto auto auto;
+    min-height: 100%;
 }
 
-.aggiungiBtn{
+.aggiungiBtn {
     color: white;
     background-color: #424C57;
     margin-right: 4px;
     margin-top: 5px;
 }
 
-.taskInp{
+.taskInp {
     margin-top: 5px;
     margin-right: 4px;
 }
+
 /* contenitore di task for state */
-.containerTFS{
-    border: 2px solid magenta;
-    height: 80%;
+.containerTFS {
+    height: 90%;
+    text-align: left;
 }
