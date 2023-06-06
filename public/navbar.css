@@ -53,7 +53,6 @@
 .dropdown-content .group {
     display: flex;
     align-items: center;
-
 }
 
 .dropdown-content .group a:first-child {
@@ -76,7 +75,7 @@
     border-left: 2px solid #000;
     border-bottom: 2px solid #000;
     border-top: 2px solid #000;
-    height: 50x;
+    height: 50px;
     width: 70px;
     margin-top: -1px;
     max-width: 70px;
@@ -91,11 +90,11 @@
 }
 
 .riduciAggiungi {
-    margin-top: -50px;
+    margin-top: -48px;
 }
 
 .riduciRimuovi {
-    margin-top: -50px;
+    margin-top: -48px;
 }
 
 hr {
@@ -122,6 +121,7 @@ hr {
     border-top: 2px solid #000;
     height: 100px;
     width: 250px;
+    margin-top: -2px;
     max-width: 250px;
     text-align: center;
 }
