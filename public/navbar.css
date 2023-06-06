@@ -137,3 +137,14 @@ hr {
     height: 90%;
     text-align: left;
 }
+.rimuoviBtn{
+    background-image: url("src/assets/rimuovi.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 20px;
+    height: 20px;
+}
+li{
+    margin-bottom: 10px;
+}

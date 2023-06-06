@@ -12,12 +12,13 @@
             <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
             <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button>
           </a>
-          <a @click="aggiungiPuls()" class="bordoIntero" :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }"
-            href="#">Aggiungi</a>
+          <a @click="aggiungiPuls()" class="bordoIntero"
+            :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }" href="#">Aggiungi</a>
 
         </div>
 
-        <a class="ml-auto bordoIntero" :class="{ riduciRimuovi: aggiungiBool }" @click="rimuoviPuls()" href="#">Rimuovi</a>
+        <a class="ml-auto bordoIntero" :class="{ riduciRimuovi: aggiungiBool }" @click="rimuoviPuls()"
+          href="#">Rimuovi</a>
 
         <div class="group">
           <a v-if="fattoIncorso" class="fattoBtn fattoBtnPrim riduciBottone" href="#">Fatto</a>
@@ -48,7 +49,7 @@
       <div class="containerTFS">
         <ul>
           <li v-for="t in dafareTasks">
-            {{ t.task }}
+            {{ t.task }} <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn"></button>
           </li>
         </ul>
       </div>
@@ -61,7 +62,7 @@
       <div class="containerTFS">
         <ul>
           <li v-for="t in incorsoTasks">
-            {{ t.task }}
+            {{ t.task }}{{ t.task }} <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn"></button>
           </li>
         </ul>
       </div>
@@ -73,37 +74,9 @@
       <div class="containerTFS">
         <ul>
           <li v-for="t in completatiTasks">
-            {{ t.task }}
+            {{ t.task }}{{ t.task }} <button @click="rimuoviTask(t)" class="rimuoviBtn"></button>
           </li>
         </ul>
-      </div>
-    </div>
-  </div>
-
-
-  <div class="taskContainer">
-    <div style="margin-top: 10px; text-align: center; height:750;color: white;">
-      DA FARE
-      <hr>
-      <div class="containerTFS">
-
-      </div>
-    </div>
-
-    <div
-      style=" margin-top: 9px;border-left: 3px solid #424c57; border-right: 3px solid #424c57;text-align: center; height:750px;color: white;">
-      IN CORSO
-      <hr>
-      <div class="containerTFS">
-
-      </div>
-    </div>
-
-    <div style="margin-top: 8.5px; text-align: center; height:750;color: white;">
-      COMPLETATI
-      <hr>
-      <div class="containerTFS">
-
       </div>
     </div>
   </div>
@@ -199,6 +172,9 @@ export default {
     aggiungiTask() {
       if (this.taskText.length != 0) this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false })
       this.taskText = ''
+    },
+    rimuoviTask(e) {
+      this.tasks = this.tasks.filter((t) => t !== e)
     }
   }
 }
