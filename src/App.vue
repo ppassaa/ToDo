@@ -1,54 +1,48 @@
 <template>
-  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="dropdown float-right">
+  <button @click="tendina()" :style="{ backgroundImage: 'url(' + imageURL + ')' }" class="dropbtn"></button>
+  <div v-if="tendinaShow" class="dropdown-content">
 
-    <a href="#close"><img width="30" height="30" src="src\assets\closeimg.PNG" alt="close"></a>
-    <p style="color: white; margin-top: 15px; margin-left: 15px;">To-Do List</p>
-    <div class="dropdown ml-auto">
-      <button @click="tendina()" :style="{ backgroundImage: 'url(' + imageURL + ')' }" class="dropbtn"></button>
-      <div v-if="tendinaShow" class="dropdown-content">
+    <div class="group">
+      <a v-if="aggiungiBool" class="aggiungiScd" href="#">
+        <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
+        <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button>
+      </a>
+      <a @click="aggiungiPuls()" class="bordoIntero"
+        :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }, { sfondochiaro: !aggiungiBool }, { sfondoscuro: aggiungiBool }"
+        href="#">Aggiungi</a>
 
-        <div class="group">
-          <a v-if="aggiungiBool" class="aggiungiScd" href="#">
-            <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
-            <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button>
-          </a>
-          <a @click="aggiungiPuls()" class="bordoIntero"
-            :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }, { sfondochiaro: !aggiungiBool }, { sfondoscuro: aggiungiBool }"
-            href="#">Aggiungi</a>
-
-        </div>
-
-        <a class="ml-auto bordoIntero"
-          :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }"
-          @click="rimuoviPuls()" href="#">Rimuovi</a>
-
-        <div class="group">
-          <a v-if="fattoIncorso" class="fattoBtn fattoBtnPrim riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
-          <a @click="incorsoPuls" class="bordoIntero"
-            :class="{ riduci: !fattoIncorso }, { sfondochiaro: !fattoIncorso }, { sfondoscuro: fattoIncorso }"
-            href="#">Sposta in
-            "In corso"</a>
-        </div>
-        <div class="group">
-          <a v-if="fattoCompletati" class="fattoBtn riduciBottone" @click="spostacompletatiFatto()" href="#">Fatto</a>
-          <a @click="completatiPuls" class="bordoIntero"
-            :class="{ riduci: !fattoCompletati }, { sfondochiaro: !fattoCompletati }, { sfondoscuro: fattoCompletati }"
-            href="#">Sposta in "Completati"</a>
-        </div>
-        <div class="group">
-          <a v-if="fattoDafare" class="fattoBtn riduciBottone" @click="spostadafareFatto()" href="#">Fatto</a>
-          <a @click="dafarePuls" class="bordoIntero"
-            :class="{ riduci: !fattoDafare }, { sfondochiaro: !fattoDafare }, { sfondoscuro: fattoDafare }"
-            href="#">Sposta in "Da
-            fare"</a>
-        </div>
-
-      </div>
     </div>
-  </nav>
+
+    <a class="ml-auto bordoIntero"
+      :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }"
+      @click="rimuoviPuls()" href="#">Rimuovi</a>
+
+    <div class="group">
+      <a v-if="fattoIncorso" class="fattoBtn fattoBtnPrim riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
+      <a @click="incorsoPuls" class="bordoIntero"
+        :class="{ riduci: !fattoIncorso }, { sfondochiaro: !fattoIncorso }, { sfondoscuro: fattoIncorso }"
+        href="#">Sposta in
+        "In corso"</a>
+    </div>
+    <div class="group">
+      <a v-if="fattoCompletati" class="fattoBtn riduciBottone" @click="spostacompletatiFatto()" href="#">Fatto</a>
+      <a @click="completatiPuls" class="bordoIntero"
+        :class="{ riduci: !fattoCompletati }, { sfondochiaro: !fattoCompletati }, { sfondoscuro: fattoCompletati }"
+        href="#">Sposta in "Completati"</a>
+    </div>
+    <div class="group">
+      <a v-if="fattoDafare" class="fattoBtn riduciBottone" @click="spostadafareFatto()" href="#">Fatto</a>
+      <a @click="dafarePuls" class="bordoIntero"
+        :class="{ riduci: !fattoDafare }, { sfondochiaro: !fattoDafare }, { sfondoscuro: fattoDafare }"
+        href="#">Sposta in "Da
+        fare"</a>
+    </div>
+  </div>
+</div>
 
   <div class="taskContainer">
-    <div style="width: 250px;margin-top: 9px; text-align: center; height:670px;color: white;">
+    <div style="width: 250px;margin-top: 9px; text-align: center; height:750px;color: white;">
       DA FARE
       <hr>
       <div class="containerTFS">
@@ -62,7 +56,7 @@
     </div>
 
     <div
-      style="width: 250px;margin-top: 9px;border-left: 3px solid #424c57; border-right: 3px solid #424c57;text-align: center; height:670px;color: white;">
+      style="width: 250px;margin-top: 9px;border-left: 3px solid #424c57; border-right: 3px solid #424c57;text-align: center; height:750px;color: white;">
       IN CORSO
       <hr>
       <div class="containerTFS">
@@ -76,7 +70,7 @@
       </div>
     </div>
 
-    <div style="width: 250px;margin-top: 8.5px; text-align: center; height:670px;color: white;">
+    <div style="width: 250px;margin-top: 8.5px; text-align: center; height:750px;color: white;">
       COMPLETATI
       <hr>
       <div class="containerTFS">
@@ -131,6 +125,7 @@ export default {
       deep: true
     }
   },
+
   methods: {
     tendina() {
       this.tendinaShow = !this.tendinaShow;
