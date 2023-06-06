@@ -24,6 +24,9 @@
     z-index: 1;
     overflow: hidden;
     width: 470px;
+    margin-right: 4px;
+    margin-top: 4px;
+
 }
 
 
@@ -56,24 +59,26 @@
 .dropdown-content .group a:first-child {
     flex-grow: 1;
     padding-right: 8px;
+
 }
 
 .dropdown-content .group a:last-child {
     flex-grow: 1;
     padding-left: 8px;
 }
-
+/*
 .fattoBtnPrimo {
     border-top: 2px solid #000;
 }
-
+*/
 .fattoBtn {
     background-color: #9B9A9A;
     border-left: 2px solid #000;
     border-bottom: 2px solid #000;
     border-top: 2px solid #000;
-    height: 50px;
+    height: 50x;
     width: 70px;
+    margin-top: -1px;
     max-width: 70px;
 }
 
@@ -152,7 +157,7 @@ hr {
     background-position: center center;
     width: 20px;
     height: 20px;
-}
+}   
 .rimuoviBtnIncorso{
     background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;

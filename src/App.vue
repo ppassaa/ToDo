@@ -19,7 +19,7 @@
       @click="rimuoviPuls()" href="#">Rimuovi</a>
 
     <div class="group">
-      <a v-if="fattoIncorso" class="fattoBtn fattoBtnPrim riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
+      <a v-if="fattoIncorso" class="fattoBtn riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
       <a @click="incorsoPuls" class="bordoIntero"
         :class="{ riduci: !fattoIncorso }, { sfondochiaro: !fattoIncorso }, { sfondoscuro: fattoIncorso }"
         href="#">Sposta in
