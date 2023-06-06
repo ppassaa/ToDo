@@ -4,6 +4,8 @@
     background-repeat: no-repeat;
     background-position: center center;
     padding: 16px;
+    margin-top: 4px;
+    margin-right: 4px;
     width: 30px;
     height: 30px;
     cursor: pointer;
@@ -144,7 +146,7 @@ hr {
     overflow: auto;
 }
 .rimuoviBtn{
-    background-image: url("rimuovi.PNG");
+    background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -152,11 +154,12 @@ hr {
     height: 20px;
 }
 .rimuoviBtnIncorso{
-    background-image: url("src\assets\rimuovi.PNG");
+    background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     width: 20px;
+    margin-left: 1px;
     height: 20px;
     z-index: 999;
     position: relative;
@@ -166,9 +169,12 @@ li{
 }
 li.rmStyle{
     list-style-type: none;
-    margin-left: -17.5px;
+    margin-left: -24.25px;
+    margin-top: -2px;
 }
 .checkbox{
     z-index: 999;
     position: relative;
+    width: 20px;
+    height: 20px;
 }
