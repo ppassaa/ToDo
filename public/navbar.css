@@ -42,10 +42,12 @@
 .dropdown-content a:hover {
     background-color: #9B9A9A;
 }
-.dropdown-content .sfondoscuro{
+
+.dropdown-content .sfondoscuro {
     background-color: #9B9A9A;
 }
-.dropdown-content .sfondochiaro{
+
+.dropdown-content .sfondochiaro {
     background-color: #f1f1f1;
 }
 
@@ -65,6 +67,7 @@
     flex-grow: 1;
     padding-left: 8px;
 }
+
 /*
 .fattoBtnPrimo {
     border-top: 2px solid #000;
@@ -126,12 +129,6 @@ hr {
     text-align: center;
 }
 
-/* container di tutte le task e del loro stato */
-.taskContainer {
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
-
 .aggiungiBtn {
     color: white;
     background-color: #424C57;
@@ -144,21 +141,16 @@ hr {
     margin-right: 4px;
 }
 
-/* contenitore di task for state */
-.containerTFS {
-    height: 90%;
-    text-align: left;
-    overflow: auto;
-}
-.rimuoviBtn{
+.rimuoviBtn {
     background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
     width: 20px;
     height: 20px;
-}   
-.rimuoviBtnIncorso{
+}
+
+.rimuoviBtnIncorso {
     background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
@@ -169,17 +161,63 @@ hr {
     z-index: 999;
     position: relative;
 }
-li{
+
+li {
     margin-bottom: 10px;
 }
-li.rmStyle{
+
+li.rmStyle {
     list-style-type: none;
     margin-left: -24.25px;
-    margin-top: -2px;
+    margin-top: -1.5px;
 }
-.checkbox{
+
+.checkbox {
     z-index: 999;
     position: relative;
     width: 20px;
     height: 20px;
+}
+
+.containerStati {
+    width: 100%;
+    margin-top: 3%;
+    text-align: center;
+    height: 100%;
+    color: white;
+}
+body{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #1b242e;
+}
+
+.containerStatiCentrale {
+    width: 100%;
+    margin-top: 3%;
+    text-align: center;
+    border-left: 3px solid #424c57; 
+    border-right: 3px solid #424c57;
+    height: 100%;
+    color: white;
+}
+
+/* contenitore di task for state */
+.containerTFS {
+    height: 90%;
+    text-align: left;
+    overflow: auto;
+}
+
+/* container di tutte le task e del loro stato */
+.taskContainer {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    width: 92%;
+    height: 100%;
+    grid-template-columns: 33.3% 33.3% 33.3%;
+    overflow: hidden;
 }

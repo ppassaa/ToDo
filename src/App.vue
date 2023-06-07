@@ -42,7 +42,7 @@
 </div>
 
   <div class="taskContainer">
-    <div style="width: 250px;margin-top: 9px; text-align: center; height:750px;color: white;">
+    <div class="containerStati">
       DA FARE
       <hr>
       <div class="containerTFS">
@@ -55,8 +55,7 @@
       </div>
     </div>
 
-    <div
-      style="width: 250px;margin-top: 9px;border-left: 3px solid #424c57; border-right: 3px solid #424c57;text-align: center; height:750px;color: white;">
+    <div class="containerStatiCentrale">
       IN CORSO
       <hr>
       <div class="containerTFS">
@@ -70,7 +69,7 @@
       </div>
     </div>
 
-    <div style="width: 250px;margin-top: 8.5px; text-align: center; height:750px;color: white;">
+    <div class="containerStati">
       COMPLETATI
       <hr>
       <div class="containerTFS">
