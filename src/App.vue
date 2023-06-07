@@ -1,68 +1,27 @@
 <template>
-  <div class="dropdown float-right">
-  <button @click="tendina()" :style="{ backgroundImage: 'url(' + imageURL + ')' }" class="dropbtn"></button>
-  <div v-if="tendinaShow" class="dropdown-content">
-
-    <div class="group">
-      <a v-if="aggiungiBool" class="aggiungiScd" href="#">
-        <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
-        <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button>
-      </a>
-      <a @click="aggiungiPuls()" class="bordoIntero"
-        :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }, { sfondochiaro: !aggiungiBool }, { sfondoscuro: aggiungiBool }"
-        href="#">Aggiungi</a>
-
-    </div>
-
-    <a class="ml-auto bordoIntero"
-      :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }"
-      @click="rimuoviPuls()" href="#">Rimuovi</a>
-
-    <div class="group">
-      <a v-if="fattoIncorso" class="fattoBtn riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
-      <a @click="incorsoPuls" class="bordoIntero"
-        :class="{ riduci: !fattoIncorso }, { sfondochiaro: !fattoIncorso }, { sfondoscuro: fattoIncorso }"
-        href="#">Sposta in
-        "In corso"</a>
-    </div>
-    <div class="group">
-      <a v-if="fattoCompletati" class="fattoBtn riduciBottone" @click="spostacompletatiFatto()" href="#">Fatto</a>
-      <a @click="completatiPuls" class="bordoIntero"
-        :class="{ riduci: !fattoCompletati }, { sfondochiaro: !fattoCompletati }, { sfondoscuro: fattoCompletati }"
-        href="#">Sposta in "Completati"</a>
-    </div>
-    <div class="group">
-      <a v-if="fattoDafare" class="fattoBtn riduciBottone" @click="spostadafareFatto()" href="#">Fatto</a>
-      <a @click="dafarePuls" class="bordoIntero"
-        :class="{ riduci: !fattoDafare }, { sfondochiaro: !fattoDafare }, { sfondoscuro: fattoDafare }"
-        href="#">Sposta in "Da
-        fare"</a>
-    </div>
-  </div>
-</div>
-
   <div class="taskContainer">
     <div class="containerStati">
-      DA FARE
+      <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
       <hr>
       <div class="containerTFS">
         <ul>
           <li v-for="t in dafareTasks" :class="{ rmStyle: incorsoBool }">
-            <input class="checkbox" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso"> {{ t.task }} <button
-              @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn"></button>
+            <input class="checkbox" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso"> {{
+              t.task }} <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn"></button>
           </li>
         </ul>
       </div>
     </div>
 
     <div class="containerStatiCentrale">
-      IN CORSO
+      <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
       <hr>
       <div class="containerTFS">
         <ul>
           <li v-for="t in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool }">
-            <input class="checkbox" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati"> <input
-              class="checkbox" v-if="dafareBool" type="checkbox" v-model="t.spostadafare"> {{ t.task }}
+            <input class="checkbox" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
+            <input class="checkbox" v-if="dafareBool" type="checkbox" v-model="t.spostadafare"> {{
+              t.task }}
             <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnIncorso"></button>
           </li>
         </ul>
@@ -70,7 +29,53 @@
     </div>
 
     <div class="containerStati">
-      COMPLETATI
+      <div class="contenitore">
+        <div style="width: 63%; text-align: right;">COMPLETATI</div>
+        <div style="margin-left:auto;margin-right: 10px">
+          <div class="dropdown float-right">
+            <button @click="tendina()" :style="{ backgroundImage: 'url(' + imageURL + ')' }" class="dropbtn"></button>
+            <div v-if="tendinaShow" class="dropdown-content">
+
+              <div class="group">
+                <a v-if="aggiungiBool" class="aggiungiScd" href="#">
+                  <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
+                  <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button>
+                </a>
+                <a @click="aggiungiPuls()" class="bordoIntero"
+                  :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }, { sfondochiaro: !aggiungiBool }, { sfondoscuro: aggiungiBool }"
+                  href="#">Aggiungi</a>
+
+              </div>
+
+              <a class="ml-auto bordoIntero"
+                :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }"
+                @click="rimuoviPuls()" href="#">Rimuovi</a>
+
+              <div class="group">
+                <a v-if="fattoIncorso" class="fattoBtn riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
+                <a @click="incorsoPuls" class="bordoIntero"
+                  :class="{ riduci: !fattoIncorso }, { sfondochiaro: !fattoIncorso }, { sfondoscuro: fattoIncorso }"
+                  href="#">Sposta in
+                  "In corso"</a>
+              </div>
+              <div class="group">
+                <a v-if="fattoCompletati" class="fattoBtn riduciBottone" @click="spostacompletatiFatto()"
+                  href="#">Fatto</a>
+                <a @click="completatiPuls" class="bordoIntero"
+                  :class="{ riduci: !fattoCompletati }, { sfondochiaro: !fattoCompletati }, { sfondoscuro: fattoCompletati }"
+                  href="#">Sposta in "Completati"</a>
+              </div>
+              <div class="group">
+                <a v-if="fattoDafare" class="fattoBtn riduciBottone" @click="spostadafareFatto()" href="#">Fatto</a>
+                <a @click="dafarePuls" class="bordoIntero"
+                  :class="{ riduci: !fattoDafare }, { sfondochiaro: !fattoDafare }, { sfondoscuro: fattoDafare }"
+                  href="#">Sposta in "Da
+                  fare"</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <hr>
       <div class="containerTFS">
         <ul>
