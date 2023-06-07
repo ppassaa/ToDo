@@ -9,6 +9,7 @@
     width: 30px;
     height: 30px;
     cursor: pointer;
+    z-index: -1;
 }
 
 /* div contenente la tendina */
@@ -73,6 +74,7 @@
     border-top: 2px solid #000;
 }
 */
+
 .fattoBtn {
     background-color: #9B9A9A;
     border-left: 2px solid #000;
@@ -101,10 +103,12 @@
 }
 
 hr {
+    position: absolute;
     height: 2px;
     color: #424c57;
     background-color: #424c57;
     margin-top: 4%;
+    width: 38.5%;
 }
 
 .bordoIntero {
