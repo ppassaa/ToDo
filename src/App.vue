@@ -1,28 +1,48 @@
 <template>
-  <div class="taskContainer">
+  <div class="showTsk" v-if="showTask">
+    <div class="navShow">
+      <div class="showTitle">
+        <b>{{ taskTitleShow }}</b>
+      </div>
+      <button @click="notShowTaskPuls()" class="esciShowTsk"></button>
+    </div>
+    <div class="showDate">
+      <div>Data di creazione: {{ taskDataCreazioneShow.substr(0, 10) }}</div>
+      <br>
+      <div>Data di scadenza: {{ taskDataScadenzaShow.substr(0, 10) }}</div>
+      <br>
+      <div v-if="taskCompletaShow">Data di fine: {{ taskDataFineShow.substr(0, 10) }}</div>
+    </div>
+  </div>
+
+  <div v-if="!showTask" class="taskContainer">
     <div class="containerStati">
       <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
-      <hr>
       <div class="containerTFS">
         <ul>
-          <li v-for="t in dafareTasks" :class="{ rmStyle: incorsoBool }">
-            <input class="checkbox" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso"> {{
-              t.task }} <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn"></button>
+          <li v-for="t in dafareTasks"
+            :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <div class="listaTask">
+              <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
+              <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
+              <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
+            </div>
           </li>
         </ul>
       </div>
     </div>
-
     <div class="containerStatiCentrale">
       <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
-      <hr>
       <div class="containerTFS">
         <ul>
-          <li v-for="t in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool }">
-            <input class="checkbox" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
-            <input class="checkbox" v-if="dafareBool" type="checkbox" v-model="t.spostadafare"> {{
-              t.task }}
-            <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnIncorso"></button>
+          <li v-for="t in incorsoTasks"
+            :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <div class="listaTask">
+              <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnZindex riduciMargineSx"></button>
+              <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
+              <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
+              <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
+            </div>
           </li>
         </ul>
       </div>
@@ -39,7 +59,10 @@
               <div class="group">
                 <a v-if="aggiungiBool" class="aggiungiScd" href="#">
                   <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
-                  <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button>
+                  <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button> <br>
+                  <p style="color: white; margin-bottom: -15px; margin-top: 10px;margin-right: 4px;">
+                    Inserire la data di scadenza</p> <br>
+                  <input style="margin-right: 4px;" type="date" v-model="scadenza" :min="todayStr">
                 </a>
                 <a @click="aggiungiPuls()" class="bordoIntero"
                   :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }, { sfondochiaro: !aggiungiBool }, { sfondoscuro: aggiungiBool }"
@@ -76,11 +99,14 @@
           </div>
         </div>
       </div>
-      <hr>
       <div class="containerTFS">
         <ul>
-          <li v-for="t in completatiTasks">
-            {{ t.task }} <button @click="rimuoviTask(t)" class="rimuoviBtn"></button>
+          <li v-for="t in completatiTasks" class="taskCompletate"
+            :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
+            <div class="listaTask">
+              <button @click="rimuoviTask(t)" class="rimuoviBtn  riduciMargineSx"></button>
+              <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
+            </div>
           </li>
         </ul>
       </div>
@@ -91,7 +117,7 @@
 export default {
   data() {
     return {
-      tasks: [{ task: "Cambiare i cuscinetti", dafare: true, incorso: false, completati: false, spostaincorso: false, spostacompletati: false, spostadafare: false }, { task: "Cambiare l'olio", dafare: true, incorso: false, completati: false, spostaincorso: false, spostacompletati: false, spostadafare: false }],
+      tasks: [],
       tendinaShow: false,
       taskText: "",
       imageURL: "src/assets/pulsanteGIU.PNG",
@@ -103,6 +129,20 @@ export default {
       incorsoBool: false,
       dafareBool: false,
       completatiBool: false,
+      scadenzaStr: "",
+      scadenza: "",
+      showTask: false,
+      taskTitleShow: "",
+      taskDataCreazioneShow: "",
+      taskDataScadenzaShow: "",
+      taskDataFineShow: "",
+      taskCompletaShow: false,
+      todayStr: new Date().toISOString().split('T')[0]
+    }
+  },
+  filters: {
+    toDate: function (value) {
+      return new Date(value);
     }
   },
   computed: {
@@ -114,7 +154,8 @@ export default {
     },
     completatiTasks() {
       return this.tasks.filter((t) => t.completati)
-    }
+    },
+
   },
   created() {
     if (localStorage.getItem('tasks')) {
@@ -129,7 +170,6 @@ export default {
       deep: true
     }
   },
-
   methods: {
     tendina() {
       this.tendinaShow = !this.tendinaShow;
@@ -200,8 +240,12 @@ export default {
 
     },
     aggiungiTask() {
-      if (this.taskText.length != 0) this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, spostaincorso: false, spostacompletati: false, spostadafare: false })
-      this.taskText = ''
+      if (this.taskText.length != 0 && this.scadenza.length != 0) {
+        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, spostaincorso: false, spostacompletati: false, spostadafare: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
+        this.taskText = '';
+        this.scadenza = '';
+      }
+
     },
     rimuoviTask(e) {
       this.tasks = this.tasks.filter((t) => t !== e)
@@ -214,7 +258,6 @@ export default {
           this.tasks[t].incorso = true;
         }
       }
-      this.tendina();
     },
     spostacompletatiFatto() {
       for (const t in this.tasks) {
@@ -222,9 +265,14 @@ export default {
           this.tasks[t].spostacompletati = false;
           this.tasks[t].incorso = false;
           this.tasks[t].completati = true;
+          let oggi = new Date();
+          let anno = oggi.getFullYear();
+          let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+          let giorno = oggi.getDate().toString().padStart(2, '0');
+          let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+          this.tasks[t].dataFine = dataYYYYMMDD;
         }
       }
-      this.tendina();
     },
     spostadafareFatto() {
       for (const t in this.tasks) {
@@ -234,8 +282,45 @@ export default {
           this.tasks[t].dafare = true;
         }
       }
-      this.tendina();
-    }
+    },
+    showTaskPuls(e) {
+      this.showTask = true;
+      this.taskDataCreazioneShow = "" + e.dataCreazione;
+      this.taskDataScadenzaShow = "" + e.dataScadenza;
+      this.taskDataFineShow = "" + e.dataFine;
+      this.taskTitleShow = "" + e.task;
+      this.taskCompletaShow = e.completati
+    },
+    notShowTaskPuls() {
+      this.showTask = false;
+      this.taskDataCreazioneShow = "";
+      this.taskDataScadenzaShow = "";
+      this.taskDataFineShow = "";
+      this.taskTitleShow = "";
+    },
+    isScadenzaOggi(e) {
+      let str = "" + e.dataScadenza;
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+      return str.slice(0, 10) === dataYYYYMMDD;
+    },
+    isNotScaduto(e) {
+      let str = "" + e.dataScadenza;
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+      return new Date().getTime() <= new Date(str.slice(0, 10)).getTime() || str.slice(0, 10)===dataYYYYMMDD;
+    },
+    isScadutoCompletati(e) {
+      let str = "" + e.dataScadenza;
+      let str1 = "" + e.dataFine;
+      return new Date(str1.slice(0, 10)).getTime() > new Date(str.slice(0, 10)).getTime();
+    },
   }
 }
 </script>
