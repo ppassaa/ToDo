@@ -70,7 +70,11 @@
 
               </div>
 
-              <a  style="margin-left: -10px;" class="ml-auto bordoIntero" :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }" @click="rimuoviPuls()" href="#"><p class="margineSx">Rimuovi</p></a>
+              <a style="margin-left: -10px;" class="ml-auto bordoIntero"
+                :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }"
+                @click="rimuoviPuls()" href="#">
+                <p class="margineSx">Rimuovi</p>
+              </a>
 
               <div class="group">
                 <a v-if="fattoIncorso" class="fattoBtn riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
@@ -112,6 +116,7 @@
   </div>
 </template>
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -155,20 +160,59 @@ export default {
     },
 
   },
-  created() {
-    if (localStorage.getItem('tasks')) {
-      this.tasks = JSON.parse(localStorage.getItem('tasks'));
-    }
-  },
-  watch: {
-    tasks: {
-      handler(newTasks) {
-        localStorage.setItem('tasks', JSON.stringify(newTasks));
-      },
-      deep: true
-    }
+  beforeMount() {
+    this.tasks=[];
+    this.readTasks();
+    console.log(this.tasks);
   },
   methods: {
+    async writeTasks() {
+      let data = JSON.stringify({
+        "appCode": "ONOINT-0002",
+        "dataName": "tasks",
+        "dataValue": JSON.stringify({ tasks: this.tasks })
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://64.227.120.171:7576/grpc/SetONOAppData',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async readTasks() {
+      let data = JSON.stringify({
+        "appCode": "ONOINT-0002",
+        "dataName": "tasks"
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://64.227.120.171:7576/grpc/GetONOAppDataFromCode',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+      };
+      let risposta = await axios.request(config);
+      console.log(risposta);
+      console.log(JSON.parse(risposta.data.data.data).tasks);
+      this.tasks=JSON.parse(risposta.data.data.data).tasks;
+    },
     tendina() {
       this.tendinaShow = !this.tendinaShow;
       this.imageURL = this.tendinaShow ? "src/assets/pulsanteSU.PNG" : "src/assets/pulsanteGIU.PNG";
@@ -238,10 +282,12 @@ export default {
 
     },
     aggiungiTask() {
-      if (this.taskText.length != 0 && this.scadenza.length != 0) {
+      console.log(this.scadenza);
+      if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, spostaincorso: false, spostacompletati: false, spostadafare: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
         this.taskText = '';
         this.scadenza = '';
+        this.writeTasks();
       }
 
     },
@@ -256,6 +302,7 @@ export default {
           this.tasks[t].incorso = true;
         }
       }
+      this.writeTasks();
     },
     spostacompletatiFatto() {
       for (const t in this.tasks) {
@@ -271,6 +318,7 @@ export default {
           this.tasks[t].dataFine = dataYYYYMMDD;
         }
       }
+      this.writeTasks();
     },
     spostadafareFatto() {
       for (const t in this.tasks) {
@@ -280,6 +328,7 @@ export default {
           this.tasks[t].dafare = true;
         }
       }
+      this.writeTasks();
     },
     showTaskPuls(e) {
       this.showTask = true;
@@ -305,6 +354,15 @@ export default {
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
       return str.slice(0, 10) === dataYYYYMMDD;
     },
+    isNotScadutoAdd(e) {
+      let str = "" + e;
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+      return new Date().getTime() <= new Date(str.slice(0, 10)).getTime() || str.slice(0, 10) === dataYYYYMMDD;
+    },
     isNotScaduto(e) {
       let str = "" + e.dataScadenza;
       let oggi = new Date();
@@ -312,7 +370,7 @@ export default {
       let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
       let giorno = oggi.getDate().toString().padStart(2, '0');
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
-      return new Date().getTime() <= new Date(str.slice(0, 10)).getTime() || str.slice(0, 10)===dataYYYYMMDD;
+      return new Date().getTime() <= new Date(str.slice(0, 10)).getTime() || str.slice(0, 10) === dataYYYYMMDD;
     },
     isScadutoCompletati(e) {
       let str = "" + e.dataScadenza;
