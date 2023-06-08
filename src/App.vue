@@ -70,9 +70,7 @@
 
               </div>
 
-              <a class="ml-auto bordoIntero"
-                :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }"
-                @click="rimuoviPuls()" href="#">Rimuovi</a>
+              <a  style="margin-left: -10px;" class="ml-auto bordoIntero" :class="{ riduciRimuovi: aggiungiBool }, { sfondochiaro: !rimuoviBool }, { sfondoscuro: rimuoviBool }" @click="rimuoviPuls()" href="#"><p class="margineSx">Rimuovi</p></a>
 
               <div class="group">
                 <a v-if="fattoIncorso" class="fattoBtn riduciBottone" @click="spostaincorsoFatto()">Fatto</a>
