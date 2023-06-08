@@ -12,6 +12,8 @@
       <div>Data di scadenza: {{ taskDataScadenzaShow.substr(0, 10) }}</div>
       <br>
       <div v-if="taskCompletaShow">Data di fine: {{ taskDataFineShow.substr(0, 10) }}</div>
+      <button @click="modificaTesto">Modifica</button>
+
     </div>
   </div>
 
@@ -377,6 +379,9 @@ export default {
       let str1 = "" + e.dataFine;
       return new Date(str1.slice(0, 10)).getTime() > new Date(str.slice(0, 10)).getTime();
     },
+    modificaTesto() {
+      this.variabileTesto = '';
+    }
   }
 }
 </script>
