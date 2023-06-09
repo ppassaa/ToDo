@@ -5,13 +5,26 @@
         {{ oggetto.task }}
       </div>
     </div>
-    <div class="showDate">
-      <div>Data di creazione: {{ taskDataCreazioneShow.substr(0, 10) }}</div>
-      <br>
-      <div>Data di scadenza: {{ taskDataScadenzaShow.substr(0, 10) }}</div>
-      <br>
-      <div v-if="taskCompletaShow">Data di fine: {{ taskDataFineShow.substr(0, 10) }}</div>
-      <button @click="modificaTesto">Modifica</button>
+    <div class="dxShow">
+      <div class="showButton">
+        <div v-if="!taskCompletaShow">
+          <button v-if="modificaBool" @click="salvaPuls()" class="modifica">Salva</button>
+          <button v-if="!modificaBool" @click="modificaPuls()" class="modifica">Modifica</button>
+        </div>
+        <div>
+          <button @click="notShowTaskPuls()" class="esciShowTsk"></button>
+        </div>
+      </div>
+      <div class="dataShow">
+        <div>Data di creazione: <p>{{ taskDataCreazioneShow.substr(0, 10) }}</p>
+        </div>
+        <div>Data di scadenza:
+          <p v-if="!modificaBool">{{ taskDataScadenzaShow.substr(0, 10) }}</p>
+          <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
+        </div>
+        <div v-if="taskCompletaShow">Data di fine: <p>{{ taskDataFineShow.substr(0, 10) }}</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -406,9 +419,6 @@ export default {
       let str1 = "" + e.dataFine;
       return new Date(str1.slice(0, 10)).getTime() > new Date(str.slice(0, 10)).getTime();
     },
-    modificaTesto() {
-      this.variabileTesto = '';
-    }
   }
 }
 </script>
