@@ -116,8 +116,7 @@
       </div>
       <div class="containerTFS">
         <ul>
-          <li v-for="t in completatiTasks" class="taskCompletate"
-            :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
+          <li v-for="t in completatiTasks" class="taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
             <div class="listaTask">
               <button @click="rimuoviTask(t)" class="rimuoviBtn  riduciMargineSx"></button>
               <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
