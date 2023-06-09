@@ -1,10 +1,9 @@
 <template>
   <div class="showTsk" v-if="showTask">
-    <div class="navShow">
-      <div class="showTitle">
-        <b>{{ taskTitleShow }}</b>
+    <div class="sxShow">
+      <div class="showTitle" :contenteditable=modificaBool @input="updateContent">
+        {{ oggetto.task }}
       </div>
-      <button @click="notShowTaskPuls()" class="esciShowTsk"></button>
     </div>
     <div class="showDate">
       <div>Data di creazione: {{ taskDataCreazioneShow.substr(0, 10) }}</div>
@@ -13,7 +12,6 @@
       <br>
       <div v-if="taskCompletaShow">Data di fine: {{ taskDataFineShow.substr(0, 10) }}</div>
       <button @click="modificaTesto">Modifica</button>
-
     </div>
   </div>
 
@@ -142,7 +140,10 @@ export default {
       taskDataScadenzaShow: "",
       taskDataFineShow: "",
       taskCompletaShow: false,
-      todayStr: new Date().toISOString().split('T')[0]
+      modificaBool: false,
+      todayStr: new Date().toISOString().split('T')[0],
+      oggetto: '',
+      newContent: "",
     }
   },
   filters: {
@@ -163,7 +164,7 @@ export default {
 
   },
   beforeMount() {
-    this.tasks=[];
+    this.tasks = [];
     this.readTasks();
     console.log(this.tasks);
   },
@@ -211,9 +212,7 @@ export default {
         data: data
       };
       let risposta = await axios.request(config);
-      console.log(risposta);
-      console.log(JSON.parse(risposta.data.data.data).tasks);
-      this.tasks=JSON.parse(risposta.data.data.data).tasks;
+      this.tasks = JSON.parse(risposta.data.data.data).tasks;
     },
     tendina() {
       this.tendinaShow = !this.tendinaShow;
@@ -284,7 +283,6 @@ export default {
 
     },
     aggiungiTask() {
-      console.log(this.scadenza);
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, spostaincorso: false, spostacompletati: false, spostadafare: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
         this.taskText = '';
@@ -295,6 +293,7 @@ export default {
     },
     rimuoviTask(e) {
       this.tasks = this.tasks.filter((t) => t !== e)
+      this.writeTasks();
     },
     spostaincorsoFatto() {
       for (const t in this.tasks) {
@@ -324,6 +323,7 @@ export default {
     },
     spostadafareFatto() {
       for (const t in this.tasks) {
+        console.log(t.task);
         if (this.tasks.hasOwnProperty(t) && this.tasks[t].spostadafare === true) {
           this.tasks[t].incorso = false;
           this.tasks[t].spostadafare = false;
@@ -334,6 +334,7 @@ export default {
     },
     showTaskPuls(e) {
       this.showTask = true;
+      this.oggetto = e;
       this.taskDataCreazioneShow = "" + e.dataCreazione;
       this.taskDataScadenzaShow = "" + e.dataScadenza;
       this.taskDataFineShow = "" + e.dataFine;
@@ -342,10 +343,36 @@ export default {
     },
     notShowTaskPuls() {
       this.showTask = false;
+      this.modificaBool = false;
+      this.oggetto = '';
+      this.newContent = ""
       this.taskDataCreazioneShow = "";
       this.taskDataScadenzaShow = "";
       this.taskDataFineShow = "";
       this.taskTitleShow = "";
+    },
+    modificaPuls() {
+      this.modificaBool = true;
+    },
+    updateContent(event) {
+      this.newContent = event.target.innerHTML;
+    },
+    salvaPuls() {
+      const oggDiTasks = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
+      let modificaScadenza = false;
+      if(this.newContent!=0){
+        oggDiTasks.task=this.newContent;
+        this.newContent = "";
+      }
+      if(this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)){
+        oggDiTasks.dataScadenza=this.scadenza;
+        modificaScadenza=true;
+      }
+      if(this.scadenza==0 || modificaScadenza){
+        this.scadenza = "";
+        this.modificaBool=false;
+        this.writeTasks();
+      }
     },
     isScadenzaOggi(e) {
       let str = "" + e.dataScadenza;
