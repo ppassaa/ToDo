@@ -341,3 +341,7 @@ div::-webkit-scrollbar-thumb {
     padding-top: 5px;
     border-top: 3px solid #A1A1A1;
 }
+
+Board{
+    width: 2000px;
+}

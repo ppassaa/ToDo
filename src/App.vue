@@ -33,32 +33,40 @@
     <div class="containerStati">
       <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
       <div class="containerTFS">
-        <ul>
-          <li v-for="t in dafareTasks"
-            :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask">
-              <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
-              <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
-              <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
-            </div>
-          </li>
-        </ul>
+        <Board id="board-1">
+          <ul>
+            <li v-for="(t, index) in dafareTasks"
+              :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+              <Card :draggable="true" :id="`card-${index}`">
+                <div class="listaTask">
+                  <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
+                  <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
+                  <p class="testoTask" @dblclick="showTaskPuls(t)">{{ t.task }}</p>
+                </div>
+              </Card>
+            </li>
+          </ul>
+        </Board>
       </div>
     </div>
     <div class="containerStatiCentrale">
       <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
       <div class="containerTFS">
-        <ul>
-          <li v-for="t in incorsoTasks"
-            :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask">
-              <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnZindex riduciMargineSx"></button>
-              <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
-              <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
-              <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
-            </div>
-          </li>
-        </ul>
+        <Board id="board-2">
+          <ul>
+            <li v-for="(t, index) in incorsoTasks"
+              :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+              <Card :draggable="true" :id="`card-${index}`">
+                <div class="listaTask">
+                  <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnZindex riduciMargineSx"></button>
+                  <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
+                  <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
+                  <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
+                </div>
+              </Card>
+            </li>
+          </ul>
+        </Board>
       </div>
     </div>
 
@@ -130,7 +138,8 @@
 </template>
 <script>
 import axios from 'axios'
-import draggable from "vuedraggable"
+import Board from "./components/Board.vue"
+import Card from "./components/Card.vue"
 export default {
   data() {
     return {
@@ -161,7 +170,8 @@ export default {
     }
   },
   components: {
-    draggable,
+    Board,
+    Card
   },
   filters: {
     toDate: function (value) {
