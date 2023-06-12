@@ -12,6 +12,7 @@
       <div class="showButton">
         <!-- sezione alta(pulsanti X e modifica) -->
         <div v-if="!taskCompletaShow">
+          <button @click="" class="modifica">Rimuovi</button>
           <button v-if="modificaBool" @click="salvaPuls()" class="modifica">Salva</button>
           <button v-if="!modificaBool" @click="modificaPuls()" class="modifica">Modifica</button>
         </div>
@@ -21,13 +22,16 @@
       </div>
       <!-- sezione nella quale si visualizzano le date -->
       <div class="dataShow">
-        <div>Data di creazione: <p>{{ taskDataCreazioneShow.substr(0, 10) }}</p>
+        <div>
+          <button class="spostainBtn">Sposta in "IN CORSO"</button>
         </div>
-        <div>Data di scadenza: {{ oggetto.dataFine }}
-          <p v-if="!modificaBool">{{ taskDataScadenzaShow.substr(0, 10) }}</p>
+        <div>Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
+        </div>
+        <div>Data di scadenza: 
+          <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
           <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
         </div>
-        <div v-if="taskCompletaShow">Data di fine: <p>{{ taskDataFineShow.substr(0, 10) }}</p>
+        <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
         </div>
       </div>
     </div>
@@ -45,6 +49,7 @@
               <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
               <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
               <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
+              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
@@ -57,11 +62,12 @@
         <ul>
           <!-- stampa delle task "IN CORSO" -->
           <li v-for="t in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask">
+            <div class="listaTask" @click="showTaskPuls(t)">
               <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnZindex riduciMargineSx"></button>
               <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
               <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
-              <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
+              <p class="testoTask" >{{ t.task }}</p>
+              <label @click="showTaskPuls(t)">Scadenza: {{ t.dataScadenza }}</label>
             </div>
           </li>
         </ul>
@@ -79,10 +85,12 @@
               <div class="group">
                 <!-- sezione Aggiungi -->
                 <a v-if="aggiungiBool" class="aggiungiScd" href="#">
-                  <input class="taskInp" v-model="taskText" placeholder="Task"> <br>
-                  <button @click="aggiungiTask" class="aggiungiBtn">Aggiungi</button> <br>
-                  <p style="color: white; margin-bottom: -15px; margin-top: 10px;margin-right: 4px;">Inserire la data di scadenza</p> <br>
-                  <input style="margin-right: 4px;" type="date" v-model="scadenza" :min="todayStr">
+                  <form>
+                    <input class="taskInp" v-model="taskText" placeholder="Task" required> <br>
+                    <p style="color: white; margin-bottom: -15px; margin-top: 10px;margin-right: 4px;">Inserire la data di scadenza</p> <br>
+                    <input style="margin-right: 4px;" type="date" v-model="scadenza" :min="todayStr" required>
+                    <button @click="aggiungiTask" class="aggiungiBtn" type="submit">Aggiungi</button> <br>
+                  </form>
                 </a>
                 <!-- pulsante Aggiungi -->
                 <a @click="aggiungiPuls()" class="bordoIntero" :class="{ riduci: !aggiungiBool }, { riduciAggiungi: aggiungiBool }, { sfondochiaro: !aggiungiBool }, { sfondoscuro: aggiungiBool }" href="#">Aggiungi</a>
@@ -117,7 +125,7 @@
       <div class="containerTFS">
         <ul>
           <!-- stampa delle task "COMPLETATI" -->
-          <li v-for="t in completatiTasks" class="taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
+          <li v-for="t in completatiTasks" class="taskStyle taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
             <div class="listaTask">
               <button @click="rimuoviTask(t)" class="rimuoviBtn  riduciMargineSx"></button>
               <p class="testoTask" @click="showTaskPuls(t)">{{ t.task }}</p>
@@ -405,7 +413,9 @@ export default {
       }
       if(this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)){
         oggDiTasks.dataScadenza=this.scadenza;
+        this.oggetto.dataScadenza=this.scadenza;
         modificaScadenza=true;
+        this.writeTasks();
       }
       if(this.scadenza==0 || modificaScadenza){
         this.scadenza = "";

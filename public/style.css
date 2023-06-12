@@ -134,7 +134,7 @@
     color: white;
     background-color: #424C57;
     margin-right: 4px;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 /* input della sezione aggiungi */
@@ -168,18 +168,32 @@
 
 /* style delle task */
 li {
-    margin-left: 10px
+    list-style-type: none;
+    width: 100%;
+}
+
+li:before {
+    margin-left: 9px;
+    content: "\2022"; /* Codice del carattere per il pallino */
+    position: absolute; /* Posizione assoluta per il pallino */
+}
+
+ul {
+    padding: 0px 0px 0px 0px;
 }
 
 /* style delle task */
 .listaTask {
-    display: flex;
     max-width: 100%;
+    border-bottom: 3px solid #424c57;
+    margin-bottom: 10px;
+    pointer-events: auto;
 }
 
 /* testo delle task */
 .testoTask {
     max-width: 90%;
+    margin-left: 20px;
 }
 
 /* cambia i margini */
@@ -291,7 +305,6 @@ div::-webkit-scrollbar {
 /* style della scrollbar */
 div::-webkit-scrollbar-thumb {
     background-color: #888;
-    border-radius: 2.5px;
     z-index: 999;
 }
 
@@ -310,7 +323,6 @@ div::-webkit-scrollbar-thumb {
 /* style della sezione in cui si vedono le informazioni di ogni task */
 .showTsk {
     border:3px solid #A1A1A1;
-    border-radius: 15px;
     color: white;
     background-color: #424C57;
     text-align: center;
@@ -329,8 +341,8 @@ div::-webkit-scrollbar-thumb {
 .sxShow {
     min-height: 100%;
     max-height: 100%;
-    min-width: 50%;
-    max-width: 50%;
+    min-width: 49%;
+    max-width: 49%;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -363,7 +375,6 @@ div::-webkit-scrollbar-thumb {
     margin-right: 10px;
     z-index: 999;
     background-color: #f1f1f1;
-    border-radius: 5px;
 }
 
 /* sezione che contiene il testo della task nella sezione in cui si vedono le informazioni di ogni task */
@@ -380,16 +391,16 @@ div::-webkit-scrollbar-thumb {
 
 /* sezione destra della sezione in cui si vedono le informazioni di ogni task */
 .dxShow {
+    text-align: center;
     border-left: 3px solid #A1A1A1;
     min-height: 100%;
     max-height: 100%;
-    min-width: 50%;
-    max-width: 50%;
+    min-width: 51%;
+    max-width: 51%;
 }
 
 /* sezione in cui di vedono le date nella sezione in cui si vedono le informazioni di ogni task */
 .dataShow{
-    padding-top: 5px;
     border-top: 3px solid #A1A1A1;
 }
 
@@ -404,4 +415,13 @@ div::-webkit-scrollbar-thumb {
     word-wrap: break-word;
     word-break: break-all;
     white-space: pre-wrap;
+    text-align: center;
+}
+
+.spostainBtn{ 
+    width: 90%;
+    height: 30px;
+    margin-right: 10px;
+    z-index: 999;
+    background-color: #f1f1f1;
 }
