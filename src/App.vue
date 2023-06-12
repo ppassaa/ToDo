@@ -130,6 +130,7 @@
 </template>
 <script>
 import axios from 'axios'
+import draggable from "vuedraggable"
 export default {
   data() {
     return {
@@ -158,6 +159,9 @@ export default {
       oggetto: '',
       newContent: "",
     }
+  },
+  components: {
+    draggable,
   },
   filters: {
     toDate: function (value) {
