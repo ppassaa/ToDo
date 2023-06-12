@@ -1,4 +1,4 @@
-/* bottone */
+/* bottone della tendina */
 .dropbtn {
     background-size: cover;
     background-repeat: no-repeat;
@@ -41,31 +41,35 @@
     background-color: #9B9A9A;
 }
 
+/* cambia colore quando si è nella sezione del pulsante */
 .dropdown-content .sfondoscuro {
     background-color: #9B9A9A;
 }
 
+/* cambia colore se non si è nella sezione del pulsante */
 .dropdown-content .sfondochiaro {
     background-color: #f1f1f1;
 }
 
-
+/* gestisce le righe composte da due pulsanti(es. Fatto | Sposta in "In corso") */
 .dropdown-content .group {
     display: flex;
     align-items: center;
 }
 
+/* gestisce le righe composte da due pulsanti(es. Fatto | Sposta in "In corso") */
 .dropdown-content .group a:first-child {
     flex-grow: 1;
     padding-right: 8px;
 
 }
-
+/* gestisce le righe composte da due pulsanti(es. Fatto | Sposta in "In corso") */
 .dropdown-content .group a:last-child {
     flex-grow: 1;
     padding-left: 8px;
 }
 
+/* style bottoni Fatto */
 .fattoBtn {
     background-color: #9B9A9A;
     border-left: 2px solid #000;
@@ -77,26 +81,32 @@
     max-width: 70px;
 }
 
+/* style task completate */
 .taskCompletate {
     list-style: none;
 }
 
+/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
 .riduci {
     margin-left: 250px;
 }
 
+/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
 .riduciBottone {
     margin-left: 180px;
 }
 
+/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
 .riduciAggiungi {
     margin-top: -248px;
 }
 
+/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
 .riduciRimuovi {
     margin-top: -248px;
 }
 
+/* bordo dei pulsanti */
 .bordoIntero {
     height: 50px;
     width: 220px;
@@ -119,6 +129,7 @@
     text-align: center;
 }
 
+/* bottone Aggiungi della scheda aggiungi */
 .aggiungiBtn {
     color: white;
     background-color: #424C57;
@@ -126,11 +137,13 @@
     margin-top: 5px;
 }
 
+/* input della sezione aggiungi */
 .taskInp {
     margin-top: 40px;
     margin-right: 4px;
 }
 
+/* style dei bottoni rimuovi che compaiono di fianco alle task */
 .rimuoviBtn {
     background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
@@ -140,6 +153,7 @@
     height: 20px;
 }
 
+/* style dei bottoni rimuovi che compaiono di fianco alle task(con z-index alto) */
 .rimuoviBtnZindex {
     background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
@@ -152,40 +166,54 @@
     position: relative;
 }
 
+/* style delle task */
 li {
     margin-left: 10px
 }
 
+/* style delle task */
 .listaTask {
     display: flex;
     max-width: 100%;
 }
 
+/* testo delle task */
 .testoTask {
     max-width: 90%;
 }
 
+/* cambia i margini */
 .riduciMargineSx {
     margin-left: -25px;
     margin-right: 5px;
 }
 
+/* cambia il colore del testo della task se è scaduta */
 .scaduto {
     color: red;
 }
 
+/* cambia il colore del testo della task se non è scaduta */
+.NotScaduto {
+    color: white;
+}
+
+/* cambia il colore del testo della task in "COMPLETATI" se è stata conclusa in tempo */
 .intempo {
     color: limegreen;
 }
 
+/* cambia il colore del testo della task se è in scadenza nel giorno odierno */
 .inscadenza {
     color: yellow;
 }
 
+/* rimuove il pallino degli elenchi puntati */
 .rmStyle {
     list-style-type: none;
 }
 
+/* style delle checkbox */
 .checkbox {
     z-index: 999;
     position: relative;
@@ -193,6 +221,7 @@ li {
     height: 20px;
 }
 
+/* style del body */
 body {
     margin: 0;
     padding: 0;
@@ -212,6 +241,7 @@ body {
     overflow: hidden;
 }
 
+/* container di ogni stato */
 .containerStati {
     width: 100%;
     margin-top: 2%;
@@ -222,6 +252,7 @@ body {
     flex-direction: column;
 }
 
+/* container dello stato centrale(aggiunta dei bordi laterali) */
 .containerStatiCentrale {
     width: 100%;
     margin-top: 2%;
@@ -247,30 +278,36 @@ body {
     margin-bottom: 4%;
     border-top: 3px solid #424c57;
     max-width: 100%;
+    white-space: pre-wrap;
 }
 
+/* style della scrollbar */
 div::-webkit-scrollbar {
     background-color: #f1f1f1;
     width: 5px;
     z-index: 999;
 }
 
+/* style della scrollbar */
 div::-webkit-scrollbar-thumb {
     background-color: #888;
     border-radius: 2.5px;
     z-index: 999;
 }
 
+/* contenitore del testo "COMPLETATI" e del pulsante per la tendina */
 .contenitore {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* modifica il margine sinistro */
 .margineSx {
     margin-left: -8px;
 }
 
+/* style della sezione in cui si vedono le informazioni di ogni task */
 .showTsk {
     border:3px solid #A1A1A1;
     border-radius: 15px;
@@ -287,6 +324,8 @@ div::-webkit-scrollbar-thumb {
     transform: translate(-50%, -50%);
     display: flex;
 }
+
+/* sezione sinistra della sezione in cui si vedono le informazioni di ogni task */
 .sxShow {
     min-height: 100%;
     max-height: 100%;
@@ -296,11 +335,15 @@ div::-webkit-scrollbar-thumb {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+
+/* sezione che contiene in bottoni nella sezione in cui si vedono le informazioni di ogni task */
 .showButton{
     display: flex;
     justify-content: flex-end;
     padding: 10px;
 }
+
+/* style della X della sezione in cui si vedono le informazioni di ogni task */
 .esciShowTsk {
     flex: 1;
     background-image: url("src/assets/rimuovi.PNG");
@@ -311,6 +354,8 @@ div::-webkit-scrollbar-thumb {
     height: 30px;
     z-index: 999;
 }
+
+/* style del bottone modifica/salva della sezioni in cui si vedono le informazioni di ogni task */
 .modifica{
     flex: 1;
     width: 90px;
@@ -320,16 +365,20 @@ div::-webkit-scrollbar-thumb {
     background-color: #f1f1f1;
     border-radius: 5px;
 }
+
+/* sezione che contiene il testo della task nella sezione in cui si vedono le informazioni di ogni task */
 .showTitle {
     word-wrap: break-word;
     word-break: break-all;
     max-height: 220px;
-    padding-right: 5px;
+    min-height: 220px;
+    padding-right: 10px;
     z-index:999;
-    overflow-y: auto;
+    overflow-y: hidden;
     font-weight: bold;
 }
 
+/* sezione destra della sezione in cui si vedono le informazioni di ogni task */
 .dxShow {
     border-left: 3px solid #A1A1A1;
     min-height: 100%;
@@ -337,7 +386,22 @@ div::-webkit-scrollbar-thumb {
     min-width: 50%;
     max-width: 50%;
 }
+
+/* sezione in cui di vedono le date nella sezione in cui si vedono le informazioni di ogni task */
 .dataShow{
     padding-top: 5px;
     border-top: 3px solid #A1A1A1;
+}
+
+/* textarea quando si modifica il testo con il pulsante modifica */
+.modificaTesto{
+    width: 100%;
+    min-height: 220px;
+    max-height: 220px;
+    background-color: transparent;
+    border: none;
+    font-weight: bold;
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: pre-wrap;
 }
