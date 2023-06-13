@@ -437,3 +437,7 @@ export default {
   }
 }
 </script>
+
+<style>
+    @import '../node_modules/@fontsource/roboto/index.css';
+  </style>
