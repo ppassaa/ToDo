@@ -4,6 +4,7 @@
         :draggable="draggable"
         @dragstart="start"
         @dragover.stop
+        @dragend="end"
     >
         <slot />
     </div>
@@ -23,6 +24,11 @@
                     e.target.style.display = "none"; //rendo la card invisibile(per ora rimane invisibile se draggata su zona non draggabile)
                 }, 0)
 
+            },
+            end: e =>{
+                setTimeout(() => {
+                    e.target.style.display = "block";
+                }, 0);
             }
         } 
     }
