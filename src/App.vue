@@ -44,7 +44,6 @@
       <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
       <div class="containerTFS">
         <Board id="board-1" style="height: 97%;">
-          <ul>
             <!-- stampa delle task "DA FARE" -->
             <li v-for="(t, index) in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <Card :id="`card-${index}`" :draggable="true">
@@ -56,7 +55,6 @@
                 </div>
               </Card>
             </li>
-          </ul>
         </Board>
       </div>
     </div>
@@ -65,7 +63,6 @@
       <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
       <div class="containerTFS">
         <Board id="board-2" style="height: 97%;">
-          <ul>
             <!-- stampa delle task "IN CORSO" -->
             <li v-for="(t, index) in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <Card :id="`card-${index}`" :draggable="true">
@@ -78,7 +75,6 @@
                 </div>
               </Card>
             </li>
-          </ul>
         </Board>
       </div>
     </div>
@@ -133,7 +129,6 @@
       </div>
       <div class="containerTFS">
         <Board id="board-3" style="height: 97%;">
-          <ul>
             <!-- stampa delle task "COMPLETATI" -->
             <li v-for="(t, index) in completatiTasks" class="taskStyle taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
               <Card :id="`card-${index}`" :draggable="true" >  
@@ -143,7 +138,6 @@
                 </div>
               </Card>
             </li>
-          </ul>
         </Board>
       </div>
     </div>

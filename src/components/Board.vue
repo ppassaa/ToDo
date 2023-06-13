@@ -25,6 +25,12 @@
 
                 card.style.display = "block";
 
+                const elementiLista = e.target.querySelectorAll("li");
+
+                elementiLista.forEach(element => {
+                    if(element.textContent === "") element.parentNode.removeChild(element);
+                });
+
                 e.target.appendChild(card);
             },
         }
