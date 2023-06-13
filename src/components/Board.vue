@@ -38,7 +38,7 @@
                     if(element.textContent === "") element.parentNode.removeChild(element);
                 });
                 //aggiungo la card alla board
-                targetBoard.appendChild(card);
+                targetBoard.appendChild(card.parentElement);
             },
             
         }
