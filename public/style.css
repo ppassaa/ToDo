@@ -1,6 +1,5 @@
-/* bottone aggiungi */
-.aggiungiBtn{
-    background-image: url("src/assets/aggiungi.PNG");
+/* bottone della tendina */
+.dropbtn {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
