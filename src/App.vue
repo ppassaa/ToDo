@@ -152,8 +152,6 @@
 <script>
 
 import axios from 'axios'
-import Board from "./components/Board.vue"
-import Card from "./components/Card.vue"
 
 export default {
   data() {
@@ -184,9 +182,7 @@ export default {
       oggettodragdrop:''
     }
   },
-  components: {
-    Board,
-    Card,
+  components: { 
   },
   filters: {
     toDate: function (value) {
