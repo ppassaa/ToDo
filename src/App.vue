@@ -47,7 +47,7 @@
             <!-- stampa delle task "DA FARE" -->
             <li v-for="(t, index) in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <Card :id="`card-${index}`" :draggable="true">
-                <div class="listaTask">
+                <div class="listaTask" @drop.prevent @dragover.prevent>
                   <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
                   <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
                   <p class="testoTask" @dblclick="showTaskPuls(t)">{{ t.task }}</p>

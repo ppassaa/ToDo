@@ -174,7 +174,6 @@ li {
 
 li:before {
     margin-left: 9px;
-    content: "\2022"; /* Codice del carattere per il pallino */
     position: absolute; /* Posizione assoluta per il pallino */
 }
 
