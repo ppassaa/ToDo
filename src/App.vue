@@ -102,12 +102,12 @@
       <div class="containerTFS">
         <Board id="board-1">
             <!-- stampa delle task "DA FARE" -->
-            <li v-for="(t, index) in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li  @dblclick="showTaskPuls(t)" v-for="(t, index) in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <Card :id="`card-${index}`" :draggable="true">
                 <div class="listaTask" @drop.prevent @dragover.prevent>
                   <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
                   <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
-                  <p class="testoTask" @dblclick="showTaskPuls(t)">{{ t.task }}</p>
+                  <p class="testoTask">{{ t.task }}</p>
                   <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
                 </div>
               </Card>
@@ -121,14 +121,14 @@
       <div class="containerTFS">
         <Board id="board-2">
             <!-- stampa delle task "IN CORSO" -->
-            <li v-for="(t, index) in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li @dblclick="showTaskPuls(t)" v-for="(t, index) in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <Card :id="`card-${index}`" :draggable="true">
                 <div class="listaTask" @click="showTaskPuls(t)">
                   <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnZindex riduciMargineSx"></button>
                   <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
                   <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
                   <p class="testoTask" >{{ t.task }}</p>
-                  <label @dblclick="showTaskPuls(t)">Scadenza: {{ t.dataScadenza }}</label>
+                  <label>Scadenza: {{ t.dataScadenza }}</label>
                 </div>
               </Card>
             </li>
@@ -147,11 +147,11 @@
       <div class="containerTFS">
         <Board id="board-3">
             <!-- stampa delle task "COMPLETATI" -->
-            <li v-for="(t, index) in completatiTasks" class="taskStyle taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
+            <li  @dblclick="showTaskPuls(t)" v-for="(t, index) in completatiTasks" class="taskStyle taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
               <Card :id="`card-${index}`" :draggable="true" >  
                 <div class="listaTask">
                   <button @click="rimuoviTask(t)" class="rimuoviBtn  riduciMargineSx"></button>
-                  <p class="testoTask" @dblclick="showTaskPuls(t)">{{ t.task }}</p>
+                  <p class="testoTask">{{ t.task }}</p>
                 </div>
               </Card>
             </li>
