@@ -44,3 +44,11 @@
         }
     }
 </script>
+<style scoped>
+    div {
+        text-align: left;
+        overflow-y: auto;
+        max-width: 100%;
+        height: 100%;
+    }
+</style>

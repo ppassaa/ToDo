@@ -286,9 +286,6 @@ body {
     word-wrap: break-word;
     word-break: break-all;
     overflow-y: auto;
-    padding-top: 10px;
-    margin-top: 10px;
-    margin-bottom: 4%;
     border-top: 3px solid #424c57;
     max-width: 100%;
     white-space: pre-wrap;
@@ -399,12 +396,12 @@ div::-webkit-scrollbar-thumb {
 }
 
 /* sezione in cui di vedono le date nella sezione in cui si vedono le informazioni di ogni task */
-.dataShow{
+.dataShow {
     border-top: 3px solid #A1A1A1;
 }
 
 /* textarea quando si modifica il testo con il pulsante modifica */
-.modificaTesto{
+.modificaTesto {
     width: 100%;
     min-height: 220px;
     max-height: 220px;
@@ -417,7 +414,7 @@ div::-webkit-scrollbar-thumb {
     text-align: center;
 }
 
-.spostainBtn{ 
+.spostainBtn { 
     width: 90%;
     height: 30px;
     margin-right: 10px;
