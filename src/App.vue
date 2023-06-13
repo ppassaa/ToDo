@@ -22,9 +22,11 @@
       </div>
       <!-- sezione nella quale si visualizzano le date -->
       <div class="dataShow">
-
-        <div>SPAZIO PER COSE FUTURE</div>
-
+        <div v-if="oggetto.dafare || oggetto.incorso" style="border-bottom: 3px solid #A1A1A1">
+          <button v-if="oggetto.dafare" class="spostainBtn" @click="spostaincorsoFatto()">Sposta in "IN CORSO"</button>
+          <button v-if="oggetto.incorso" class="spostainBtn" @click="spostacompletatiFatto()">Sposta in "COMPLETATI"</button>
+          <button v-if="oggetto.incorso" class="spostainBtn" @click="spostadafareFatto()">Sposta in "DA FARE"</button>
+        </div>
         <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
         </div>
         <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
@@ -97,40 +99,31 @@
     <!-- sezione DA FARE -->
     <div class="containerStati">
       <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
-      <div class="containerTFS">
-        <Board id="board-1">
-            <!-- stampa delle task "DA FARE" -->
-            <li v-for="(t, index) in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-              <Card @dblclick="showTaskPuls(t)" :id="`card-${index}`" :draggable="true" :task="t">
-                <div class="listaTask" @drop.prevent @dragover.prevent>
-                  <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
-                  <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
-                  <p class="testoTask">{{ t.task }}</p>
-                  <p style="text-align: right; font-size: small; padding-right: 4%;">Scadenza: {{ t.dataScadenza }}</p>
-                </div>
-              </Card>
-            </li>
-        </Board>
+      <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
+        <ul>
+          <!-- stampa delle task "DA FARE" -->
+          <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <div class="listaTask" @dblclick="showTaskPuls(t)">
+              <p class="testoTask">{{ t.task }}</p>
+              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <!-- sezione IN CORSO -->
     <div class="containerStatiCentrale">
       <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
-      <div class="containerTFS">
-        <Board id="board-2">
-            <!-- stampa delle task "IN CORSO" -->
-            <li v-for="(t, index) in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-              <Card  @dblclick="showTaskPuls(t)" :id="`card-${index}`" :draggable="true" :task="t">
-                <div class="listaTask" @click="showTaskPuls(t)">
-                  <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtnZindex riduciMargineSx"></button>
-                  <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
-                  <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
-                  <p class="testoTask" >{{ t.task }}</p>
-                  <label style="font-size: small; text-align: right; padding-right: 10px;">Scadenza: {{ t.dataScadenza }}</label>
-                </div>
-              </Card>
-            </li>
-        </Board>
+      <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
+        <ul>
+          <!-- stampa delle task "IN CORSO" -->
+          <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <div class="listaTask" @click="showTaskPuls(t)">
+              <p class="testoTask" >{{ t.task }}</p>
+              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
     <!-- sezione COMPLETATI -->
@@ -142,18 +135,16 @@
             <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
         </div>
       </div>
-      <div class="containerTFS">
-        <Board id="board-3">
-            <!-- stampa delle task "COMPLETATI" -->
-            <li v-for="(t, index) in completatiTasks" class="taskStyle taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
-              <Card @dblclick="showTaskPuls(t)" :id="`card-${index}`" :draggable="true" :task ="t">  
-                <div class="listaTask">
-                  <button @click="rimuoviTask(t)" class="rimuoviBtn  riduciMargineSx"></button>
-                  <p class="testoTask">{{ t.task }}</p>
-                </div>
-              </Card>
-            </li>
-        </Board>
+      <div class="containerTFS" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
+        <ul>
+          <!-- stampa delle task "COMPLETATI" -->
+          <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
+            <div class="listaTask" @click="showTaskPuls(t)">
+              <p class="testoTask">{{ t.task }}</p>
+              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -190,6 +181,7 @@ export default {
       todayStr: new Date().toISOString().split('T')[0],
       oggetto: '',
       newContent: "",
+      oggettodragdrop:''
     }
   },
   components: {
@@ -410,6 +402,37 @@ export default {
       this.tasks.sort((a, b) => {
         return new Date(a.dataScadenza) - new Date(b.dataScadenza);
       });
+    },
+    startDrag (event, task) {
+      console.log(task)
+      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.dropEffect = 'move'
+      this.oggettodragdrop=task;
+    },
+    onDrop (event, dest) {
+      console.log(this.oggettodragdrop)
+      const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
+      if(this.oggettodragdrop.dafare == true && dest === "incorso"){
+        task.incorso = true
+        task.dafare = false
+        this.writeTasks();
+      }
+      if(this.oggettodragdrop.incorso == true && dest === "completati"){
+        let oggi = new Date();
+        let anno = oggi.getFullYear();
+        let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+        let giorno = oggi.getDate().toString().padStart(2, '0');
+        let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+        task.dataFine = dataYYYYMMDD;
+        task.completati = true
+        task.incorso = false
+        this.writeTasks();
+      }
+      if(this.oggettodragdrop.incorso == true && dest === "dafare"){
+        task.incorso = false
+        task.dafare = true
+        this.writeTasks();
+      }
     }
   }
 }
