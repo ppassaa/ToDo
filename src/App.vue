@@ -22,11 +22,9 @@
       </div>
       <!-- sezione nella quale si visualizzano le date -->
       <div class="dataShow">
-        <div v-if="oggetto.dafare || oggetto.incorso" style="border-bottom: 3px solid #A1A1A1">
-          <button v-if="oggetto.dafare" class="spostainBtn" @click="spostaincorsoFatto()">Sposta in "IN CORSO"</button>
-          <button v-if="oggetto.incorso" class="spostainBtn" @click="spostacompletatiFatto()">Sposta in "COMPLETATI"</button>
-          <button v-if="oggetto.incorso" class="spostainBtn" @click="spostadafareFatto()">Sposta in "DA FARE"</button>
-        </div>
+
+        <div>SPAZIO PER COSE FUTURE</div>
+
         <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
         </div>
         <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
@@ -437,14 +435,14 @@ export default {
         oggDiTasks.task=this.newContent;
       }
       if(this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)){
-        oggDiTasks.dataScadenza=this.scadenza;
-        this.oggetto.dataScadenza=this.scadenza;
+        oggDiTasks.dataScadenza = this.scadenza;
+        this.oggetto.dataScadenza = this.scadenza;
         modificaScadenza=true;
         this.writeTasks();
       }
-      if(this.scadenza==0 || modificaScadenza){
+      if(this.scadenza == 0 || modificaScadenza){
         this.scadenza = "";
-        this.modificaBool=false;
+        this.modificaBool = false;
         this.writeTasks();
       }
     },
