@@ -25,19 +25,19 @@
             },
             drop: function(e) {
                 console.log(e.target);
+                //ottengo ricorsivamente la board dall'elemento target
                 const targetBoard = this.getBoard(e.target);
-                const card_id = e.dataTransfer.getData("card_id");
-                
+                const card_id = e.dataTransfer.getData("card_id"); // ottengo la card dall'evento
                 const card = document.getElementById(card_id);
 
                 card.style.display = "block";
-
+                //rimozione dei li vuoti
                 const elementiLista = targetBoard.querySelectorAll("li");
 
                 elementiLista.forEach(element => {
                     if(element.textContent === "") element.parentNode.removeChild(element);
                 });
-
+                //aggiungo la card alla board
                 targetBoard.appendChild(card);
             },
             
