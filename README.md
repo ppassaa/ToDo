@@ -1,6 +1,6 @@
 # ToDoList
 
-This template should help get you started developing with Vue 3 in Vite.
+todoList developed by @ppassaa @aosocram @Reyunityone for the internal automatic storage of Ambrosi SRL's company.
 
 ## Recommended IDE Setup
 
