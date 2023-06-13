@@ -18,7 +18,7 @@
         },
         methods: {
             drop: e => {
-                console.log("drop fired");
+                console.log(e.target);
                 const card_id = e.dataTransfer.getData("card_id");
                 
                 const card = document.getElementById(card_id);
