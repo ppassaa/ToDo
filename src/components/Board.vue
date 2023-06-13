@@ -17,22 +17,30 @@
             id: String,
         },
         methods: {
-            drop: e => {
+            getBoard: function(element) {
+                if(element.id === "board-1" || element.id === "board-2" || element.id === "board-3"){
+                    return element;
+                }
+                else return this.getBoard(element.parentNode);
+            },
+            drop: function(e) {
                 console.log(e.target);
+                const targetBoard = this.getBoard(e.target);
                 const card_id = e.dataTransfer.getData("card_id");
                 
                 const card = document.getElementById(card_id);
 
                 card.style.display = "block";
 
-                const elementiLista = e.target.querySelectorAll("li");
+                const elementiLista = targetBoard.querySelectorAll("li");
 
                 elementiLista.forEach(element => {
                     if(element.textContent === "") element.parentNode.removeChild(element);
                 });
 
-                e.target.appendChild(card);
+                targetBoard.appendChild(card);
             },
+            
         }
     }
 </script>
