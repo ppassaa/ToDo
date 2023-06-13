@@ -106,7 +106,7 @@
                   <button @click="rimuoviTask(t)" v-if="rimuoviBool" class="rimuoviBtn riduciMargineSx"></button>
                   <input class="checkbox riduciMargineSx" v-if="incorsoBool" type="checkbox" v-model="t.spostaincorso">
                   <p class="testoTask">{{ t.task }}</p>
-                  <p style="margin-left: 20px; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
+                  <p style="text-align: right; font-size: small; padding-right: 4%;">Scadenza: {{ t.dataScadenza }}</p>
                 </div>
               </Card>
             </li>
@@ -126,7 +126,7 @@
                   <input class="checkbox riduciMargineSx" v-if="completatiBool" type="checkbox" v-model="t.spostacompletati">
                   <input class="checkbox riduciMargineSx" v-if="dafareBool" type="checkbox" v-model="t.spostadafare">
                   <p class="testoTask" >{{ t.task }}</p>
-                  <label style="font-size: small;">Scadenza: {{ t.dataScadenza }}</label>
+                  <label style="font-size: small; text-align: right; padding-right: 10px;">Scadenza: {{ t.dataScadenza }}</label>
                 </div>
               </Card>
             </li>
@@ -194,7 +194,7 @@ export default {
   },
   components: {
     Board,
-    Card
+    Card,
   },
   filters: {
     toDate: function (value) {

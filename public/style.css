@@ -9,6 +9,17 @@
     cursor: pointer;
 }
 
+/* style bottoni Fatto */
+.fattoBtn {
+    background-color: #9B9A9A;
+    border-left: 2px solid #000;
+    border-bottom: 2px solid #000;
+    border-top: 2px solid #000;
+    height: 50px;
+    width: 70px;
+    margin-top: -1px;
+    max-width: 70px;
+}
 
 /* style task completate */
 .taskCompletate {
@@ -101,6 +112,12 @@ li {
     width: 100%;
 }
 
+/*li:before {
+    margin-left: 9px;
+    content: "\2022";
+    position: absolute; 
+}*/
+
 .riduciTop{
     margin-top: -20px;
 }
@@ -115,13 +132,30 @@ ul {
     border-bottom: 3px solid #424c57;
     margin-bottom: 10px;
     pointer-events: auto;
+    max-height: 100px;
+    min-height: 100px;
     z-index: 999;
 }
 
 /* testo delle task */
 .testoTask {
     max-width: 90%;
+    overflow-y: auto;
+    max-height: 45px;
+    min-height: 45px;
     margin-left: 20px;
+    text-align: center;
+    padding-right: 10px ;
+}
+p::-webkit-scrollbar {
+    background-color: #f1f1f1;
+    width: 5px;
+    z-index: 999;
+}
+
+p::-webkit-scrollbar-thumb {
+    background-color: #888;
+    z-index: 999;
 }
 
 /* cambia i margini */
@@ -215,6 +249,9 @@ body {
     word-wrap: break-word;
     word-break: break-all;
     overflow-y: auto;
+    padding-top: 10px;
+    margin-top: 10px;
+    margin-bottom: 4%;
     border-top: 3px solid #424c57;
     max-width: 100%;
     white-space: pre-wrap;
@@ -327,12 +364,12 @@ div::-webkit-scrollbar-thumb {
 }
 
 /* sezione in cui di vedono le date nella sezione in cui si vedono le informazioni di ogni task */
-.dataShow {
+.dataShow{
     border-top: 3px solid #A1A1A1;
 }
 
 /* textarea quando si modifica il testo con il pulsante modifica */
-.modificaTesto {
+.modificaTesto{
     width: 100%;
     min-height: 220px;
     max-height: 220px;
@@ -356,8 +393,18 @@ div::-webkit-scrollbar-thumb {
     text-align: center;
     color: white;
 }
+textarea::-webkit-scrollbar {
+    background-color: #f1f1f1;
+    width: 5px;
+    z-index: 999;
+}
 
-.spostainBtn { 
+textarea::-webkit-scrollbar-thumb {
+    background-color: #888;
+    z-index: 999;
+}
+
+.spostainBtn{ 
     width: 90%;
     height: 30px;
     margin-top: 5px;
