@@ -114,16 +114,12 @@ li {
 
 /*li:before {
     margin-left: 9px;
-<<<<<<< Updated upstream
-    position: absolute; /* Posizione assoluta per il pallino */
-=======
     content: "\2022";
     position: absolute; 
 }*/
 
 .riduciTop{
     margin-top: -20px;
->>>>>>> Stashed changes
 }
 
 ul {
@@ -387,10 +383,6 @@ div::-webkit-scrollbar-thumb {
     margin-top: 5px;
     margin-bottom: 5px;
     z-index: 999;
-<<<<<<< Updated upstream
-    background-color: #f1f1f1;
-}
-=======
     background-color: #1B9DD9;
 }
 .form{
@@ -425,4 +417,3 @@ div::-webkit-scrollbar-thumb {
     display: flex;
     z-index: 1001;
 }
->>>>>>> Stashed changes

@@ -100,7 +100,6 @@
     <div class="containerStati">
       <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
       <div class="containerTFS">
-<<<<<<< Updated upstream
         <Board id="board-1" style="height: 97%;">
             <!-- stampa delle task "DA FARE" -->
             <li v-for="(t, index) in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -114,24 +113,12 @@
               </Card>
             </li>
         </Board>
-=======
-        <ul>
-          <!-- stampa delle task "DA FARE" -->
-          <li v-for="t in dafareTasks" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask" @click="showTaskPuls(t)">
-              <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
-            </div>
-          </li>
-        </ul>
->>>>>>> Stashed changes
       </div>
     </div>
     <!-- sezione IN CORSO -->
     <div class="containerStatiCentrale">
       <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
       <div class="containerTFS">
-<<<<<<< Updated upstream
         <Board id="board-2" style="height: 97%;">
             <!-- stampa delle task "IN CORSO" -->
             <li v-for="(t, index) in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -146,17 +133,6 @@
               </Card>
             </li>
         </Board>
-=======
-        <ul>
-          <!-- stampa delle task "IN CORSO" -->
-          <li v-for="t in incorsoTasks" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask" @click="showTaskPuls(t)">
-              <p class="testoTask" >{{ t.task }}</p>
-              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
-            </div>
-          </li>
-        </ul>
->>>>>>> Stashed changes
       </div>
     </div>
     <!-- sezione COMPLETATI -->
@@ -169,7 +145,6 @@
         </div>
       </div>
       <div class="containerTFS">
-<<<<<<< Updated upstream
         <Board id="board-3" style="height: 97%;">
             <!-- stampa delle task "COMPLETATI" -->
             <li v-for="(t, index) in completatiTasks" class="taskStyle taskCompletate" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
@@ -181,31 +156,16 @@
               </Card>
             </li>
         </Board>
-=======
-        <ul>
-          <!-- stampa delle task "COMPLETATI" -->
-          <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
-            <div class="listaTask" @click="showTaskPuls(t)">
-              <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
-            </div>
-          </li>
-        </ul>
->>>>>>> Stashed changes
       </div>
     </div>
   </div>
 </template>
 <script>
 
-<<<<<<< Updated upstream
 import axios from 'axios'
 import Board from "./components/Board.vue"
 import Card from "./components/Card.vue"
-=======
-import axios from 'axios';
 
->>>>>>> Stashed changes
 export default {
   data() {
     return {
