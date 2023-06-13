@@ -152,8 +152,6 @@
 <script>
 
 import axios from 'axios'
-import Board from "./components/Board.vue"
-import Card from "./components/Card.vue"
 
 export default {
   data() {
@@ -184,9 +182,7 @@ export default {
       oggettodragdrop:''
     }
   },
-  components: {
-    Board,
-    Card,
+  components: { 
   },
   filters: {
     toDate: function (value) {
@@ -211,7 +207,7 @@ export default {
   beforeMount() {
     this.tasks = [];
     this.readTasks();
-    //this.sortTasks();
+    this.sortTasks();
     console.log(this.tasks);
   },
   methods: {
@@ -272,7 +268,6 @@ export default {
       this.incorsoBool = false;
       this.dafareBool = false;
       this.completatiBool = false;
-
     },
     /* azione di quando si clicca il pulsante Rimuovi */
     rimuoviPuls() {
@@ -291,7 +286,7 @@ export default {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
         this.taskText = '';
         this.scadenza = '';
-        //this.sortTasks()
+        this.sortTasks();
         this.notShowTaskPuls();
         this.writeTasks();
       }
@@ -301,7 +296,40 @@ export default {
       this.tasks = this.tasks.filter((t) => t !== this.oggetto)
       this.notShowTaskPuls();
       this.rimuoviBool = false;
-      //this.sortTasks()
+      this.sortTasks();
+      this.writeTasks();
+    },
+    /* sposta nella sezione "IN CORSO" tutte le task presenti nella sezione "DA FARE" con la checkbox spuntata e aggiorna il DB */
+    spostaincorsoFatto() {
+      const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
+      temp.dafare=false;
+      temp.incorso=true;
+      this.notShowTaskPuls();
+      this.sortTasks();
+      this.writeTasks();
+    },
+    /* sposta nella sezione "COMPLETATI" tutte le task presenti nella sezione "IN CORSO" con la checkbox spuntata e aggiorna il DB */
+    spostacompletatiFatto() {
+      const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
+      temp.incorso=false;
+      temp.completati=true;
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+      temp.dataFine = dataYYYYMMDD;
+      this.notShowTaskPuls()
+      this.sortTasks();
+      this.writeTasks();
+    },
+    /* sposta nella sezione "DA FARE" tutte le task presenti nella sezione "IN CORSO" con la checkbox spuntata e aggiorna il DB */
+    spostadafareFatto() {
+      const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
+      temp.incorso=false;
+      temp.dafare=true;
+      this.notShowTaskPuls()
+      this.sortTasks();
       this.writeTasks();
     },
     /* mostra la sezione che contiene le informazioni della task cliccata */
@@ -314,9 +342,6 @@ export default {
       this.taskTitleShow = "" + e.task;
       this.newContent = "" + e.task;
       this.taskCompletaShow = e.completati;
-      console.log(this.isScadenzaOggi(this.oggetto));
-      console.log(this.isNotScaduto(this.oggetto));
-      console.log(this.isScadutoCompletati(this.oggetto));
 
     },
     /* chiude la sezione che contiene le informazioni della task cliccata */
@@ -335,10 +360,6 @@ export default {
     modificaPuls() {
       this.modificaBool = true;
     },
-    /* salva il testo della task in cambiamento */
-    updateContent(event) {
-      console.log(this.newContent);
-    },
     /* salva le modifiche effettuate alla task */
     salvaPuls() {
       console.log(this.newContent);
@@ -351,11 +372,13 @@ export default {
         oggDiTasks.dataScadenza = this.scadenza;
         this.oggetto.dataScadenza = this.scadenza;
         modificaScadenza=true;
+        this.sortTasks();
         this.writeTasks();
       }
       if(this.scadenza == 0 || modificaScadenza){
         this.scadenza = "";
-        this.modificaBool = false;
+        this.modificaBool=false;
+        this.sortTasks();
         this.writeTasks();
       }
     },
@@ -406,7 +429,7 @@ export default {
     startDrag (event, task) {
       console.log(task)
       event.dataTransfer.dropEffect = 'move'
-      event.dataTransfer.dropEffect = 'move'
+      event.dataTransfer.effectAllowed = 'move'
       this.oggettodragdrop=task;
     },
     onDrop (event, dest) {
@@ -415,6 +438,7 @@ export default {
       if(this.oggettodragdrop.dafare == true && dest === "incorso"){
         task.incorso = true
         task.dafare = false
+        this.sortTasks();
         this.writeTasks();
       }
       if(this.oggettodragdrop.incorso == true && dest === "completati"){
@@ -426,14 +450,20 @@ export default {
         task.dataFine = dataYYYYMMDD;
         task.completati = true
         task.incorso = false
+        this.sortTasks();
         this.writeTasks();
       }
       if(this.oggettodragdrop.incorso == true && dest === "dafare"){
         task.incorso = false
         task.dafare = true
+        this.sortTasks();
         this.writeTasks();
       }
     }
   }
 }
 </script>
+
+<style>
+    @import '../node_modules/@fontsource/roboto/index.css';
+  </style>

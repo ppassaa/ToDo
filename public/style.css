@@ -445,3 +445,7 @@ textarea::-webkit-scrollbar-thumb {
     display: flex;
     z-index: 1001;
 }
+
+*{
+    font-family: "Roboto", sans-serif;
+}
