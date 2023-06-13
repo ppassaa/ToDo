@@ -270,19 +270,6 @@ export default {
       let risposta = await axios.request(config);
       this.tasks = JSON.parse(risposta.data.data.data).tasks;
     },
-    /* mostra la tendina */
-    tendina() {
-      this.tendinaShow = !this.tendinaShow;
-      this.fattoCompletati = false;
-      this.fattoIncorso = false;
-      this.fattoDafare = false;
-      this.aggiungiBool = false;
-      this.rimuoviBool = false;
-      this.incorsoBool = false;
-      this.dafareBool = false;
-      this.completatiBool = false;
-
-    },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
       this.aggiungiBool = !this.aggiungiBool;
@@ -306,43 +293,7 @@ export default {
       this.dafareBool = false;
       this.completatiBool = false;
     },
-    /* azione di quando si clicca il pulsante Sposta in "In corso" */
-    incorsoPuls() {
-      this.fattoIncorso = !this.fattoIncorso;
-      this.incorsoBool = !this.incorsoBool;
-      this.fattoCompletati = false;
-      this.fattoDafare = false;
-      this.aggiungiBool = false;
-      this.rimuoviBool = false;
-      this.completatiBool = false;
-      this.dafareBool = false;
-
-
-    },
-    /* azione di quando si clicca il pulsante Sposta in "Completati" */
-    completatiPuls() {
-      this.fattoCompletati = !this.fattoCompletati;
-      this.completatiBool = !this.completatiBool;
-      this.fattoIncorso = false;
-      this.incorsoBool = false;
-      this.fattoDafare = false;
-      this.aggiungiBool = false;
-      this.rimuoviBool = false;
-      this.dafareBool = false;
-    },
-    /* azione di quando si clicca il pulsante Sposta in "Da fare" */
-    dafarePuls() {
-      this.fattoDafare = !this.fattoDafare;
-      this.dafareBool = !this.dafareBool;
-      this.fattoIncorso = false;
-      this.incorsoBool = false;
-      this.fattoCompletati = false;
-      this.aggiungiBool = false;
-      this.rimuoviBool = false;
-      this.completatiBool = false;
-
-    },
-    /* aggiunge la task all'array e aggiorna il DB  */
+    /* aggiunge la task all'array e aggiorna il DB */
     aggiungiTask() {
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
@@ -359,36 +310,6 @@ export default {
       this.notShowTaskPuls();
       this.rimuoviBool = false;
       //this.sortTasks()
-      this.writeTasks();
-    },
-    /* sposta nella sezione "IN CORSO" tutte le task presenti nella sezione "DA FARE" con la checkbox spuntata e aggiorna il DB */
-    spostaincorsoFatto() {
-      const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
-      temp.dafare=false;
-      temp.incorso=true;
-      this.notShowTaskPuls();
-      this.writeTasks();
-    },
-    /* sposta nella sezione "COMPLETATI" tutte le task presenti nella sezione "IN CORSO" con la checkbox spuntata e aggiorna il DB */
-    spostacompletatiFatto() {
-      const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
-      temp.incorso=false;
-      temp.completati=true;
-      let oggi = new Date();
-      let anno = oggi.getFullYear();
-      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
-      let giorno = oggi.getDate().toString().padStart(2, '0');
-      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
-      temp.dataFine = dataYYYYMMDD;
-      this.notShowTaskPuls()
-      this.writeTasks();
-    },
-    /* sposta nella sezione "DA FARE" tutte le task presenti nella sezione "IN CORSO" con la checkbox spuntata e aggiorna il DB */
-    spostadafareFatto() {
-      const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
-      temp.incorso=false;
-      temp.dafare=true;
-      this.notShowTaskPuls()
       this.writeTasks();
     },
     /* mostra la sezione che contiene le informazioni della task cliccata */
