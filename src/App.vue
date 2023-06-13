@@ -186,7 +186,7 @@ export default {
   },
   components: {
     Board,
-    Card
+    Card,
   },
   filters: {
     toDate: function (value) {
