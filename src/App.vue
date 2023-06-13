@@ -105,7 +105,7 @@
           <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
             <div class="listaTask" @dblclick="showTaskPuls(t)">
               <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
+              <p style="margin-right: 4%; text-align: right; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
@@ -120,7 +120,7 @@
           <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
             <div class="listaTask" @dblclick="showTaskPuls(t)">
               <p class="testoTask" >{{ t.task }}</p>
-              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
+              <p style="margin-right: 4%; text-align: right; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
@@ -141,7 +141,7 @@
           <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
             <div class="listaTask" @dblclick="showTaskPuls(t)">
               <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-left: 20px;">Scadenza: {{ t.dataScadenza }}</p>
+              <p style="margin-right: 4%; text-align: right; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
