@@ -1,5 +1,6 @@
-/* bottone della tendina */
-.dropbtn {
+/* bottone aggiungi */
+.aggiungiBtn{
+    background-image: url("src/assets/aggiungi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -143,8 +144,6 @@ ul {
     max-height: 45px;
     min-height: 45px;
     margin-left: 20px;
-    text-align: center;
-    padding-right: 10px ;
 }
 p::-webkit-scrollbar {
     background-color: #f1f1f1;
