@@ -102,7 +102,7 @@
       <!-- sezione DA FARE -->
       <div class="containerStati">
         <div style="display: flex; align-items: center;">
-          <div style="margin-right: auto; margin-left: 10px;">
+          <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
           </div>
           <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">

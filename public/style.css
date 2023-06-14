@@ -301,7 +301,7 @@ div::-webkit-scrollbar-thumb {
 /* sezione che contiene in bottoni nella sezione in cui si vedono le informazioni di ogni task */
 .showButton{
     display: flex;
-    justify-content: center;
+    justify-content: end;
     padding: 10px;
 }
 
