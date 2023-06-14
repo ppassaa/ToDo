@@ -23,11 +23,6 @@
         </div>
         <!-- sezione nella quale si visualizzano le date -->
         <div class="dataShow">
-          <!--<div v-if="(oggetto.dafare || oggetto.incorso) && !modificaBool" style="border-bottom: 3px solid #A1A1A1">
-            <button v-if="oggetto.dafare" class="spostainBtn" @click="spostaincorsoFatto()">Sposta in "IN CORSO"</button>
-            <button v-if="oggetto.incorso" class="spostainBtn" @click="spostacompletatiFatto()">Sposta in "COMPLETATI"</button>
-            <button v-if="oggetto.incorso" class="spostainBtn" @click="spostadafareFatto()">Sposta in "DA FARE"</button>
-          </div>-->
           <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
           </div>
           <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 

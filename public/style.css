@@ -9,18 +9,6 @@
     cursor: pointer;
 }
 
-/* style bottoni Fatto */
-.fattoBtn {
-    background-color: #9B9A9A;
-    border-left: 2px solid #000;
-    border-bottom: 2px solid #000;
-    border-top: 2px solid #000;
-    height: 50px;
-    width: 70px;
-    margin-top: -1px;
-    max-width: 70px;
-}
-
 /* style task completate */
 .taskCompletate {
     list-style: none;
@@ -112,12 +100,6 @@ li {
     width: 100%;
 }
 
-/*li:before {
-    margin-left: 9px;
-    content: "\2022";
-    position: absolute; 
-}*/
-
 .riduciTop{
     margin-top: -20px;
 }
@@ -139,6 +121,7 @@ ul {
 
 /* testo delle task */
 .testoTask {
+    text-align: center;
     max-width: 90%;
     overflow-y: auto;
     margin-right: 4%;
@@ -147,6 +130,8 @@ ul {
     min-height: 45px;
     text-align: center;
     margin-left: 20px;
+    padding-right: 10px;
+    margin-right: 4%;
 }
 p::-webkit-scrollbar {
     background-color: #f1f1f1;
@@ -490,6 +475,6 @@ textarea::-webkit-scrollbar-thumb {
     pointer-events: auto; /* Abilita gli eventi del mouse sullo sfondo */
   }
 
-*{
+* {
     font-family: "Roboto", sans-serif;
 }
