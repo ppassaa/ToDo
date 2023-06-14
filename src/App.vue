@@ -67,6 +67,16 @@
     </form>
   </div>
 
+  <div v-if="showInfo" class="popup-overlay">
+    <div class="informazioni" style="height: 70%; width: 70%;">
+      <div style="padding: 4px;">
+        <h1 style="color:white">Informazioni</h1>
+      </div>
+      <div style="color:white; padding: 4px;">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corporis modi odit reprehenderit repudiandae similique et voluptatibus assumenda aliquam sequi. Repellendus iusto aliquam magnam ipsam doloribus illum nesciunt, optio dolorem.
+      </div>
+    </div>
+  </div>
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool">
         <!-- sezione sinistra(testo della task) -->
@@ -177,6 +187,7 @@ export default {
       newContent: "",
       oggettodragdrop:'',
       mostraBottone: false,
+      showInfo: true,
     }
   },
   filters: {
