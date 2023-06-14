@@ -68,7 +68,7 @@
   </div>
   <!-- sezione informazioni -->
   <div v-if="showInfo" class="popup-overlay">
-    <div class="informazioni" style="height: 70%; width: 70%;">
+    <div class="informazioni" style="height: 80%; width: 70%;">
       <div style="display: flex; align-items: center; padding: 10px;">
           <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
             <h1 style="color:white;margin-right: -40px;">Informazioni</h1> 
@@ -82,22 +82,29 @@
           <li>
             <b>Aggiungere una task</b> <br>
             Per aggiungere una task premere il pulsante in alto a destra:
-            <br><img style="width: 100%" src="src\assets\img1.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img1.PNG"><br><br>
             Nel riquadro sinistro andrà inserita la nostra task e nel riquadro destro la data di scadenza. Sono entrambi dei campi obbligatori
-            <br><img style="width: 100%" src="src\assets\img2.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img2.PNG"><br><br>
             In questo caso, come task è stata inserita "task1" e come data di scadenza il 15/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
-            <br><img style="width: 100%" src="src\assets\img3.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img3.PNG"><br><br>
             Dopo aver premuto il pulsante aggiungi la lista sarà così:
-            <br><img style="width: 100%" src="src\assets\img4.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img4.PNG"><br><br>
           </li>
           <li>
             <b>Visualizzare le informazioni di una task</b> <br>
-            Per visualizzare le informazioni di una task basterà effettuare un doppio tocco sulla task desiderata, in questo caso task1.
-            <br><img style="width: 100%" src="src\assets\img5.PNG"><br><br>
+            Per visualizzare le informazioni di una task basterà effettuare un doppio tocco sulla task desiderata, in questo caso task1. Nel riquadro sinistro è visualizzata la task, nel riquadro destro è visualizzata la data di creazione e la data di scadenza. Inoltre è possibile modificare la nota ed eliminarla.
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img5.PNG"><br><br>
+          </li>
+          <li>
+            <b>Modificare una task</b> <br>
+            Per modificare le informazioni di una task premere sul tasto modifica. E' possibile modificare il testo della task e la data di scadenza.
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img6.PNG"><br><br>
+            In questo caso è stato aggiunto il testo "modificata" a "task1" e modificata la data inserendo 16/062023. Successivamente è stato premuto il pulsante Salva. 
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img7.PNG"><br><br>
+            Dopo che è stato premuto Salva, le informazioni saranno cambiate.
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img8.PNG"><br><br>
           </li>
         </ol>
-        
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corporis modi odit reprehenderit repudiandae similique et voluptatibus assumenda aliquam sequi. Repellendus iusto aliquam magnam ipsam doloribus illum nesciunt, optio dolorem.
       </div>
     </div>
   </div>
