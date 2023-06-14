@@ -117,7 +117,7 @@ ul {
     border-bottom: 3px solid #424c57;
     margin-bottom: 10px;
     pointer-events: auto;
-    max-height: 100px;
+    max-height: 110px;
     min-height: 100px;
     z-index: 999;
 }

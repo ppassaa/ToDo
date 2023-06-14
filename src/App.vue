@@ -143,8 +143,8 @@
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
-                <p class="testoTask"><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task + " " + t.nome + " " + t.cognome }}</p>
-                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+                <p class="testoTask"><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task}}</p>
+                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}<br>{{ `${t.nome} ${t.cognome}` }}</p>
               </div>
             </li>
           </ul>
@@ -159,7 +159,7 @@
             <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask" ><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task }}</p>
-                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}<br>{{ `${t.nome} ${t.cognome}` }}</p>
               </div>
             </li>
           </ul>
