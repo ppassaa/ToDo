@@ -1,52 +1,42 @@
 <template>
   <!-- sezione di visualizzazione delle task -->
-  <div class="showTsk" v-if="showTask">
-    <!-- sezione sinistra(testo della task) -->
-    <div class="sxShow">
-      <div class="showTitle">
-        <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
-      </div>
-    </div>
-    <!-- sezione destra(pulsanti X e modifica e date) -->
-    <div class="dxShow">
-      <div class="showButton">
-        <!-- sezione alta(pulsanti X e modifica) -->
-        <div>
-          <button @click="rimuoviPuls()" class="modifica">Rimuovi</button>
-          <button v-if="modificaBool && !taskCompletaShow" @click="salvaPuls()" class="modifica">Salva</button>
-          <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica">Modifica</button>
-        </div>
-        <div>
-          <button @click="notShowTaskPuls()" class="esciShowTsk"></button>
+  <div class="popup-overlay" v-if="showTask">
+    <div class="showTsk" v-if="showTask">
+      <!-- sezione sinistra(testo della task) -->
+      <div class="sxShow">
+        <div class="showTitle">
+          <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
         </div>
       </div>
-      <!-- sezione nella quale si visualizzano le date -->
-      <div class="dataShow">
-        <div>
-          aaaaaaaaaaaaaaaaaaaaaaaaa
+      <!-- sezione destra(pulsanti X e modifica e date) -->
+      <div class="dxShow">
+        <div class="showButton">
+          <!-- sezione alta(pulsanti X e modifica) -->
+          <div>
+            <button @click="rimuoviPuls()" class="modifica" :disabled="rimuoviBool">Rimuovi</button>
+            <button v-if="modificaBool && !taskCompletaShow" @click="salvaPuls()" class="modifica">Salva</button>
+            <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool">Modifica</button>
+          </div>
+          <div>
+            <button @click="notShowTaskPuls()" class="esciShowTsk" :disabled="rimuoviBool"></button>
+          </div>
         </div>
-        <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
-        </div>
-        <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
-          <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
-          <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
-        </div>
-        <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
+        <!-- sezione nella quale si visualizzano le date -->
+        <div class="dataShow">
+          <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
+          </div>
+          <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
+            <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
+            <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
+          </div>
+          <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <div class="informazioni" v-if="showInfo">
-    <div style="padding: 4px;">
-      <h1 style="color:white">Informazioni d'uso</h1>
-    </div>
-    <div style="margin-top: 10px;">
-      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam, aliquid fuga iste tempora consequuntur dolorem iure culpa aut distinctio natus rem repellat, nisi alias suscipit, laborum impedit magni earum ratione.
-    </div>
-  </div>
-  
   <!-- sezione aggiungi task -->
+  <div class="popup-overlay" v-if="aggiungiBool">
     <form v-if="aggiungiBool">
       <div class="showTsk">
         <!-- sezione sinistra(testo della task) -->
@@ -75,32 +65,23 @@
         </div>
       </div>
     </form>
+  </div>
 
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool">
         <!-- sezione sinistra(testo della task) -->
-        <div style="width: 100%">
-          <div class="showTitle" style="margin-top: 50px;font-size: 25px;">
-            Conferma di <br> rimozione della <br> task
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
+            Conferma di rimozione della task
           </div>
-        </div>
         <!-- sezione destra(pulsanti X) -->
-        <div class="dxShow">
           <div class="showButton">
             <!-- sezione alta(pulsanti X) -->
             <div>
-              <button @click="rimuoviPuls()" class="esciShowTsk"></button>
+              <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls()">Annulla</button>
             </div>
-          </div>
-          <!-- sezione nella quale si visualizzano le date -->
-          <div class="dataShow" style="padding-top: 50px;">
-            <div>
-              <button style="margin-top: 15px;width: 90px;height: 30px;z-index: 1001;background-color: #1B9DD9;" @click="rimuoviTask()">Rimuovi</button>
-            </div>
-          </div>
         </div>
       </div>
-
   <!-- contenitore di tutte le task e dei loro stati -->
     <div class="taskContainer">
       <!-- sezione DA FARE -->
@@ -195,7 +176,7 @@ export default {
       oggetto: '',
       newContent: "",
       oggettodragdrop:'',
-      showInfo: false,
+      mostraBottone: false,
     }
   },
   filters: {
@@ -333,7 +314,8 @@ export default {
       let giorno = oggi.getDate().toString().padStart(2, '0');
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
       temp.dataFine = dataYYYYMMDD;
-      this.notShowTaskPuls()
+      this.showRimButton();
+      this.notShowTaskPuls();
       this.sortTasks();
       this.writeTasks();
     },
@@ -473,6 +455,9 @@ export default {
         this.sortTasks();
         this.writeTasks();
       }
+    },
+    showRimButton() {
+      this.mostraBottone = true;
     }
   }
 }
