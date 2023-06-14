@@ -148,7 +148,7 @@
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome} ${t.dafare}` }}</p>
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
                   </div>
                 </div>
               </div>
@@ -263,17 +263,17 @@ export default {
   computed: {
     /* restituisce le task "DA FARE" */
     dafareTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id === this.operatoreId));
+      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id == this.operatoreId));
       else return this.tasks.filter((t) => t.dafare)
     },
     /* restituisce le task "IN CORSO" */
     incorsoTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id === this.operatoreId));
+      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id == this.operatoreId));
       else return this.tasks.filter((t) => t.incorso)
     },
     /* restituisce le task "COMPLETATI" */
     completatiTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.completati && t.id === this.operatoreId));
+      if(this.taskUtente) return this.tasks.filter((t) => (t.completati && t.id == this.operatoreId));
       else return this.tasks.filter((t) => t.completati)
     },
     /* restituisce le task con l'ID dell'utente, sezione "Da fare" */
