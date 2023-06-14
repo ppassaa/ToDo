@@ -132,7 +132,6 @@
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
             <button @click="confermaSelezione()" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
             <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
-            
           </div>
           <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
             <span style="margin-right: 90px;">DA FARE</span>
@@ -146,7 +145,7 @@
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
                   <div style="flex-grow: 1;">
-                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" name="" id="" @change="check(t)" v-if="showCheckbox">
+                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
                     <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }}</p>
@@ -166,7 +165,14 @@
             <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask" >{{ t.task }}</p>
-                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+                <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
+                  <div style="flex-grow: 1;">
+                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox">
+                  </div>
+                  <div style="width: 70%;margin-right: 10px;text-align: right;">
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }}</p>
+                  </div>
+                </div>
               </div>
             </li>
           </ul>
@@ -186,8 +192,15 @@
             <!-- stampa delle task "COMPLETATI" -->
             <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
-                <p class="testoTask"><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task }}</p>
-                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+                <p class="testoTask">{{ t.task }}</p>
+                <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
+                  <div style="flex-grow: 1;">
+                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox">
+                  </div>
+                  <div style="width: 70%;margin-right: 10px;text-align: right;">
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }}</p>
+                  </div>
+                </div>
               </div>
             </li>
           </ul>
@@ -317,6 +330,7 @@ export default {
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
       this.aggiungiBool = !this.aggiungiBool;
+      this.showCheckbox = false;
       this.fattoIncorso = false;
       this.fattoCompletati = false;
       this.fattoDafare = false;
@@ -339,7 +353,7 @@ export default {
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
-        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId })
+        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId })
         this.taskText = '';
         this.scadenza = '';
         this.sortTasks();
@@ -392,6 +406,7 @@ export default {
     /* mostra la sezione che contiene le informazioni della task cliccata */
     showTaskPuls(e) {
       this.showTask = true;
+      this.showCheckbox = false;
       this.oggetto = e;
       this.taskDataCreazioneShow = "" + e.dataCreazione;
       this.taskDataScadenzaShow = "" + e.dataScadenza;
@@ -520,19 +535,13 @@ export default {
     showRimButton() {
       this.mostraBottone = true;
     },
-    attivaSelezione(e){
+    attivaSelezione(){
       this.showCheckbox = true;
     },
-    check(t){
-      if(this.taskSelezionate.includes(t)){
-        this.taskSelezionate = this.taskSelezionate.filter(task => task!=t);
-      }
-      else{
-        this.taskSelezionate.push(t);
-      }
-    },
     confermaSelezione(){
-      this.showCheckbox = !this.showCheckbox; this.tasks = this.tasks.filter((task) => !this.taskSelezionate.includes(task)); this.writeTasks()
+      this.showCheckbox = !this.showCheckbox; 
+      this.tasks = this.tasks.filter((t) => t.selezionatoDel == false)
+      this.writeTasks()
     }
   }
 }

@@ -119,7 +119,12 @@ ul {
     pointer-events: auto;
     max-height: 100px;
     min-height: 100px;
-    z-index: 999;
+}
+.zindexAlto{
+    z-index: 9999;
+}
+.zindexBasso{
+    z-index: -999;
 }
 
 /* testo delle task */
