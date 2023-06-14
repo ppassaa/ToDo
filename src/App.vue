@@ -230,7 +230,15 @@ export default {
       showInfo: false,
       showCheckbox: false,
       taskSelezionate: [],
+      operatoreId: sessionStorage.getItem("operatorID"),
+      operatoreNome: sessionStorage.getItem("operatorName"),
+      operatoreCognome: sessionStorage.getItem("operatorSurname"),
     }
+  },
+  mounted(){
+    sessionStorage.setItem("operatorID", 104);
+    sessionStorage.setItem("operatorName", "Silvio");
+    sessionStorage.setItem("operatorSurname", "Berlusconi");
   },
   filters: {
     toDate: function (value) {
@@ -280,7 +288,7 @@ export default {
 
       axios.request(config)
         .then((response) => {
-          console.log(JSON.stringify(response.data));
+          // console.log(JSON.stringify(response.data));
         })
         .catch((error) => {
           console.log(error);
@@ -331,7 +339,7 @@ export default {
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
-        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
+        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId })
         this.taskText = '';
         this.scadenza = '';
         this.sortTasks();
