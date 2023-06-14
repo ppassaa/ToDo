@@ -140,7 +140,7 @@
         <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "DA FARE" -->
-            <li v-if="!taskUtente" draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
@@ -148,20 +148,7 @@
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li v-if="taskUtente" draggable="true" v-for="t in dafareTasksUtente" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-              <div class="listaTask" @dblclick="showTaskPuls(t)">
-                <p class="testoTask">{{ t.task }}</p>
-                <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
-                  <div style="flex-grow: 1;">
-                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox">
-                  </div>
-                  <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome} ${t.dafare}` }}</p>
                   </div>
                 </div>
               </div>
@@ -276,20 +263,20 @@ export default {
   computed: {
     /* restituisce le task "DA FARE" */
     dafareTasks() {
-      return this.tasks.filter((t) => t.dafare)
+      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id === this.operatoreId));
+      else return this.tasks.filter((t) => t.dafare)
     },
     /* restituisce le task "IN CORSO" */
     incorsoTasks() {
-      return this.tasks.filter((t) => t.incorso)
+      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id === this.operatoreId));
+      else return this.tasks.filter((t) => t.incorso)
     },
     /* restituisce le task "COMPLETATI" */
     completatiTasks() {
-      return this.tasks.filter((t) => t.completati)
+      if(this.taskUtente) return this.tasks.filter((t) => (t.completati && t.id === this.operatoreId));
+      else return this.tasks.filter((t) => t.completati)
     },
     /* restituisce le task con l'ID dell'utente, sezione "Da fare" */
-    dafareTasksUtente(){
-      return this.tasks.filter((t) => t.dafare && t.id == this.operatoreId)
-    }
 
   },
   beforeMount() {
