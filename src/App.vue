@@ -76,7 +76,7 @@
           <div style="margin-left: auto;margin-right: 10px;">
             <button @click="showInfo = !showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
           </div>
-        </div>
+      </div>
       <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
         <ol>
           <li>
@@ -127,10 +127,10 @@
     <div class="taskContainer">
       <!-- sezione DA FARE -->
       <div class="containerStati">
-        <div style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center;margin-bottom: -1px;">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="confermaSelezione" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button @click="confermaSelezione()" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
             <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
             
           </div>
@@ -145,6 +145,15 @@
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask"><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task}}</p>
                 <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}<br>{{ `${t.nome} ${t.cognome}` }}</p>
+                <p class="testoTask">{{ t.task }}</p>
+                <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
+                  <div style="flex-grow: 1;">
+                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" name="" id="" @change="check(t)" v-if="showCheckbox">
+                  </div>
+                  <div style="width: 70%;margin-right: 10px;text-align: right;">
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }}</p>
+                  </div>
+                </div>
               </div>
             </li>
           </ul>
@@ -160,6 +169,8 @@
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask" ><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task }}</p>
                 <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}<br>{{ `${t.nome} ${t.cognome}` }}</p>
+                <p class="testoTask" >{{ t.task }}</p>
+                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
               </div>
             </li>
           </ul>
@@ -169,7 +180,7 @@
       <div class="containerStati">
         <div class="contenitore">
           <div style="width: 63%; text-align: right;">COMPLETATI</div>
-          <div style="margin-left:auto;margin-right: 10px">
+          <div style="margin-left:auto;margin-right: 10px;margin-bottom: -1px;">
             <!-- bottone per aggiungere una nota -->
               <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
           </div>
@@ -513,10 +524,10 @@ export default {
     showRimButton() {
       this.mostraBottone = true;
     },
-    attivaSelezione: function(e){
+    attivaSelezione(e){
       this.showCheckbox = true;
     },
-    check: function(t){
+    check(t){
       if(this.taskSelezionate.includes(t)){
         this.taskSelezionate = this.taskSelezionate.filter(task => task!=t);
       }
@@ -524,7 +535,7 @@ export default {
         this.taskSelezionate.push(t);
       }
     },
-    confermaSelezione: function(){
+    confermaSelezione(){
       this.showCheckbox = !this.showCheckbox; this.tasks = this.tasks.filter((task) => !this.taskSelezionate.includes(task)); this.writeTasks()
     }
   }
