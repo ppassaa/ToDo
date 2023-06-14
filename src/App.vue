@@ -185,8 +185,8 @@
           <div style="width: 63%; text-align: right;">COMPLETATI</div>
           <div style="margin-left:auto;margin-right: 10px;margin-bottom: -1px;">
             <!-- bottone per aggiungere una nota -->
-            <button @click="taskUtente = !taskUtente" style="margin-top: 3px;" class="togglePubblico" v-if="taskUtente"></button>
-            <button @click="taskUtente = !taskUtente" style="margin-top: 3px;" class="toggleUtente" v-else></button>
+            <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
+            <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="toggleUtente" v-else></button>
             <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
           </div>
         </div>
