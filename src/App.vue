@@ -176,7 +176,8 @@ export default {
       todayStr: new Date().toISOString().split('T')[0],
       oggetto: '',
       newContent: "",
-      oggettodragdrop:''
+      oggettodragdrop:'',
+      mostraBottone: false,
     }
   },
   filters: {
@@ -314,7 +315,8 @@ export default {
       let giorno = oggi.getDate().toString().padStart(2, '0');
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
       temp.dataFine = dataYYYYMMDD;
-      this.notShowTaskPuls()
+      this.showRimButton();
+      this.notShowTaskPuls();
       this.sortTasks();
       this.writeTasks();
     },
@@ -454,6 +456,9 @@ export default {
         this.sortTasks();
         this.writeTasks();
       }
+    },
+    showRimButton() {
+      this.mostraBottone = true;
     }
   }
 }
