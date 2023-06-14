@@ -223,15 +223,15 @@ export default {
       showInfo: false,
       showCheckbox: false,
       taskSelezionate: [],
-      operatoreId: sessionStorage.getItem("operatore_id"),
-      operatoreNome: sessionStorage.getItem("operatore_nome"),
-      operatoreCognome: sessionStorage.getItem("operatore_cognome"),
+      operatoreId: sessionStorage.getItem("operatorID"),
+      operatoreNome: sessionStorage.getItem("operatorName"),
+      operatoreCognome: sessionStorage.getItem("operatorSurname"),
     }
   },
   mounted(){
-    sessionStorage.setItem("operatore_id", 104);
-    sessionStorage.setItem("operatore_nome", "Silvio");
-    sessionStorage.setItem("operatore_cognome", "Berlusconi");
+    sessionStorage.setItem("operatorID", 104);
+    sessionStorage.setItem("operatorName", "Silvio");
+    sessionStorage.setItem("operatorSurname", "Berlusconi");
   },
   filters: {
     toDate: function (value) {
