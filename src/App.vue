@@ -77,7 +77,7 @@
             <button @click="showInfo = !showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
           </div>
         </div>
-      <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto;">
+      <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
         <ol>
           <li>
             <b>Aggiungere una task</b> <br>
@@ -87,8 +87,13 @@
             <br><img style="width: 100%" src="src\assets\img2.PNG"><br><br>
             In questo caso, come task è stata inserita "task1" e come data di scadenza il 15/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
             <br><img style="width: 100%" src="src\assets\img3.PNG"><br><br>
-            Dopo aver premuto il pulsante aggiungi la nostra lista sarà così:
+            Dopo aver premuto il pulsante aggiungi la lista sarà così:
             <br><img style="width: 100%" src="src\assets\img4.PNG"><br><br>
+          </li>
+          <li>
+            <b>Visualizzare le informazioni di una task</b> <br>
+            Per visualizzare le informazioni di una task basterà effettuare un doppio tocco sulla task desiderata, in questo caso task1.
+            <br><img style="width: 100%" src="src\assets\img5.PNG"><br><br>
           </li>
         </ol>
         
