@@ -265,12 +265,12 @@ export default {
   computed: {
     /* restituisce le task "DA FARE" */
     dafareTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id == this.operatoreId && t.privata));
+      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id == this.operatoreId));
       else return this.tasks.filter((t) => (t.dafare && !t.privata))
     },
     /* restituisce le task "IN CORSO" */
     incorsoTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id == this.operatoreId && t.privata));
+      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id == this.operatoreId));
       else return this.tasks.filter((t) => (t.incorso && !t.privata))
     },
     /* restituisce le task "COMPLETATI" */

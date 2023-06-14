@@ -548,7 +548,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .toggleUtente{
-    background-image: url("src/assets/aggiungi.PNG"); /*cambiare l'immagine qui*/
+    background-image: url("src/assets/sbloccato.PNG"); /*cambiare l'immagine qui*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -558,7 +558,7 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .togglePubblico{
-    background-image: url("src/assets/info.PNG"); /*cambiare l'immagine qui*/
+    background-image: url("src/assets/bloccato.PNG"); /*cambiare l'immagine qui*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
