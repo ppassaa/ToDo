@@ -130,9 +130,12 @@
         <div style="display: flex; align-items: center;">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
+            <button @click="confermaSelezione" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
+            
           </div>
           <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
-            <span style="margin-right: 30px;">DA FARE</span>
+            <span style="margin-right: 90px;">DA FARE</span>
           </div>
         </div>
         <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
@@ -140,14 +143,14 @@
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
-                <p class="testoTask">{{ t.task }}</p>
+                <p class="testoTask"><input type="checkbox" name="" id="" @change="check(t)" v-if="showCheckbox">{{ t.task }}</p>
                 <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
               </div>
             </li>
           </ul>
         </div>
       </div>
-      <!-- sezione IN CORSO -->
+      <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
         <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
         <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
@@ -218,6 +221,8 @@ export default {
       oggettodragdrop:'',
       mostraBottone: false,
       showInfo: false,
+      showCheckbox: false,
+      taskSelezionate: [],
     }
   },
   filters: {
@@ -499,6 +504,20 @@ export default {
     },
     showRimButton() {
       this.mostraBottone = true;
+    },
+    attivaSelezione: function(e){
+      this.showCheckbox = true;
+    },
+    check: function(t){
+      if(this.taskSelezionate.includes(t)){
+        this.taskSelezionate = this.taskSelezionate.filter(task => task!=t);
+      }
+      else{
+        this.taskSelezionate.push(t);
+      }
+    },
+    confermaSelezione: function(){
+      this.showCheckbox = !this.showCheckbox; this.tasks = this.tasks.filter((task) => !this.taskSelezionate.includes(task)); this.writeTasks()
     }
   }
 }
