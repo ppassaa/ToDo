@@ -546,3 +546,23 @@ textarea::-webkit-scrollbar-thumb {
     height: 30px;
     cursor: pointer;
 }
+
+.toggleUtente{
+    background-image: url("src/assets/aggiungi.PNG"); /*cambiare l'immagine qui*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.togglePubblico{
+    background-image: url("src/assets/info.PNG"); /*cambiare l'immagine qui*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
