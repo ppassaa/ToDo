@@ -528,3 +528,13 @@ textarea::-webkit-scrollbar-thumb {
     height: 30px;
     cursor: pointer;
 }
+
+.confermaBtn{
+    background-image: url("src/assets/conferma.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}

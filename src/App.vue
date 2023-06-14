@@ -104,7 +104,7 @@
         <div style="display: flex; align-items: center;">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="confermaSelezione" style="margin-top: 3px; margin-left: 4px;" class="infoBtn" v-if="showCheckbox"></button>
+            <button @click="confermaSelezione" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
             <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
             
           </div>
