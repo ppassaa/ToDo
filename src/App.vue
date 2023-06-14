@@ -292,9 +292,7 @@ export default {
     /* scrive nel DB */
     async waitForTask(){
       while(true){
-        await new Promise((resolve, reject)=>{
-          setTimeout(resolve(), 2000);
-        });
+        await new Promise(resolve => setTimeout(resolve, 2000));
         this.readTasks();
       }
     }, 
