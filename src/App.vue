@@ -68,7 +68,7 @@
   </div>
   <!-- sezione informazioni -->
   <div v-if="showInfo" class="popup-overlay">
-    <div class="informazioni" style="height: 80%; width: 70%;">
+    <div class="informazioni" style="height: 80%; width: 70%; max-width: 500px;">
       <div style="display: flex; align-items: center; padding: 10px;">
           <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
             <h1 style="color:white;margin-right: -40px;">Informazioni</h1> 
