@@ -118,7 +118,7 @@ ul {
     margin-bottom: 10px;
     pointer-events: auto;
     max-height: 110px;
-    min-height: 100px;
+    min-height: 110px;
 }
 .zindexAlto{
     z-index: 9999;
