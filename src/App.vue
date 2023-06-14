@@ -23,7 +23,6 @@
       <!-- sezione nella quale si visualizzano le date -->
       <div class="dataShow">
         <div>
-          aaaaaaaaaaaaaaaaaaaaaaaaa
         </div>
         <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
         </div>

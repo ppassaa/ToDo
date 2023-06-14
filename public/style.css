@@ -9,18 +9,6 @@
     cursor: pointer;
 }
 
-/* style bottoni Fatto */
-.fattoBtn {
-    background-color: #9B9A9A;
-    border-left: 2px solid #000;
-    border-bottom: 2px solid #000;
-    border-top: 2px solid #000;
-    height: 50px;
-    width: 70px;
-    margin-top: -1px;
-    max-width: 70px;
-}
-
 /* style task completate */
 .taskCompletate {
     list-style: none;
@@ -111,12 +99,6 @@ li {
     list-style-type: none;
     width: 100%;
 }
-
-/*li:before {
-    margin-left: 9px;
-    content: "\2022";
-    position: absolute; 
-}*/
 
 .riduciTop{
     margin-top: -20px;
@@ -449,6 +431,6 @@ textarea::-webkit-scrollbar-thumb {
     z-index: 1001;
 }
 
-*{
+* {
     font-family: "Roboto", sans-serif;
 }
