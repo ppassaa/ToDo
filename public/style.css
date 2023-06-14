@@ -206,7 +206,7 @@ body {
 /* container di ogni stato */
 .containerStati {
     width: 100%;
-    margin-top: 2%;
+    margin-top: 10px;
     text-align: center;
     max-height: 90%;
     color: white;
@@ -216,8 +216,8 @@ body {
 
 /* container dello stato centrale(aggiunta dei bordi laterali) */
 .containerStatiCentrale {
+    margin-top: 10px;
     width: 100%;
-    margin-top: 2%;
     text-align: center;
     border-left: 3px solid #424c57;
     border-right: 3px solid #424c57;
