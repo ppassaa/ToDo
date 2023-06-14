@@ -187,7 +187,7 @@ export default {
       newContent: "",
       oggettodragdrop:'',
       mostraBottone: false,
-      showInfo: true,
+      showInfo: false,
     }
   },
   filters: {
