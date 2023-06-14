@@ -77,7 +77,21 @@
             <button @click="showInfo = !showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
           </div>
         </div>
-      <div style="color:white; padding: 10px;">
+      <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto;">
+        <ol>
+          <li>
+            <b>Aggiungere una task</b> <br>
+            Per aggiungere una task premere il pulsante in alto a destra:
+            <br><img style="width: 100%" src="src\assets\img1.PNG"><br><br>
+            Nel riquadro sinistro andrà inserita la nostra task e nel riquadro destro la data di scadenza. Sono entrambi dei campi obbligatori
+            <br><img style="width: 100%" src="src\assets\img2.PNG"><br><br>
+            In questo caso, come task è stata inserita "task1" e come data di scadenza il 15/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
+            <br><img style="width: 100%" src="src\assets\img3.PNG"><br><br>
+            Dopo aver premuto il pulsante aggiungi la nostra lista sarà così:
+            <br><img style="width: 100%" src="src\assets\img4.PNG"><br><br>
+          </li>
+        </ol>
+        
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corporis modi odit reprehenderit repudiandae similique et voluptatibus assumenda aliquam sequi. Repellendus iusto aliquam magnam ipsam doloribus illum nesciunt, optio dolorem.
       </div>
     </div>

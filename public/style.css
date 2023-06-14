@@ -95,9 +95,12 @@
 }
 
 /* style delle task */
-li {
+.containerTFS li {
     list-style-type: none;
     width: 100%;
+}
+ol {
+    padding-right: 20px;
 }
 
 .riduciTop{
