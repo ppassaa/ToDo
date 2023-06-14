@@ -452,3 +452,30 @@ textarea::-webkit-scrollbar-thumb {
 *{
     font-family: "Roboto", sans-serif;
 }
+
+.informazioni{
+    height: 70%;
+    width: 70%;
+    border:3px solid #A1A1A1;
+    color: white;
+    background-color: #424C57;
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    z-index: 1001;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.infoBtn{
+    background-image: url("src/assets/info.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}

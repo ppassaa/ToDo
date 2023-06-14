@@ -36,6 +36,15 @@
       </div>
     </div>
   </div>
+
+  <div class="informazioni" v-if="showInfo">
+    <div style="padding: 4px;">
+      <h1 style="color:white">Informazioni d'uso</h1>
+    </div>
+    <div style="margin-top: 10px;">
+      Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quam, aliquid fuga iste tempora consequuntur dolorem iure culpa aut distinctio natus rem repellat, nisi alias suscipit, laborum impedit magni earum ratione.
+    </div>
+  </div>
   
   <!-- sezione aggiungi task -->
     <form v-if="aggiungiBool">
@@ -93,59 +102,67 @@
       </div>
 
   <!-- contenitore di tutte le task e dei loro stati -->
-  <div class="taskContainer">
-    <!-- sezione DA FARE -->
-    <div class="containerStati">
-      <div style="height: 30.25px;margin-top: 6px;">DA FARE</div>
-      <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
-        <ul>
-          <!-- stampa delle task "DA FARE" -->
-          <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask" @dblclick="showTaskPuls(t)">
-              <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- sezione IN CORSO -->
-    <div class="containerStatiCentrale">
-      <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
-      <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
-        <ul>
-          <!-- stampa delle task "IN CORSO" -->
-          <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-            <div class="listaTask" @dblclick="showTaskPuls(t)">
-              <p class="testoTask" >{{ t.task }}</p>
-              <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- sezione COMPLETATI -->
-    <div class="containerStati">
-      <div class="contenitore">
-        <div style="width: 63%; text-align: right;">COMPLETATI</div>
-        <div style="margin-left:auto;margin-right: 10px">
-          <!-- bottone per aggiungere una nota -->
-            <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
+    <div class="taskContainer">
+      <!-- sezione DA FARE -->
+      <div class="containerStati">
+        <div style="display: flex; align-items: center;">
+  <div style="margin-right: auto; margin-left: 10px;">
+    <!-- button to add a note -->
+    <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
+  </div>
+  <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+    <span style="margin-right: 30px;">DA FARE</span>
+  </div>
+</div>
+        <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
+          <ul>
+            <!-- stampa delle task "DA FARE" -->
+            <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+              <div class="listaTask" @dblclick="showTaskPuls(t)">
+                <p class="testoTask">{{ t.task }}</p>
+                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="containerTFS" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
-        <ul>
-          <!-- stampa delle task "COMPLETATI" -->
-          <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
-            <div class="listaTask" @dblclick="showTaskPuls(t)">
-              <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
-            </div>
-          </li>
-        </ul>
+      <!-- sezione IN CORSO -->
+      <div class="containerStatiCentrale">
+        <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
+        <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
+          <ul>
+            <!-- stampa delle task "IN CORSO" -->
+            <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+              <div class="listaTask" @dblclick="showTaskPuls(t)">
+                <p class="testoTask" >{{ t.task }}</p>
+                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- sezione COMPLETATI -->
+      <div class="containerStati">
+        <div class="contenitore">
+          <div style="width: 63%; text-align: right;">COMPLETATI</div>
+          <div style="margin-left:auto;margin-right: 10px">
+            <!-- bottone per aggiungere una nota -->
+              <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
+          </div>
+        </div>
+        <div class="containerTFS" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
+          <ul>
+            <!-- stampa delle task "COMPLETATI" -->
+            <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
+              <div class="listaTask" @dblclick="showTaskPuls(t)">
+                <p class="testoTask">{{ t.task }}</p>
+                <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 
@@ -177,7 +194,8 @@ export default {
       todayStr: new Date().toISOString().split('T')[0],
       oggetto: '',
       newContent: "",
-      oggettodragdrop:''
+      oggettodragdrop:'',
+      showInfo: false,
     }
   },
   filters: {
