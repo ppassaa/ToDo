@@ -66,13 +66,18 @@
       </div>
     </form>
   </div>
-
+  <!-- sezione informazioni -->
   <div v-if="showInfo" class="popup-overlay">
     <div class="informazioni" style="height: 70%; width: 70%;">
-      <div style="padding: 4px;">
-        <h1 style="color:white">Informazioni</h1>
-      </div>
-      <div style="color:white; padding: 4px;">
+      <div style="display: flex; align-items: center; padding: 10px;">
+          <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+            <h1 style="color:white;margin-right: -40px;">Informazioni</h1> 
+          </div>
+          <div style="margin-left: auto;margin-right: 10px;">
+            <button @click="showInfo = !showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
+          </div>
+        </div>
+      <div style="color:white; padding: 10px;">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Error corporis modi odit reprehenderit repudiandae similique et voluptatibus assumenda aliquam sequi. Repellendus iusto aliquam magnam ipsam doloribus illum nesciunt, optio dolorem.
       </div>
     </div>
@@ -97,14 +102,13 @@
       <!-- sezione DA FARE -->
       <div class="containerStati">
         <div style="display: flex; align-items: center;">
-  <div style="margin-right: auto; margin-left: 10px;">
-    <!-- button to add a note -->
-    <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-  </div>
-  <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
-    <span style="margin-right: 30px;">DA FARE</span>
-  </div>
-</div>
+          <div style="margin-right: auto; margin-left: 10px;">
+            <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
+          </div>
+          <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+            <span style="margin-right: 30px;">DA FARE</span>
+          </div>
+        </div>
         <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "DA FARE" -->
