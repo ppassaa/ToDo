@@ -140,7 +140,20 @@
         <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "DA FARE" -->
-            <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li v-if="!taskUtente" draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+              <div class="listaTask" @dblclick="showTaskPuls(t)">
+                <p class="testoTask">{{ t.task }}</p>
+                <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
+                  <div style="flex-grow: 1;">
+                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox">
+                  </div>
+                  <div style="width: 70%;margin-right: 10px;text-align: right;">
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li v-if="taskUtente" draggable="true" v-for="t in dafareTasksUtente" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
@@ -247,6 +260,7 @@ export default {
       operatoreId: sessionStorage.getItem("operatorID"),
       operatoreNome: sessionStorage.getItem("operatorName"),
       operatoreCognome: sessionStorage.getItem("operatorSurname"),
+      taskUtente: false,
     }
   },
   mounted(){
@@ -272,6 +286,10 @@ export default {
     completatiTasks() {
       return this.tasks.filter((t) => t.completati)
     },
+    /* restituisce le task con l'ID dell'utente, sezione "Da fare" */
+    dafareTasksUtente(){
+      return this.tasks.filter((t) => t.dafare && t.id == this.operatoreId)
+    }
 
   },
   beforeMount() {
@@ -361,6 +379,7 @@ export default {
         this.notShowTaskPuls();
         this.writeTasks();
       }
+      this.writeTasks();
     },
     /* rimuove la task dall'array e aggiorna il DB */
     rimuoviTask() {
