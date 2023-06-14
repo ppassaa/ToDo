@@ -4,7 +4,7 @@
     <!-- sezione sinistra(testo della task) -->
     <div class="sxShow">
       <div class="showTitle">
-        <textarea class="modificaTesto" :class="{intempo: !isScadutoCompletati(oggetto) && (oggetto.dataFine !== 'undefined'), NotScaduto: isNotScaduto(oggetto), scaduto: !isNotScaduto(oggetto), inscadenza: isScadenzaOggi(oggetto)}" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
+        <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
       </div>
     </div>
     <!-- sezione destra(pulsanti X e modifica e date) -->
@@ -70,7 +70,7 @@
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool">
         <!-- sezione sinistra(testo della task) -->
-        <div class="sxShow">
+        <div style="width: 100%">
           <div class="showTitle" style="margin-top: 50px;font-size: 25px;">
             Conferma di <br> rimozione della <br> task
           </div>
@@ -103,7 +103,7 @@
           <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
             <div class="listaTask" @dblclick="showTaskPuls(t)">
               <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-right: 4%; text-align: right; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
+              <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
@@ -118,7 +118,7 @@
           <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
             <div class="listaTask" @dblclick="showTaskPuls(t)">
               <p class="testoTask" >{{ t.task }}</p>
-              <p style="margin-right: 4%; text-align: right; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
+              <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
@@ -139,7 +139,7 @@
           <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
             <div class="listaTask" @dblclick="showTaskPuls(t)">
               <p class="testoTask">{{ t.task }}</p>
-              <p style="margin-right: 4%; text-align: right; font-size: small;">Scadenza: {{ t.dataScadenza }}</p>
+              <p style="margin-right: 4%;font-size: small; text-align: right">Scadenza: {{ t.dataScadenza }}</p>
             </div>
           </li>
         </ul>
@@ -149,7 +149,7 @@
 </template>
 <script>
 
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   data() {
@@ -179,8 +179,6 @@ export default {
       newContent: "",
       oggettodragdrop:''
     }
-  },
-  components: { 
   },
   filters: {
     toDate: function (value) {
@@ -278,7 +276,7 @@ export default {
       this.dafareBool = false;
       this.completatiBool = false;
     },
-    /* aggiunge la task all'array e aggiorna il DB */
+    /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false })
@@ -367,13 +365,13 @@ export default {
         oggDiTasks.task=this.newContent;
       }
       if(this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)){
-        oggDiTasks.dataScadenza = this.scadenza;
-        this.oggetto.dataScadenza = this.scadenza;
+        oggDiTasks.dataScadenza=this.scadenza;
+        this.oggetto.dataScadenza=this.scadenza;
         modificaScadenza=true;
         this.sortTasks();
         this.writeTasks();
       }
-      if(this.scadenza == 0 || modificaScadenza){
+      if(this.scadenza==0 || modificaScadenza){
         this.scadenza = "";
         this.modificaBool=false;
         this.sortTasks();
@@ -464,4 +462,4 @@ export default {
 
 <style>
     @import '../node_modules/@fontsource/roboto/index.css';
-  </style>
+</style>
