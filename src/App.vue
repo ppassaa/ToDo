@@ -265,18 +265,18 @@ export default {
   computed: {
     /* restituisce le task "DA FARE" */
     dafareTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id == this.operatoreId));
-      else return this.tasks.filter((t) => t.dafare)
+      if(this.taskUtente) return this.tasks.filter((t) => (t.dafare && t.id == this.operatoreId && t.privata));
+      else return this.tasks.filter((t) => (t.dafare && !t.privata))
     },
     /* restituisce le task "IN CORSO" */
     incorsoTasks() {
-      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id == this.operatoreId));
-      else return this.tasks.filter((t) => t.incorso)
+      if(this.taskUtente) return this.tasks.filter((t) => (t.incorso && t.id == this.operatoreId && t.privata));
+      else return this.tasks.filter((t) => (t.incorso && !t.privata))
     },
     /* restituisce le task "COMPLETATI" */
     completatiTasks() {
       if(this.taskUtente) return this.tasks.filter((t) => (t.completati && t.id == this.operatoreId));
-      else return this.tasks.filter((t) => t.completati)
+      else return this.tasks.filter((t) => (t.completati && !t.privata))
     },
     /* restituisce le task con l'ID dell'utente, sezione "Da fare" */
 
@@ -361,7 +361,7 @@ export default {
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
-        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId })
+        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente})
         this.taskText = '';
         this.scadenza = '';
         this.sortTasks();
