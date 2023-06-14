@@ -141,8 +141,11 @@ ul {
 .testoTask {
     max-width: 90%;
     overflow-y: auto;
+    margin-right: 4%;
+    padding-right: 10px;
     max-height: 45px;
     min-height: 45px;
+    text-align: center;
     margin-left: 20px;
 }
 p::-webkit-scrollbar {
