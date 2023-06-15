@@ -599,8 +599,11 @@ export default {
     },
     eliminaGruppo(){
       let gruppo = this.currentGroup;
+      this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
+      this.writeTasks();
       this.gruppi = this.gruppi.filter(g => g !== this.currentGroup);
       this.currentGroup = gruppo!=1 ? gruppo-1 : gruppo+1;
+      
     },
   }
 }
