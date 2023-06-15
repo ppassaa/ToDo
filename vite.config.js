@@ -15,7 +15,7 @@ export default defineConfig({
     rollupOptions: {
       external: [
       "src/assets/aggiungi.PNG",
-      "src/assets/bloccato.PNG",
+      "src/assets/privato.PNG",
       "src/assets/conferma.PNG",
       "src/assets/favicon.ico",
       "src/assets/img1.PNG",
@@ -30,7 +30,7 @@ export default defineConfig({
       "src/assets/img10.PNG",
       "src/assets/info.png",
       "src/assets/rimuovi.PNG",
-      "src/assets/sbloccato.PNG",
+      "src/assets/pubblico.PNG",
       "src/assets/trash.png",
       ]
     }
