@@ -271,6 +271,19 @@ export default {
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
+    // setTimeout(() => {
+    //   let maxGroup = 1;
+    //   console.log(maxGroup);
+    //   console.log(this.tasks);
+    //   this.tasks.forEach(element => {
+    //     maxGroup = (element.gruppo > maxGroup) ? element.gruppo : maxGroup;
+    //   });
+    //   console.log(maxGroup);
+    //   for (let index = 0; index < maxGroup; index++) {
+    //     this.gruppi.push(index+1);
+    //   }
+    //   console.log(this.gruppi);
+    // }, 2000);
   },
   filters: {
     toDate: function (value) {
@@ -299,6 +312,7 @@ export default {
   beforeMount() {
     this.tasks = [];
     this.readTasks();
+    this.readGroups();
     this.sortTasks();
     console.log(this.tasks);
   },
@@ -308,9 +322,36 @@ export default {
       let data = JSON.stringify({
         "appCode": "ONOINT-0002",
         "dataName": "tasks",
-        "dataValue": JSON.stringify({ tasks: this.tasks, gruppi:this.gruppi })
+        "dataValue": JSON.stringify({ tasks: this.tasks})
       });
 
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://64.227.120.171:7576/grpc/SetONOAppData',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          // console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async writeGroups() {
+      let data = JSON.stringify({
+        "appCode": "ONOINT-0002",
+        "dataName": "groups",
+        "dataValue": JSON.stringify({ groups: this.gruppi})
+      });
+      console.log(data);
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -348,7 +389,27 @@ export default {
         data: data
       };
       let risposta = await axios.request(config);
-      this.tasks = JSON.parse(risposta.data.data.data).tasks;
+      this.tasks = JSON.parse(risposta.data.data.data).tasks ?? [];
+    },
+
+    async readGroups() {
+      let data = JSON.stringify({
+        "appCode": "ONOINT-0002",
+        "dataName": "groups"
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://64.227.120.171:7576/grpc/GetONOAppDataFromCode',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+      };
+      let risposta = await axios.request(config);
+      this.gruppi = JSON.parse(risposta.data.data.data).groups;
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
@@ -563,6 +624,7 @@ export default {
       }
       this.timer = setInterval(() => {
         this.readTasks();
+        this.readGroups();
       }, 2000);
     },
     showRimButton() {
@@ -583,12 +645,17 @@ export default {
       this.showGruppiWindow = !this.showGruppiWindow;
     },
     creaGruppo(){
-      this.gruppi.push(this.gruppi.length+1)
+      this.gruppi.push(this.gruppi.length+1);
+      this.writeGroups();
     },
     eliminaGruppo(){
       let gruppo = this.currentGroup;
+      this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
+      this.writeTasks();
       this.gruppi = this.gruppi.filter(g => g !== this.currentGroup);
+      this.writeGroups();
       this.currentGroup = gruppo!=1 ? gruppo-1 : gruppo+1;
+      
     },
   }
 }
