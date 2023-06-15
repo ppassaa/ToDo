@@ -148,7 +148,7 @@
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox" @change="salvaselezione()">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
               </div>
@@ -201,7 +201,7 @@
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox" @change="salvaselezione()">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
               </div>
