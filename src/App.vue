@@ -251,15 +251,15 @@ export default {
       operatoreNome: sessionStorage.getItem("operatorName"),
       operatoreCognome: sessionStorage.getItem("operatorSurname"),
       taskUtente: false,
+      timer: setInterval(() => {
+      this.readTasks();
+    }, 2000),
     }
   },
   mounted(){
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
-    setInterval(() => {
-      this.readTasks();
-    }, 2000);
   },
   filters: {
     toDate: function (value) {
@@ -518,6 +518,7 @@ export default {
       this.oggettodragdrop=task;
     },
     onDrop (event, dest) {
+      clearInterval(this.timer);
       console.log(this.oggettodragdrop)
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       if(this.oggettodragdrop.dafare == true && dest === "incorso"){
@@ -544,6 +545,9 @@ export default {
         this.sortTasks();
         this.writeTasks();
       }
+      this.timer = setInterval(() => {
+        this.readTasks();
+      }, 2000);
     },
     showRimButton() {
       this.mostraBottone = true;
