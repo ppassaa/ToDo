@@ -263,13 +263,26 @@ export default {
         this.readTasks();
       }, 2000),
       showGruppiWindow: false,
-      gruppi: [1],
+      gruppi: [],
     }
   },
   mounted(){
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
+    setTimeout(() => {
+      let maxGroup = 1;
+      console.log(maxGroup);
+      console.log(this.tasks);
+      this.tasks.forEach(element => {
+        maxGroup = (element.gruppo > maxGroup) ? element.gruppo : maxGroup;
+      });
+      console.log(maxGroup);
+      for (let index = 0; index < maxGroup; index++) {
+        this.gruppi.push(index+1);
+      }
+      console.log(this.gruppi);
+    }, 2000);
   },
   filters: {
     toDate: function (value) {
