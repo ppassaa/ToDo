@@ -130,12 +130,10 @@
         <div class="contenitore">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="confermaSelezione()" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button @click="confermaSelezione()" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
             <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
           </div>
-          <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
-            <span style="margin-right: 90px;">DA FARE</span>
-          </div>
+          <div style="width: 58%; text-align: left;">DA FARE</div>
         </div>
         <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
           <ul>
