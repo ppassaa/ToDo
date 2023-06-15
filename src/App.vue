@@ -108,6 +108,15 @@
       </div>
     </div>
   </div>
+  <div v-if="showGruppiWindow" class="popup-overlay">
+    <div class="informazioni" style="height: 80%; width: 70%; max-width: 500px;">
+      <button @click="creaGruppo">crea</button>
+      <button @click="eliminaGruppo">elimina</button>
+      <select name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+        <option v-for="g in gruppi" :value="g">{{ g }}</option>
+      </select>
+    </div>
+  </div>
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool">
         <!-- sezione sinistra(testo della task) -->
@@ -135,7 +144,7 @@
           </div>
           <div style="width: 58%; text-align: left;">DA FARE</div>
         </div>
-        <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
+        <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
           <ul>
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -251,8 +260,10 @@ export default {
       taskUtente: false,
       currentGroup: 1,
       timer: setInterval(() => {
-      this.readTasks();
-    }, 2000),
+        this.readTasks();
+      }, 2000),
+      showGruppiWindow: false,
+      gruppi: [1],
     }
   },
   mounted(){
@@ -296,7 +307,7 @@ export default {
       let data = JSON.stringify({
         "appCode": "ONOINT-0002",
         "dataName": "tasks",
-        "dataValue": JSON.stringify({ tasks: this.tasks })
+        "dataValue": JSON.stringify({ tasks: this.tasks, gruppi:this.gruppi })
       });
 
       let config = {
@@ -566,7 +577,18 @@ export default {
       this.showCheckbox = !this.showCheckbox; 
       this.tasks = this.tasks.filter((t) => t.selezionatoDel == false)
       this.writeTasks()
-    }
+    },
+    gruppiHandler(){
+      this.showGruppiWindow = !this.showGruppiWindow;
+    },
+    creaGruppo(){
+      this.gruppi.push(this.gruppi.length+1)
+    },
+    eliminaGruppo(){
+      let gruppo = this.currentGroup;
+      this.gruppi = this.gruppi.filter(g => g !== this.currentGroup);
+      this.currentGroup = gruppo!=1 ? gruppo-1 : gruppo+1;
+    },
   }
 }
 </script>
