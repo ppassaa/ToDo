@@ -214,6 +214,7 @@
 <script>
 
 import axios from 'axios';
+import { toRaw } from 'vue';
 
 export default {
   data() {
@@ -375,7 +376,7 @@ export default {
     },
     /* rimuove la task dall'array e aggiorna il DB */
     rimuoviTask() {
-      this.tasks = this.tasks.filter((t) => t !== this.oggetto)
+      this.tasks = this.tasks.filter((t) => JSON.stringify(t) !== JSON.stringify(this.oggetto));
       this.notShowTaskPuls();
       this.rimuoviBool = false;
       this.sortTasks();
