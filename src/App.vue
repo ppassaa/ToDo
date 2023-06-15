@@ -645,7 +645,7 @@ export default {
       this.showGruppiWindow = !this.showGruppiWindow;
     },
     creaGruppo(){
-      this.gruppi.push(this.gruppi.length+1);
+      this.gruppi.push(this.gruppi[this.gruppi.length-1]+1);
       this.writeGroups();
     },
     eliminaGruppo(){
@@ -654,7 +654,8 @@ export default {
       this.writeTasks();
       this.gruppi = this.gruppi.filter(g => g !== this.currentGroup);
       this.writeGroups();
-      this.currentGroup = gruppo!=1 ? gruppo-1 : gruppo+1;
+      console.log(gruppo);
+      this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ] : gruppo+1;
       
     },
   }
