@@ -28,8 +28,8 @@ npm run dev
 npm run build
 ```
 
-### PORCODDIO
+### MORE THINGS COMING SOON
 
 ```sh
-PORCODDIO
+more things coming soon
 ```
