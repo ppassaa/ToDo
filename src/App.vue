@@ -256,7 +256,9 @@ export default {
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
-    this.waitForTask();
+    setInterval(() => {
+      this.readTasks();
+    }, 2000);
   },
   filters: {
     toDate: function (value) {
@@ -290,12 +292,6 @@ export default {
   },
   methods: {
     /* scrive nel DB */
-    async waitForTask(){
-      while(true){
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        this.readTasks();
-      }
-    }, 
     async writeTasks() {
       let data = JSON.stringify({
         "appCode": "ONOINT-0002",
