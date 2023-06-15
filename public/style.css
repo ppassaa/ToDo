@@ -591,3 +591,10 @@ textarea::-webkit-scrollbar-thumb {
     height: 30px;
     cursor: pointer;
 }
+
+.select {
+    margin-top: 5px;
+    width: 98%;
+    margin-left: 3.5px;
+
+}

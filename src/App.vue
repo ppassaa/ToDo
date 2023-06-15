@@ -74,7 +74,7 @@
             <h1 style="color:white;margin-right: -40px;">Informazioni</h1> 
           </div>
           <div style="margin-left: auto;margin-right: 10px;">
-            <button @click="showInfo = !showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
+            <button @click="showInfo =! showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
           </div>
       </div>
       <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
@@ -108,11 +108,12 @@
       </div>
     </div>
   </div>
-  <div v-if="showGruppiWindow" class="popup-overlay">
-    <div class="informazioni" style="height: 80%; width: 70%; max-width: 500px;">
-      <button @click="creaGruppo">crea</button>
-      <button @click="eliminaGruppo">elimina</button>
-      <select name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+  <div v-if="showGruppiWindow" class="popup-overlay"> 
+    <div class="informazioni" style="height: 50%; width: 20%; max-width: 500px; min-width: 350px;">
+      <button @click="creaGruppo" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
+      <button @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
+      <!-- <button @click="eliminaGruppo">elimina</button> -->
+      <select class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
         <option v-for="g in gruppi" :value="g">{{ g }}</option>
       </select>
     </div>
@@ -252,6 +253,7 @@ export default {
       oggettodragdrop:'',
       mostraBottone: false,
       showInfo: false,
+      showGruppiWindow: false,
       showCheckbox: false,
       taskSelezionate: [],
       operatoreId: sessionStorage.getItem("operatorID"),
@@ -262,7 +264,6 @@ export default {
       timer: setInterval(() => {
         this.readTasks();
       }, 2000),
-      showGruppiWindow: false,
       gruppi: [1],
     }
   },
