@@ -130,7 +130,7 @@
         <div class="contenitore">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="confermaSelezione()" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button @click="rimuoviPuls()" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
             <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
           </div>
           <div style="width: 58%; text-align: left;">DA FARE</div>
@@ -375,11 +375,16 @@ export default {
     },
     /* rimuove la task dall'array e aggiorna il DB */
     rimuoviTask() {
-      this.tasks = this.tasks.filter((t) => JSON.stringify(t) !== JSON.stringify(this.oggetto));
-      this.notShowTaskPuls();
-      this.rimuoviBool = false;
-      this.sortTasks();
-      this.writeTasks();
+      if(this.showCheckbox){
+        this.confermaSelezione();
+        this.rimuoviBool = false;
+      } else{
+        this.tasks = this.tasks.filter((t) => JSON.stringify(t) !== JSON.stringify(this.oggetto));
+        this.notShowTaskPuls();
+        this.rimuoviBool = false;
+        this.sortTasks();
+        this.writeTasks();
+      }
     },
     /* sposta nella sezione "IN CORSO" tutte le task presenti nella sezione "DA FARE" con la checkbox spuntata e aggiorna il DB */
     spostaincorsoFatto() {
