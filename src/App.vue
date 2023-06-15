@@ -148,7 +148,7 @@
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox" @change="salvaselezione()">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
               </div>
@@ -169,8 +169,8 @@
                   <div style="flex-grow: 1;">
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox" @change="salvaselezione()">
                   </div>
-                  <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                  <div style="width: 100%; text-align: right;">
+                    <p style="margin-right: 4%;font-size: small; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
                 <p style="margin-right: 4%;font-size: small; text-align: right"></p>
@@ -201,7 +201,7 @@
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox" @change="salvaselezione()">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
-                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <br>{{ `${t.nome} ${t.cognome}` }}</p>
+                    <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
               </div>
@@ -251,15 +251,15 @@ export default {
       operatoreNome: sessionStorage.getItem("operatorName"),
       operatoreCognome: sessionStorage.getItem("operatorSurname"),
       taskUtente: false,
+      timer: setInterval(() => {
+      this.readTasks();
+    }, 2000),
     }
   },
   mounted(){
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
-    setInterval(() => {
-      this.readTasks();
-    }, 2000);
   },
   filters: {
     toDate: function (value) {
@@ -518,6 +518,7 @@ export default {
       this.oggettodragdrop=task;
     },
     onDrop (event, dest) {
+      clearInterval(this.timer);
       console.log(this.oggettodragdrop)
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       if(this.oggettodragdrop.dafare == true && dest === "incorso"){
@@ -544,6 +545,9 @@ export default {
         this.sortTasks();
         this.writeTasks();
       }
+      this.timer = setInterval(() => {
+        this.readTasks();
+      }, 2000);
     },
     showRimButton() {
       this.mostraBottone = true;
