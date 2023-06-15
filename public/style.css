@@ -190,8 +190,16 @@ p::-webkit-scrollbar-thumb {
     width: 20px;
     height: 20px;
 }
-
+html{
+    min-width: 510px;
+}
 /* style del body */
+@media (max-width: 510px) {
+    body {
+      overflow-x: hidden;
+    }
+  }
+
 body {
     margin: 0;
     padding: 0;
@@ -269,7 +277,24 @@ div::-webkit-scrollbar-thumb {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-bottom: -5px;
+    @media (max-width: 684px) {
+        min-height: 73.6px;
+        max-height: 73.6px;
+    }
+}
+
+.contenitoreincorso {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 5px;
+    @media (max-width: 684px) {
+        margin-bottom: 0px;
+        margin-top: 0px;
+        min-height: 73.6px;
+        max-height: 73.6px;
+    }
 }
 
 /* modifica il margine sinistro */

@@ -127,7 +127,7 @@
     <div class="taskContainer">
       <!-- sezione DA FARE -->
       <div class="containerStati">
-        <div style="display: flex; align-items: center;margin-bottom: -1px;">
+        <div class="contenitore">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
             <button @click="confermaSelezione()" style="margin-top: 3px; margin-left: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
@@ -158,7 +158,7 @@
       </div>
       <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
-        <div style="height: 30.25px;margin-top: 6px;">IN CORSO</div>
+        <div class="contenitoreincorso">IN CORSO</div>
         <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
@@ -183,7 +183,7 @@
       <div class="containerStati">
         <div class="contenitore">
           <div style="width: 63%; text-align: right;">COMPLETATI</div>
-          <div style="margin-left:auto;margin-right: 10px;margin-bottom: -1px;">
+          <div style="margin-left:auto;margin-right: 10px;">
             <!-- bottone per aggiungere una nota -->
             <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
             <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="toggleUtente" v-else></button>
