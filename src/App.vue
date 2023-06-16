@@ -1,4 +1,29 @@
 <template>
+  <!-- calendario -->
+  <div class="calendar" v-if="showCalendar">
+    <div style="display: flex; justify-content: center;">
+      <button @click="meseMeno()">Back </button>
+      <button @click="createCalendar()">load</button>
+      <h1 style="color: white; min-width: 300px; max-width: 300px;">{{ mesi[month] }} {{ year }}</h1> <button @click="mesePiu()">Avanti</button>
+    </div>
+    <div style="display: flex;height: 100%">
+    <table>
+    <thead>
+      <tr>
+        <th>Lun</th>
+        <th>Mar</th>
+        <th>Mer</th>
+        <th>Gio</th>
+        <th>Ven</th>
+        <th>Sab</th>
+        <th>Dom</th>
+      </tr>
+    </thead>
+    <tbody id="calendar-body">
+    </tbody>
+  </table>
+  </div>
+</div>
   <!-- sezione di visualizzazione delle task -->
   <div class="popup-overlay" v-if="showTask">
     <div class="showTsk" v-if="showTask">
@@ -124,7 +149,7 @@
         </div>
       </div>
   <!-- contenitore di tutte le task e dei loro stati -->
-    <div class="taskContainer">
+    <div class="taskContainer" v-if="!showCalendar">
       <!-- sezione DA FARE -->
       <div class="containerStati">
         <div class="contenitore">
@@ -209,6 +234,7 @@
       </div>
     </div>
 </template>
+
 <script>
 
 import axios from 'axios';
@@ -220,6 +246,9 @@ export default {
       tasks: [],
       tendinaShow: false,
       taskText: "",
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
+      mesi: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
       fattoIncorso: false,
       fattoCompletati: false,
       fattoDafare: false,
@@ -249,6 +278,8 @@ export default {
       operatoreNome: sessionStorage.getItem("operatorName"),
       operatoreCognome: sessionStorage.getItem("operatorSurname"),
       taskUtente: false,
+      showCalendar: false,
+      scadenzaConfronto: "",
       currentGroup: 1,
       timer: setInterval(() => {
       this.readTasks();
@@ -281,7 +312,9 @@ export default {
       if(this.taskUtente) return this.tasks.filter((t) => (t.completati && t.id == this.operatoreId && t.gruppo === this.currentGroup));
       else return this.tasks.filter((t) => (t.completati && !t.privata && t.gruppo === this.currentGroup))
     },
-    /* restituisce le task con l'ID dell'utente, sezione "Da fare" */
+    taskDataSelez(){
+      return this.tasks.filter(t => t.dataScadenza == this.scadenzaConfronto);
+    }
 
   },
   beforeMount() {
@@ -363,6 +396,7 @@ export default {
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
+      console.log(this.scadenza)
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup})
         this.taskText = '';
@@ -566,9 +600,86 @@ export default {
       this.showCheckbox = !this.showCheckbox; 
       this.tasks = this.tasks.filter((t) => t.selezionatoDel == false)
       this.writeTasks()
-    }
-  }
+    },
+    mesePiu(){
+      this.month++;
+      if(this.month==12){
+        this.month=0;
+        this.year++;
+      }
+      this.createCalendar();
+    },
+    meseMeno(){
+      this.month--;
+      if(this.month==-1){
+        this.month=11;
+        this.year--;
+      }
+      this.createCalendar();
+    },
+    metodo(){
+      console.log("clickSi")
+    },
+    stampaTaskCalendario(){
+      let divFinale = '';
+      for(let i=0;i<this.tasks.length;i++){
+        if(this.tasks && Array.isArray(this.tasks) && this.tasks.length > 0){if(this.tasks[i].dataScadenza == this.scadenzaConfronto){
+          divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.tasks[' + i + '])">' + this.tasks[i].task + '</div>';
+          //divFinale = '<button @click="showTaskPuls(this.tasks[' + i + '])>ciao</button>';
+        }}
+      }
+      return divFinale;
+    },
+    createCalendar(){
+      const calendarBody = document.getElementById('calendar-body');
+      const today = new Date();
+      const firstDayOfMonth = new Date(this.year, this.month, 1);
+      const lastDayOfMonth = new Date(this.year, this.month + 1, 0);
+      const numDays = lastDayOfMonth.getDate();
+      const firstDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7;
+      let calendar = '';
+      let week = '';
+      let id = '';
+      let temp = "";
+      let temp2 = "";
+    
+      for (let i = 0; i < firstDayOfWeek; i++) {
+        week += '<td></td>';
+      }
+    
+      for (let day = 1; day <= numDays; day++) {
+        if(day < 10) temp="0"+day;
+        else temp = day;
+        if(this.month < 9) temp2="0"+(this.month+1);
+        else temp2=(this.month+1);
+        this.scadenzaConfronto=this.year+'-'+temp2+'-'+temp;
+        week += '<td id="' + id + '">' + '<p style="font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
+    // t.task </div>
+        if ((firstDayOfWeek + day) % 7 === 0) {
+          calendar += '<tr>' + week + '</tr>';
+          week = '';
+        }
+      }
+    
+      if (week !== '') {
+        calendar += '<tr>' + week + '</tr>';
+      }
+    
+      calendarBody.innerHTML = calendar;
+      const taskElements = document.querySelectorAll('.calendarTask');
+      for (let k = 0; k < taskElements.length; k++) {
+        const taskElement = taskElements[k];
+        taskElement.addEventListener('dblclick', () => {
+          this.showTaskPuls(this.tasks[k]);
+        });
+      }
+      }
+
+      
+  },
+  
 }
+  
 </script>
 
 <style>
