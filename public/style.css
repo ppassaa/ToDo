@@ -97,7 +97,10 @@
 /* style delle task */
 .containerTFS li {
     list-style-type: none;
-    width: 100%;
+    width: 90%;
+    background-color: #293542; 
+    margin-bottom: 15px;
+    margin-left: 5%;
 }
 ol {
     padding-right: 20px;
