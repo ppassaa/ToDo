@@ -776,7 +776,7 @@ export default {
         if(this.month < 9) temp2="0"+(this.month+1);
         else temp2=(this.month+1);
         this.scadenzaConfronto=this.year+'-'+temp2+'-'+temp;
-        week += '<td id="' + id + '">' + '<p style="font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
+        week += '<td>' + '<p style="font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
     // t.task </div>
         if ((firstDayOfWeek + day) % 7 === 0) {
           calendar += '<tr>' + week + '</tr>';
@@ -792,7 +792,7 @@ export default {
       const taskElements = document.querySelectorAll('.calendarTask');
       for (let k = 0; k < taskElements.length; k++) {
         const taskElement = taskElements[k];
-        taskElement.addEventListener('dblclick', () => {
+        taskElement.addEventListener('click', () => {
           this.showTaskPuls(this.tasks[k]);
         });
       }

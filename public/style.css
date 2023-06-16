@@ -1,14 +1,11 @@
 table {
     width: 100%;
-    border: 2px solid red;
     height: 90%;
     table-layout: fixed;
 }
 .calendarBox{
     word-wrap: break-word;
-    border: solid magenta;
-    min-height: 90%;
-    max-height: 90%;
+    height: 80%;
     word-break: break-all;
     overflow-y: auto;
 }
@@ -22,22 +19,21 @@ table {
     overflow: hidden;
     pointer-events: auto;
 }
+tbody tr {
+    max-height: 10%;
+    overflow-y: auto;
+}
 td {
     border: 1px solid #ddd;
+    vertical-align: top;
     text-align: center;
     color: white;
-    width: 14.28%;
-    max-height: 50px;
 }
 thead{
     height: 28px;
 }
 tbody {
     height: 90%;
-    border: solid lime;
-}
-tbody tr {
-    max-height: 50px;
 }
 th {
     background-color: black;
@@ -48,11 +44,10 @@ th {
 }
 .calendar {
     display: solid;
-    border: solid yellow;
     margin: 0;
-    padding: 10px;
+    padding: 0;
+    height: 100%;
     width: 100%;
-    height: 100vh;
     overflow: hidden;
 }
 /* bottone aggiungi */
