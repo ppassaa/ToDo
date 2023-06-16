@@ -114,7 +114,7 @@
       <button :disabled="rimuoviBoolGruppi" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
       <button :disabled="rimuoviBoolGruppi" @click="rimuoviBoolGruppi = true">elimina</button>
       <select :disabled="rimuoviBoolGruppi" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
-        <option v-for="g in gruppi" :value="g">{{ g }}</option>
+        <option v-for="g in gruppi" :value="g.id">{{ g.nome }}</option>
       </select>
     </div>
   </div>
@@ -279,7 +279,7 @@ export default {
       timer: setInterval(() => {
         this.readTasks();
       }, 2000),
-      gruppi: [1],
+      gruppi: [{id: 1, nome: "Forza Italia"}],
       rimuoviBoolGruppi : false,
     }
   },
@@ -367,7 +367,6 @@ export default {
         "dataName": "groups",
         "dataValue": JSON.stringify({ groups: this.gruppi})
       });
-      console.log(data);
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -663,17 +662,17 @@ export default {
       this.showGruppiWindow = !this.showGruppiWindow;
     },
     creaGruppo(){
-      this.gruppi.push(this.gruppi[this.gruppi.length-1]+1);
+      this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:"provvisorio"});
       this.writeGroups();
     },
     eliminaGruppo(){
       let gruppo = this.currentGroup;
       this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
       this.writeTasks();
-      this.gruppi = this.gruppi.filter(g => g !== this.currentGroup);
+      this.gruppi = this.gruppi.filter(g => g.id !== this.currentGroup);
       this.writeGroups();
       console.log(gruppo);
-      this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ] : gruppo+1;
+      this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ].id : gruppo+1;
       this.rimuoviBoolGruppi = false;
     },
   }
