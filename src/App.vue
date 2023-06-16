@@ -222,7 +222,7 @@
       </div>
       <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
-        <div class="contenitoreincorso">IN CORSO</div>
+        <div class="contenitoreincorso"  @auxclick="showCalendar = true">IN CORSO</div>
         <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
@@ -782,7 +782,6 @@ export default {
         taskElement.addEventListener('dblclick', () => {
           this.showTaskPuls(this.tasks[k]);
         });
-      }
       }
 
       
