@@ -5,7 +5,7 @@
       <button @click="meseMeno()" class="modifica" style="max-width: 100px;">Back </button>
       <h1 style="color: white; min-width: 300px; max-width: 300px;">{{ mesi[month] }} {{ year }}</h1> 
       <button @click="mesePiu()" class="modifica" style="max-width: 100px;">Avanti</button>
-      <button @click="notShowTaskPuls()" class="esciShowTsk" style="max-width: 30px; max-height: 30px; margin-left: auto;" :disabled="rimuoviBool"></button>
+      <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" style="max-width: 30px; max-height: 30px; margin-left: auto;" :disabled="rimuoviBool"></button>
     </div>
     <div style="display: flex;height: 100%">
     <table>
@@ -203,10 +203,10 @@
           </div>
           <div style="width: 58%; text-align: left;">DA FARE</div>
         </div>
-        <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
+        <div class="containerTFS dafare" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
           <ul>
             <!-- stampa delle task "DA FARE" -->
-            <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li draggable="true" v-for="t in dafareTasks" @touchstart="oggettodragdrop = t" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
@@ -225,7 +225,7 @@
       <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
         <div class="contenitoreincorso"  @auxclick="showCalendarPuls()">IN CORSO</div>
-        <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
+        <div class="containerTFS incorso" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
             <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -256,7 +256,7 @@
             <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
           </div>
         </div>
-        <div class="containerTFS" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
+        <div class="containerTFS completati" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "COMPLETATI" -->
             <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
@@ -327,7 +327,7 @@ export default {
       currentGroup: 1,
       timer: setInterval(() => {
         this.readTasks();
-      }, 2000),
+      }, 1000),
       gruppi: [],
       rimuoviBoolGruppi : false,
       showInputGruppo : false,
@@ -585,7 +585,6 @@ export default {
     /* chiude la sezione che contiene le informazioni della task cliccata */
     notShowTaskPuls() {
       this.showTask = false;
-      this.showCalendar = false;
       this.modificaBool = false;
       this.aggiungiBool = false;
       this.oggetto = '';
@@ -703,7 +702,7 @@ export default {
       this.timer = setInterval(() => {
         this.readTasks();
         this.readGroups();
-      }, 2000);
+      }, 1000);
     },
     showRimButton() {
       this.mostraBottone = true;
@@ -821,6 +820,28 @@ export default {
         this.rimuoviBoolGruppi = false;
       }
     },
+    touchEndHandler(e){
+      console.log(e);
+      console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).classList[1]);
+      let destinazione = document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).classList[1];
+      const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
+      if(destinazione === "dafare"){
+        task.completati = false;
+        task.incorso = false;
+        task.dafare = true;
+      }
+      if(destinazione === "incorso"){
+        task.completati = false;
+        task.incorso = true;
+        task.dafare = false;
+      }
+      if(destinazione === "completati"){
+        task.completati = true;
+        task.incorso = false;
+        task.dafare = false;
+      }
+      this.writeTasks();
+    }
     
   }
 }
