@@ -2,12 +2,16 @@
 <template>
   <!-- calendario -->
   <div class="calendar" v-if="showCalendar">
-    <div style="display: flex; justify-content: center;">
-      <button @click="meseMeno()" class="modifica" style="max-width: 100px;">Back </button>
-      <h1 style="color: white; min-width: 300px; max-width: 300px;">{{ mesi[month] }} {{ year }}</h1> 
-      <button @click="mesePiu()" class="modifica" style="max-width: 100px;">Avanti</button>
-      <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" style="max-width: 30px; max-height: 30px; margin-left: auto;" :disabled="rimuoviBool"></button>
-    </div>
+    <div style="display: flex; justify-content: space-between;">
+  <div style="display: flex;">
+    <button @click="meseMeno()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡸</button>
+    <button @click="mesePiu()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡺</button>
+    <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
+  </div>
+  <div>
+    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" style="max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
+  </div>
+</div>
     <div style="display: flex;height: 100%">
     <table>
     <thead>
