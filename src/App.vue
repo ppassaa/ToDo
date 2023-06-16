@@ -110,10 +110,10 @@
   </div>
   <div v-if="showGruppiWindow" class="popup-overlay"> 
     <div class="informazioni" style="height: 50%; width: 20%; max-width: 500px; min-width: 350px;">
-      <button @click="creaGruppo" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
-      <button @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
-      <button @click="rimuoviBoolGruppi = true">elimina</button>
-      <select class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+      <button :disabled="rimuoviBoolGruppi" @click="creaGruppo" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
+      <button :disabled="rimuoviBoolGruppi" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
+      <button :disabled="rimuoviBoolGruppi" @click="rimuoviBoolGruppi = true">elimina</button>
+      <select :disabled="rimuoviBoolGruppi" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
         <option v-for="g in gruppi" :value="g">{{ g }}</option>
       </select>
     </div>
