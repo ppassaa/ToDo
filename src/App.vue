@@ -52,6 +52,7 @@
           </div>
           <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
             <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
+            <p v-if="showCalendar">Gruppo: {{ gruppi[oggetto.gruppo].nome }}</p>
             <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
           </div>
           <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
@@ -558,7 +559,7 @@ export default {
       const temp = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
       temp.incorso=false;
       temp.dafare=true;
-      this.notShowTaskPuls()
+      this.notShowTaskPuls();
       this.sortTasks();
       this.writeTasks();
     },
