@@ -206,7 +206,7 @@
         <div class="containerTFS dafare" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
           <ul>
             <!-- stampa delle task "DA FARE" -->
-            <li draggable="true" v-for="t in dafareTasks" @touchstart="oggettodragdrop = t" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li draggable="true" v-for="t in dafareTasks" @touchstart="touchStartHandler(t)" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
@@ -228,7 +228,7 @@
         <div class="containerTFS incorso" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
-            <li draggable="true" v-for="t in incorsoTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
+            <li draggable="true" v-for="t in incorsoTasks" @touchstart="touchStartHandler(t)" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
               <div class="listaTask" @dblclick="showTaskPuls(t)">
                 <p class="testoTask" >{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
@@ -841,6 +841,15 @@ export default {
         task.dafare = false;
       }
       this.writeTasks();
+      this.timer = setInterval(() => {
+        this.readTasks();
+        this.readGroups();
+      }, 1000);
+    },
+    touchStartHandler(t){
+      clearInterval(this.timer);
+      this.oggettodragdrop = t;
+      
     }
     
   }
