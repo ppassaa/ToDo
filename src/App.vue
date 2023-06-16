@@ -777,13 +777,15 @@ export default {
       console.log("clickSi")
     },
     stampaTaskCalendario(){
+      let taskAttuali = this.tasks.filter(t => t.gruppo === this.currentGroup);
+      console.log(taskAttuali);
       let divFinale = '';
-      for(let i=0;i<this.tasks.length;i++){
-        if(this.tasks && Array.isArray(this.tasks) && this.tasks.length > 0){if(this.tasks[i].dataScadenza == this.scadenzaConfronto){
-          if(this.tasks[i].task.length > 10){
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.tasks[' + i + '])">' + this.tasks[i].task.substr(0,10) + '...</div>';
+      for(let i=0;i<taskAttuali.length;i++){
+        if(taskAttuali && Array.isArray(taskAttuali) && taskAttuali.length > 0){if(taskAttuali[i].dataScadenza == this.scadenzaConfronto){
+          if(taskAttuali[i].task.length > 10){
+            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(taskAttuali[' + i + '])">' + taskAttuali[i].task.substr(0,10) + '...</div>';
           } else {
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.tasks[' + i + '])">' + this.tasks[i].task.substr(0,10) + '</div>';
+            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(taskAttuali[' + i + '])">' + taskAttuali[i].task.substr(0,10) + '</div>';
           }
           //divFinale = '<button @click="showTaskPuls(this.tasks[' + i + '])>ciao</button>';
         }}
