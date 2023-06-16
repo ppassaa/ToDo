@@ -112,12 +112,27 @@
     <div class="informazioni" style="height: 50%; width: 20%; max-width: 500px; min-width: 350px;">
       <button @click="creaGruppo" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
       <button @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
-      <!-- <button @click="eliminaGruppo">elimina</button> -->
+      <button @click="rimuoviBoolGruppi = true">elimina</button>
       <select class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
         <option v-for="g in gruppi" :value="g">{{ g }}</option>
       </select>
     </div>
   </div>
+  <!-- alert rimozione gruppi -->
+  <div class="showRm" v-if="rimuoviBoolGruppi">
+        <!-- sezione sinistra(testo della task) -->
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
+            Conferma di rimozione del gruppo
+          </div>
+        <!-- sezione destra(pulsanti X) -->
+          <div class="showButton">
+            <!-- sezione alta(pulsanti X) -->
+            <div>
+              <button class="allertRmRimuovi" @click="eliminaGruppo()">Rimuovi</button>
+              <button class="allertRmAnnulla" @click="rimuoviBoolGruppi = false">Annulla</button>
+            </div>
+        </div>
+      </div>
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool">
         <!-- sezione sinistra(testo della task) -->
@@ -265,6 +280,7 @@ export default {
         this.readTasks();
       }, 2000),
       gruppi: [1],
+      rimuoviBoolGruppi : false,
     }
   },
   mounted(){
@@ -422,6 +438,7 @@ export default {
       this.incorsoBool = false;
       this.dafareBool = false;
       this.completatiBool = false;
+      this.rimuoviBoolGruppi = false;
     },
     /* azione di quando si clicca il pulsante Rimuovi */
     rimuoviPuls() {
@@ -433,6 +450,7 @@ export default {
       this.incorsoBool = false;
       this.dafareBool = false;
       this.completatiBool = false;
+      this.rimuoviBoolGruppi = false;
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
@@ -656,7 +674,7 @@ export default {
       this.writeGroups();
       console.log(gruppo);
       this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ] : gruppo+1;
-      
+      this.rimuoviBoolGruppi = false;
     },
   }
 }
