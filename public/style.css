@@ -27,17 +27,24 @@ td {
     text-align: center;
     color: white;
     width: 14.28%;
+    max-height: 50px;
 }
-
+thead{
+    height: 28px;
+}
+tbody {
+    height: 90%;
+    border: solid lime;
+}
+tbody tr {
+    max-height: 50px;
+}
 th {
     background-color: black;
     border: 1px solid #ddd;
     text-align: center;
+    height: 28px;
     color: white;
-}
-
-h1 {
-    text-align: center;
 }
 .calendar {
     display: solid;

@@ -2,9 +2,10 @@
   <!-- calendario -->
   <div class="calendar" v-if="showCalendar">
     <div style="display: flex; justify-content: center;">
-      <button @click="meseMeno()">Back </button>
-      <button @click="createCalendar()">load</button>
-      <h1 style="color: white; min-width: 300px; max-width: 300px;">{{ mesi[month] }} {{ year }}</h1> <button @click="mesePiu()">Avanti</button>
+      <button @click="meseMeno()" class="modifica" style="max-width: 100px;">Back </button>
+      <h1 style="color: white; min-width: 300px; max-width: 300px;">{{ mesi[month] }} {{ year }}</h1> 
+      <button @click="mesePiu()" class="modifica" style="max-width: 100px;">Avanti</button>
+      <button @click="notShowTaskPuls()" class="esciShowTsk" style="max-width: 30px; max-height: 30px; margin-left: auto;" :disabled="rimuoviBool"></button>
     </div>
     <div style="display: flex;height: 100%">
     <table>
@@ -222,7 +223,7 @@
       </div>
       <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
-        <div class="contenitoreincorso"  @auxclick="showCalendar = true">IN CORSO</div>
+        <div class="contenitoreincorso"  @auxclick="showCalendarPuls()">IN CORSO</div>
         <div class="containerTFS" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
@@ -527,6 +528,7 @@ export default {
         this.sortTasks();
         this.writeTasks();
       }
+      this.createCalendar();
     },
     /* sposta nella sezione "IN CORSO" tutte le task presenti nella sezione "DA FARE" con la checkbox spuntata e aggiorna il DB */
     spostaincorsoFatto() {
@@ -575,9 +577,14 @@ export default {
       this.taskCompletaShow = e.completati;
 
     },
+    showCalendarPuls() {
+      this.showCalendar = true;
+      this.createCalendar()
+    },
     /* chiude la sezione che contiene le informazioni della task cliccata */
     notShowTaskPuls() {
       this.showTask = false;
+      this.showCalendar = false;
       this.modificaBool = false;
       this.aggiungiBool = false;
       this.oggetto = '';
@@ -612,6 +619,7 @@ export default {
         this.sortTasks();
         this.writeTasks();
       }
+      this.createCalendar();
     },
     /* controlla se la task scade oggi */
     isScadenzaOggi(e) {
@@ -734,7 +742,11 @@ export default {
       let divFinale = '';
       for(let i=0;i<this.tasks.length;i++){
         if(this.tasks && Array.isArray(this.tasks) && this.tasks.length > 0){if(this.tasks[i].dataScadenza == this.scadenzaConfronto){
-          divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.tasks[' + i + '])">' + this.tasks[i].task + '</div>';
+          if(this.tasks[i].task.length > 10){
+            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.tasks[' + i + '])">' + this.tasks[i].task.substr(0,10) + '...</div>';
+          } else {
+            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.tasks[' + i + '])">' + this.tasks[i].task.substr(0,10) + '</div>';
+          }
           //divFinale = '<button @click="showTaskPuls(this.tasks[' + i + '])>ciao</button>';
         }}
       }
@@ -783,9 +795,7 @@ export default {
           this.showTaskPuls(this.tasks[k]);
         });
       }
-
-      
-  },
+    },
   
     gruppiHandler(){
       this.showGruppiWindow = !this.showGruppiWindow;
@@ -810,6 +820,7 @@ export default {
         this.rimuoviBoolGruppi = false;
       }
     },
+    
   }
 }
   
