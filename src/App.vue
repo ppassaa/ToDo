@@ -99,7 +99,7 @@
             <h1 style="color:white;margin-right: -40px;">Informazioni</h1> 
           </div>
           <div style="margin-left: auto;margin-right: 10px;">
-            <button @click="showInfo = !showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
+            <button @click="showInfo =! showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
           </div>
       </div>
       <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
@@ -133,6 +133,47 @@
       </div>
     </div>
   </div>
+  <div v-if="showGruppiWindow" class="popup-overlay"> 
+    <div class="informazioni" style="height: 50%; width: 20%; max-width: 500px; min-width: 350px;">
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
+      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+        <option v-for="g in gruppi" :value="g.id">{{ g.nome }}</option>
+      </select>
+    </div>
+  </div>
+  <!-- alert rimozione gruppi -->
+  <div class="showRm" v-if="rimuoviBoolGruppi">
+        <!-- sezione sinistra(testo della task) -->
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
+            Conferma di rimozione del gruppo
+          </div>
+        <!-- sezione destra(pulsanti X) -->
+          <div class="showButton">
+            <!-- sezione alta(pulsanti X) -->
+            <div>
+              <button class="allertRmRimuovi" @click="eliminaGruppo()">Rimuovi</button>
+              <button class="allertRmAnnulla" @click="rimuoviBoolGruppi = false">Annulla</button>
+            </div>
+        </div>
+      </div>
+  <!-- alert inserimento nome gruppo -->
+  <div class="showRm" v-if="showInputGruppo">
+        <!-- sezione sinistra(testo della task) -->
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
+            Inserisci il nome del gruppo
+            <input type="text" v-model="nomeGruppo" style="margin-top: 10px;" maxlength="20" placeholder="Nome(max 20 caratteri)">
+          </div>
+        <!-- sezione destra(pulsanti X) -->
+          <div class="showButton">
+            <!-- sezione alta(pulsanti X) -->
+            <div>
+              <button class="allertRmRimuovi" @click="creaGruppo()">Conferma</button>
+              <button class="allertRmAnnulla" @click="showInputGruppo = false">Annulla</button>
+            </div>
+        </div>
+      </div>
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool">
         <!-- sezione sinistra(testo della task) -->
@@ -160,7 +201,7 @@
           </div>
           <div style="width: 58%; text-align: left;">DA FARE</div>
         </div>
-        <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent>
+        <div class="containerTFS" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
           <ul>
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -272,6 +313,7 @@ export default {
       oggettodragdrop:'',
       mostraBottone: false,
       showInfo: false,
+      showGruppiWindow: false,
       showCheckbox: false,
       taskSelezionate: [],
       operatoreId: sessionStorage.getItem("operatorID"),
@@ -282,14 +324,31 @@ export default {
       scadenzaConfronto: "",
       currentGroup: 1,
       timer: setInterval(() => {
-      this.readTasks();
-    }, 2000),
+        this.readTasks();
+      }, 2000),
+      gruppi: [],
+      rimuoviBoolGruppi : false,
+      showInputGruppo : false,
+      nomeGruppo : "",
     }
   },
   mounted(){
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
+    // setTimeout(() => {
+    //   let maxGroup = 1;
+    //   console.log(maxGroup);
+    //   console.log(this.tasks);
+    //   this.tasks.forEach(element => {
+    //     maxGroup = (element.gruppo > maxGroup) ? element.gruppo : maxGroup;
+    //   });
+    //   console.log(maxGroup);
+    //   for (let index = 0; index < maxGroup; index++) {
+    //     this.gruppi.push(index+1);
+    //   }
+    //   console.log(this.gruppi);
+    // }, 2000);
   },
   filters: {
     toDate: function (value) {
@@ -320,6 +379,7 @@ export default {
   beforeMount() {
     this.tasks = [];
     this.readTasks();
+    this.readGroups();
     this.sortTasks();
     console.log(this.tasks);
   },
@@ -329,9 +389,35 @@ export default {
       let data = JSON.stringify({
         "appCode": "ONOINT-0002",
         "dataName": "tasks",
-        "dataValue": JSON.stringify({ tasks: this.tasks })
+        "dataValue": JSON.stringify({ tasks: this.tasks})
       });
 
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://64.227.120.171:7576/grpc/SetONOAppData',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+      };
+
+      axios.request(config)
+        .then((response) => {
+          // console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    async writeGroups() {
+      let data = JSON.stringify({
+        "appCode": "ONOINT-0002",
+        "dataName": "groups",
+        "dataValue": JSON.stringify({ groups: this.gruppi})
+      });
       let config = {
         method: 'post',
         maxBodyLength: Infinity,
@@ -369,7 +455,27 @@ export default {
         data: data
       };
       let risposta = await axios.request(config);
-      this.tasks = JSON.parse(risposta.data.data.data).tasks;
+      this.tasks = JSON.parse(risposta.data.data.data).tasks ?? [];
+    },
+
+    async readGroups() {
+      let data = JSON.stringify({
+        "appCode": "ONOINT-0002",
+        "dataName": "groups"
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'http://64.227.120.171:7576/grpc/GetONOAppDataFromCode',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+      };
+      let risposta = await axios.request(config);
+      this.gruppi = JSON.parse(risposta.data.data.data).groups;
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
@@ -382,6 +488,7 @@ export default {
       this.incorsoBool = false;
       this.dafareBool = false;
       this.completatiBool = false;
+      this.rimuoviBoolGruppi = false;
     },
     /* azione di quando si clicca il pulsante Rimuovi */
     rimuoviPuls() {
@@ -393,6 +500,7 @@ export default {
       this.incorsoBool = false;
       this.dafareBool = false;
       this.completatiBool = false;
+      this.rimuoviBoolGruppi = false;
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
@@ -585,6 +693,7 @@ export default {
       }
       this.timer = setInterval(() => {
         this.readTasks();
+        this.readGroups();
       }, 2000);
     },
     showRimButton() {
@@ -601,6 +710,7 @@ export default {
       this.tasks = this.tasks.filter((t) => t.selezionatoDel == false)
       this.writeTasks()
     },
+
     mesePiu(){
       this.month++;
       if(this.month==12){
@@ -678,6 +788,30 @@ export default {
       
   },
   
+    gruppiHandler(){
+      this.showGruppiWindow = !this.showGruppiWindow;
+    },
+    creaGruppo(){
+      if(this.nomeGruppo != ""){
+        this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:this.nomeGruppo});
+        this.writeGroups();
+        this.showInputGruppo = false;
+        this.nomeGruppo = "";
+      }
+    },
+    eliminaGruppo(){
+      if(this.gruppi.length > 1){
+        let gruppo = this.currentGroup;
+        this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
+        this.writeTasks();
+        this.gruppi = this.gruppi.filter(g => g.id !== this.currentGroup);
+        this.writeGroups();
+        console.log(gruppo);
+        this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ].id : gruppo+1;
+        this.rimuoviBoolGruppi = false;
+      }
+    },
+  }
 }
   
 </script>

@@ -147,7 +147,10 @@ h1 {
 /* style delle task */
 .containerTFS li {
     list-style-type: none;
-    width: 100%;
+    width: 90%;
+    background-color: #293542; 
+    margin-bottom: 15px;
+    margin-left: 5%;
 }
 ol {
     padding-right: 20px;
@@ -520,6 +523,7 @@ textarea::-webkit-scrollbar-thumb {
     transform: translate(-50%, -50%);
     z-index: 1001;
 }
+
 .allertRmText {
     word-wrap: break-word;
     max-height: 100px;
@@ -640,4 +644,11 @@ textarea::-webkit-scrollbar-thumb {
     width: 30px;
     height: 30px;
     cursor: pointer;
+}
+
+.select {
+    margin-top: 5px;
+    width: 98%;
+    margin-left: 3.5px;
+
 }
