@@ -37,7 +37,7 @@
       <div class="sxShow">
         <div class="showTitle">
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
-          <button @click="showCommenti = true" class="modifica" :disabled="rimuoviBool">Commenti</button>
+          <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool"></button>
         </div>
       </div>
       <!-- sezione destra(pulsanti X e modifica e date) -->
