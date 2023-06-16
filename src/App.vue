@@ -110,10 +110,10 @@
   </div>
   <div v-if="showGruppiWindow" class="popup-overlay"> 
     <div class="informazioni" style="height: 50%; width: 20%; max-width: 500px; min-width: 350px;">
-      <button :disabled="rimuoviBoolGruppi" @click="creaGruppo" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
-      <button :disabled="rimuoviBoolGruppi" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
-      <button :disabled="rimuoviBoolGruppi" @click="rimuoviBoolGruppi = true">elimina</button>
-      <select :disabled="rimuoviBoolGruppi" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
+      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
         <option v-for="g in gruppi" :value="g.id">{{ g.nome }}</option>
       </select>
     </div>
@@ -130,6 +130,22 @@
             <div>
               <button class="allertRmRimuovi" @click="eliminaGruppo()">Rimuovi</button>
               <button class="allertRmAnnulla" @click="rimuoviBoolGruppi = false">Annulla</button>
+            </div>
+        </div>
+      </div>
+  <!-- alert inserimento nome gruppo -->
+  <div class="showRm" v-if="showInputGruppo">
+        <!-- sezione sinistra(testo della task) -->
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
+            Inserisci il nome del gruppo
+            <input type="text" v-model="nomeGruppo" style="margin-top: 10px;" maxlength="20" placeholder="Nome(max 20 caratteri)">
+          </div>
+        <!-- sezione destra(pulsanti X) -->
+          <div class="showButton">
+            <!-- sezione alta(pulsanti X) -->
+            <div>
+              <button class="allertRmRimuovi" @click="creaGruppo()">Conferma</button>
+              <button class="allertRmAnnulla" @click="showInputGruppo = false">Annulla</button>
             </div>
         </div>
       </div>
@@ -281,6 +297,8 @@ export default {
       }, 2000),
       gruppi: [{id: 1, nome: "Forza Italia"}],
       rimuoviBoolGruppi : false,
+      showInputGruppo : false,
+      nomeGruppo : "",
     }
   },
   mounted(){
@@ -662,8 +680,12 @@ export default {
       this.showGruppiWindow = !this.showGruppiWindow;
     },
     creaGruppo(){
-      this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:"provvisorio"});
-      this.writeGroups();
+      if(this.nomeGruppo != ""){
+        this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:this.nomeGruppo});
+        this.writeGroups();
+        this.showInputGruppo = false;
+        this.nomeGruppo = "";
+      }
     },
     eliminaGruppo(){
       let gruppo = this.currentGroup;
