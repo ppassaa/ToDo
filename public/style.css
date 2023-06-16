@@ -454,8 +454,8 @@ div::-webkit-scrollbar-thumb {
 /* textarea quando si modifica il testo con il pulsante modifica */
 .modificaTesto{
     width: 100%;
-    min-height: 220px;
-    max-height: 220px;
+    min-height: 180px;
+    max-height: 180px;
     background-color: transparent;
     border: none;
     font-weight: bold;
@@ -511,7 +511,7 @@ textarea::-webkit-scrollbar-thumb {
     z-index: 1000;
     overflow: hidden;
 }
-.showRm {
+.showRm{
     border:3px solid #A1A1A1;
     color: white;
     background-color: #1b242e;
@@ -525,6 +525,14 @@ textarea::-webkit-scrollbar-thumb {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1001;
+}
+
+.showRm.addCommenti{
+    max-height: 300px;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .allertRmText {

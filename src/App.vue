@@ -37,6 +37,7 @@
       <div class="sxShow">
         <div class="showTitle">
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
+          <button @click="showCommenti = true" class="modifica" :disabled="rimuoviBool">Commenti</button>
         </div>
       </div>
       <!-- sezione destra(pulsanti X e modifica e date) -->
@@ -64,6 +65,20 @@
           <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <!-- sezione commenti -->
+  <div class="popup-overlay" v-if="showCommenti">
+    <div class="showTsk" v-if="showCommenti">
+      <div class="sxShow" style="overflow-y: auto;">
+        <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px;" v-for="c in oggetto.commenti">
+          {{ c.commento}} <br> <span style="font-size: small;">{{ c.utente }}</span>
+        </div>
+      </div>
+      <div class="dxShow">
+        <button @click="showAddCommento = true" class="modifica" :disabled="rimuoviBool">Commenta</button>
+        <button @click="showCommenti = false" class="modifica" :disabled="rimuoviBool">Chiudi</button>
       </div>
     </div>
   </div>
@@ -178,6 +193,21 @@
             <div>
               <button class="allertRmRimuovi" @click="creaGruppo()">Conferma</button>
               <button class="allertRmAnnulla" @click="showInputGruppo = false">Annulla</button>
+            </div>
+        </div>
+      </div>
+  <!-- alert inserimento commento -->
+  <div class="showRm addCommenti" v-if="showAddCommento">
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
+            Inserisci il commento
+            <textarea v-model="newCommento" style="margin-top: 10px;" maxlength="500" placeholder="Commento(Max 500 caratteri)"></textarea>
+          </div>
+        <!-- sezione destra(pulsanti X) -->
+          <div class="showButton">
+            <!-- sezione alta(pulsanti X) -->
+            <div>
+              <button class="allertRmRimuovi" @click="addCommento">Conferma</button>
+              <button class="allertRmAnnulla" @click="showAddCommento = false">Annulla</button>
             </div>
         </div>
       </div>
@@ -337,6 +367,9 @@ export default {
       rimuoviBoolGruppi : false,
       showInputGruppo : false,
       nomeGruppo : "",
+      newCommento: "",
+      showCommenti: false,
+      showAddCommento : false,
     }
   },
   mounted(){
@@ -513,7 +546,7 @@ export default {
     aggiungiTask() {
       console.log(this.scadenza)
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
-        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup})
+        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup, commenti: []})
         this.taskText = '';
         this.scadenza = '';
         this.sortTasks();
@@ -862,6 +895,14 @@ export default {
       if(ids.includes(id)) return id;
       else return this.getTfs(elemento.parentElement);
     },
+    addCommento(){
+      console.log(this.newCommento);
+      const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
+      this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
+      task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
+      this.writeTasks();
+      this.showAddCommento = false;
+    }
     
   }
 }
