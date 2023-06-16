@@ -295,7 +295,7 @@ export default {
       timer: setInterval(() => {
         this.readTasks();
       }, 2000),
-      gruppi: [{id: 1, nome: "Forza Italia"}],
+      gruppi: [],
       rimuoviBoolGruppi : false,
       showInputGruppo : false,
       nomeGruppo : "",
@@ -688,14 +688,16 @@ export default {
       }
     },
     eliminaGruppo(){
-      let gruppo = this.currentGroup;
-      this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
-      this.writeTasks();
-      this.gruppi = this.gruppi.filter(g => g.id !== this.currentGroup);
-      this.writeGroups();
-      console.log(gruppo);
-      this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ].id : gruppo+1;
-      this.rimuoviBoolGruppi = false;
+      if(this.gruppi.length > 1){
+        let gruppo = this.currentGroup;
+        this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
+        this.writeTasks();
+        this.gruppi = this.gruppi.filter(g => g.id !== this.currentGroup);
+        this.writeGroups();
+        console.log(gruppo);
+        this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ].id : gruppo+1;
+        this.rimuoviBoolGruppi = false;
+      }
     },
   }
 }
