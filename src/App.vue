@@ -823,8 +823,8 @@ export default {
     },
     touchEndHandler(e){
       console.log(e);
-      console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).classList[1]);
-      let destinazione = document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY).classList[1];
+      console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
+      let destinazione = this.getTfs(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       if(destinazione === "dafare"){
         task.completati = false;
@@ -851,7 +851,13 @@ export default {
       clearInterval(this.timer);
       this.oggettodragdrop = t;
       
-    }
+    },
+    getTfs(elemento){
+      let id = elemento.classList[1] ?? "";
+      let ids = ["dafare","incorso","completati"];
+      if(ids.includes(id)) return id;
+      else return this.getTfs(elemento.parentElement);
+    },
     
   }
 }
