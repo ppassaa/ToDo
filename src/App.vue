@@ -1,5 +1,15 @@
 <!-- yuhu -->
 <template>
+  <!-- contenitore di tutte le task e dei loro stati -->
+  <div class="" style="color: white;">
+    <div class="dropdown">
+      {{ gruppi.find(g => g.id == currentGroup).nome }}
+      <div class="dropdownContent">
+        <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
+        <button @click="showGruppiWindow = true">Gestisci gruppi</button>
+      </div>
+    </div>
+  </div>
   <!-- calendario -->
   <div class="calendar" v-if="showCalendar">
     <div style="display: flex; justify-content: space-between;">
@@ -163,7 +173,7 @@
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputPermessi = true">permessi</button>
-      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
         <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
       </select>
     </div>
@@ -247,7 +257,7 @@
         </div>
       </div>
   <!-- allert di rimozione -->
-  <div class="showRm" v-if="rimuoviBool">
+  <div class="showRm" v-if="rimuoviBool && tasks.some(t => t.selezionatoDel)">
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
             Conferma di rimozione della task
@@ -257,11 +267,10 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls()">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool = false">Annulla</button>
             </div>
         </div>
       </div>
-  <!-- contenitore di tutte le task e dei loro stati -->
     <div class="taskContainer" v-if="!showCalendar">
       <!-- sezione DA FARE -->
       <div class="containerStati">
@@ -604,6 +613,10 @@ export default {
       this.dafareBool = false;
       this.completatiBool = false;
       this.rimuoviBoolGruppi = false;
+      if(!this.tasks.some(t => t.selezionatoDel)) {
+        this.showCheckbox = false;
+        this.rimuoviBool = false;
+      };
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
