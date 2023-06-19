@@ -188,7 +188,7 @@
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
             Inserisci il nome del gruppo
-            <input type="text" v-model="nomeGruppo" style="margin-top: 10px;" maxlength="20" placeholder="Nome(max 20 caratteri)">
+            <input type="text" v-model="nomeGruppo" style="margin-top: 10px; text-align: center;" maxlength="20" placeholder="Nome (max 20 caratteri)">
           </div>
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
@@ -204,7 +204,13 @@
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
             Aggiungi utente
-            <input type="number" v-model="utenteAggiunto" style="margin-top: 10px;" min="1" placeholder="Inserisci l'id utente">
+            <textarea 
+              type="number" 
+              v-model="utenteAggiunto" 
+              style="margin-top: 10px; height: 33px; text-align: center; word-wrap: break-word; word-break: break-all; white-space: pre-wrap;"
+              min="1" 
+              placeholder="Inserisci l'id utente">
+            </textarea>
           </div>
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
