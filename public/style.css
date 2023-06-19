@@ -61,13 +61,28 @@ th {
     height: 30px;
     cursor: pointer;
 }
+
 .commentiBtn{
     background-image: url("src/assets/commenti.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
+    background-color: #424C57;
+    border: none;
+}
+
+.commentiBtn1{
+    background-image: url("src/assets/commenti1.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 25px;
+    height: 25px;
+    margin-left: auto;
+    background-color: #424C57;
+    border: none;
     cursor: pointer;
 }
 
@@ -447,7 +462,6 @@ div::-webkit-scrollbar-thumb {
 
 /* sezione destra della sezione in cui si vedono le informazioni di ogni task */
 .dxShow {
-    text-align: center;
     border-left: 3px solid #A1A1A1;
     min-height: 100%;
     max-height: 100%;

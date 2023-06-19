@@ -37,7 +37,10 @@
       <div class="sxShow">
         <div class="showTitle">
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
-          <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool"></button>
+          <div style="display: flex;">
+            <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool"></button>
+            <button @click="showCommenti = true" class="commentiBtn1" :disabled="rimuoviBool"></button>
+          </div>
         </div>
       </div>
       <!-- sezione destra(pulsanti X e modifica e date) -->
@@ -242,7 +245,7 @@
           <ul>
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @touchstart="touchStartHandler(t)" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-              <div class="listaTask" @dblclick="showTaskPuls(t)">
+              <div class="listaTask" @click="showTaskPuls(t)">
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
                   <div style="flex-grow: 1;">
@@ -264,7 +267,7 @@
           <ul>
             <!-- stampa delle task "IN CORSO" -->
             <li draggable="true" v-for="t in incorsoTasks" @touchstart="touchStartHandler(t)" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: completatiBool || dafareBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
-              <div class="listaTask" @dblclick="showTaskPuls(t)">
+              <div class="listaTask" @click="showTaskPuls(t)">
                 <p class="testoTask" >{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
                   <div style="flex-grow: 1;">
@@ -295,7 +298,7 @@
           <ul>
             <!-- stampa delle task "COMPLETATI" -->
             <li v-for="t in completatiTasks" class="taskStyle" :class="{ intempo: !isScadutoCompletati(t), scaduto: isScadutoCompletati(t) }">
-              <div class="listaTask" @dblclick="showTaskPuls(t)">
+              <div class="listaTask" @click="showTaskPuls(t)">
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
                   <div style="flex-grow: 1;">
@@ -422,6 +425,15 @@ export default {
     this.readGroups();
     this.sortTasks();
     console.log(this.tasks);
+  },
+  watch: {
+    showCalendar(newVal) {
+      if (newVal) {
+        this.$nextTick(() => {
+          this.createCalendar();
+        });
+      }
+    },
   },
   methods: {
     /* scrive nel DB */
@@ -618,7 +630,6 @@ export default {
     },
     showCalendarPuls() {
       this.showCalendar = true;
-      this.createCalendar()
     },
     /* chiude la sezione che contiene le informazioni della task cliccata */
     notShowTaskPuls() {
@@ -792,9 +803,8 @@ export default {
       }
       return divFinale;
     },
-    createCalendar(){
+    createCalendar() {
       const calendarBody = document.getElementById('calendar-body');
-      const today = new Date();
       const firstDayOfMonth = new Date(this.year, this.month, 1);
       const lastDayOfMonth = new Date(this.year, this.month + 1, 0);
       const numDays = lastDayOfMonth.getDate();
