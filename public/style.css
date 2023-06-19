@@ -73,18 +73,6 @@ th {
     border: none;
 }
 
-.commentiBtn1{
-    background-image: url("src/assets/commenti1.PNG");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 25px;
-    height: 25px;
-    margin-left: auto;
-    background-color: #424C57;
-    border: none;
-    cursor: pointer;
-}
 
 /* style task completate */
 .taskCompletate {
@@ -477,8 +465,8 @@ div::-webkit-scrollbar-thumb {
 /* textarea quando si modifica il testo con il pulsante modifica */
 .modificaTesto{
     width: 100%;
-    min-height: 180px;
-    max-height: 180px;
+    min-height: 193px;
+    max-height: 193px;
     background-color: transparent;
     border: none;
     font-weight: bold;

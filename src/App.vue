@@ -39,7 +39,6 @@
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
           <div style="display: flex;">
             <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool"></button>
-            <button @click="showCommenti = true" class="commentiBtn1" :disabled="rimuoviBool"></button>
           </div>
         </div>
       </div>
