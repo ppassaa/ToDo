@@ -11,11 +11,11 @@
     </div>
     <div style="margin-left: auto;">
       <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn"></button>
-      <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
-      <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="toggleUtente" v-else></button>
+      <button @click="taskUtente = !taskUtente;" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
+      <button @click="taskUtente = !taskUtente;" style="margin-right: 4px;" class="toggleUtente" v-else></button>
       <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls()"></button>
       <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
-            <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else></button>
+      <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else></button>
       <button @click="showInfo = !showInfo" class="infoBtn"></button>
     </div>
   </div>
@@ -97,9 +97,12 @@
           {{ c.commento}} <br> <span style="font-size: small;">{{ c.utente }}</span>
         </div>
       </div>
-      <div class="dxShow">
-        <button @click="showAddCommento = true" class="modifica" :disabled="rimuoviBool">Commenta</button>
-        <button @click="showCommenti = false" class="modifica" :disabled="rimuoviBool">Chiudi</button>
+      <div class="dxShowCommenti">
+        <button @click="showCommenti = false" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
+        <div style="text-align: center;">
+          <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" placeholder="Commento(Max 500 caratteri)"></textarea>
+          <button class="allertRmRimuovi" @click="addCommento">Aggiungi</button>
+        </div>
       </div>
     </div>
   </div>
@@ -206,7 +209,8 @@
   <!-- Storico -->
   <div class="showSto" v-if="showStorico">
     <!-- sezione sinistra(testo della task) -->
-    <button @click="showStoricoPuls()" class="esciShowTsk" style="margin-left: 90%;max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
+    <b style="margin-left: 70px;">Storico della task</b>
+    <button @click="showStoricoPuls()" class="esciShowTsk float-right" style="max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
     <div class="storicoInfo">
       {{ oggetto.storico }}
     </div>
@@ -250,21 +254,6 @@
             </div>
         </div>
       </div>
-  <!-- alert inserimento commento -->
-  <div class="showRm addCommenti" v-if="showAddCommento">
-          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
-            Inserisci il commento
-            <textarea v-model="newCommento" style="margin-top: 10px;" maxlength="500" placeholder="Commento(Max 500 caratteri)"></textarea>
-          </div>
-        <!-- sezione destra(pulsanti X) -->
-          <div class="showButton">
-            <!-- sezione alta(pulsanti X) -->
-            <div>
-              <button class="allertRmRimuovi" @click="addCommento">Conferma</button>
-              <button class="allertRmAnnulla" @click="showAddCommento = false">Annulla</button>
-            </div>
-        </div>
-      </div>
   <!-- allert di rimozione -->
   <div class="showRm" v-if="rimuoviBool && tasks.some(t => t.selezionatoDel)">
         <!-- sezione sinistra(testo della task) -->
@@ -276,7 +265,7 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool = false">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();">Annulla</button>
             </div>
         </div>
       </div>
@@ -794,7 +783,7 @@ export default {
       if(this.oggettodragdrop.dafare == true && dest === "incorso"){
         task.incorso = true
         task.dafare = false
-        task.storico += 'Spostato in IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        task.storico += 'Spostato in "IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
         this.sortTasks();
         this.writeTasks();
       }
@@ -802,14 +791,14 @@ export default {
         task.dataFine = dataYYYYMMDD;
         task.completati = true
         task.incorso = false
-        task.storico += 'Spostato in COMPLETATI" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        task.storico += 'Spostato in "COMPLETATI" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
         this.sortTasks();
         this.writeTasks();
       }
       if(this.oggettodragdrop.incorso == true && dest === "dafare"){
         task.incorso = false
         task.dafare = true
-        task.storico += 'Spostato in DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        task.storico += 'Spostato in "DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
         this.sortTasks();
         this.writeTasks();
       }
@@ -964,13 +953,13 @@ export default {
         task.completati = false;
         task.incorso = false;
         task.dafare = true;
-        task.storico += 'Spostato in DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        task.storico += 'Spostato in "DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "incorso"){
         task.completati = false;
         task.incorso = true;
         task.dafare = false;
-        task.storico += 'Spostato in IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        task.storico += 'Spostato in "IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "completati"){
         task.completati = true;
@@ -1002,6 +991,7 @@ export default {
       this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
       task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
       this.writeTasks();
+      this.newCommento = "";
       this.showAddCommento = false;
     },
     addPermesso(){
