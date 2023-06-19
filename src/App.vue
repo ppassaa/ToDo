@@ -67,7 +67,7 @@
         <div class="showButton">
           <!-- sezione alta(pulsanti X e modifica) -->
           <div>
-            <button @click="rimuoviPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Rimuovi</button>
+            <button @click="rimuoviPuls(); rimuoviBool2 = true" class="modifica" :disabled="rimuoviBool || showStorico">Rimuovi</button>
             <button v-if="modificaBool && !taskCompletaShow" @click="salvaPuls()" class="modifica">Salva</button>
             <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Modifica</button>
           </div>
@@ -266,7 +266,7 @@
         </div>
       </div>
   <!-- allert di rimozione -->
-  <div class="showRm" v-if="rimuoviBool && tasks.some(t => t.selezionatoDel)">
+  <div class="showRm" v-if="(rimuoviBool && tasks.some(t => t.selezionatoDel)) || rimuoviBool2">
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
             Conferma di rimozione della task
@@ -276,7 +276,7 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool = false">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool = rimuoviBool2 = false">Annulla</button>
             </div>
         </div>
       </div>
@@ -370,6 +370,7 @@ export default {
       fattoDafare: false,
       aggiungiBool: false,
       rimuoviBool: false,
+      rimuoviBool2: false,
       incorsoBool: false,
       dafareBool: false,
       completatiBool: false,
@@ -469,7 +470,6 @@ export default {
     this.readTasks();
     this.readGroups();
     this.sortTasks();
-    console.log(this.tasks);
   },
   watch: {
     showCalendar(newVal) {
@@ -614,7 +614,6 @@ export default {
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
-      console.log(this.scadenza)
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup, commenti: [], storico: ""})
         this.taskText = '';
@@ -633,7 +632,7 @@ export default {
       } else{
         this.tasks = this.tasks.filter((t) => JSON.stringify(t) !== JSON.stringify(this.oggetto));
         this.notShowTaskPuls();
-        this.rimuoviBool = false;
+        this.rimuoviBool = this.rimuoviBool2 = false;
         this.sortTasks();
         this.writeTasks();
       }
@@ -710,7 +709,6 @@ export default {
     },
     /* salva le modifiche effettuate alla task */
     salvaPuls() {
-      console.log(this.newContent);
       const oggDiTasks = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
       let modificaScadenza = false;
       if(this.newContent!=0){
@@ -776,14 +774,12 @@ export default {
       });
     },
     startDrag (event, task) {
-      console.log(task)
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
       this.oggettodragdrop=task;
     },
     onDrop (event, dest) {
       clearInterval(this.timer);
-      console.log(this.oggettodragdrop)
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       let oggi = new Date();
       let anno = oggi.getFullYear();
@@ -852,7 +848,6 @@ export default {
       console.log("clickSi")
     },
     stampaTaskCalendario(){
-      console.log(this.taskAttuali);
       let divFinale = '';
       for(let i=0;i<this.taskAttuali.length;i++){
         if(this.taskAttuali && Array.isArray(this.taskAttuali) && this.taskAttuali.length > 0){if(this.taskAttuali[i].dataScadenza == this.scadenzaConfronto){
