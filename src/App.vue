@@ -1,5 +1,15 @@
 <!-- yuhu -->
 <template>
+  <!-- contenitore di tutte le task e dei loro stati -->
+  <div class="" style="color: white;">
+    <div class="dropdown">
+      {{ gruppi.find(g => g.id == currentGroup).nome }}
+      <div class="dropdownContent">
+        <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
+        <button @click="showGruppiWindow = true">Gestisci gruppi</button>
+      </div>
+    </div>
+  </div>
   <!-- calendario -->
   <div class="calendar" v-if="showCalendar">
     <div style="display: flex; justify-content: space-between;">
@@ -245,16 +255,6 @@
             </div>
         </div>
       </div>
-  <!-- contenitore di tutte le task e dei loro stati -->
-  <div class="" style="color: white;">
-    <div class="dropdown">
-      {{ gruppi.find(g => g.id == currentGroup).nome }}
-      <div class="dropdownContent">
-        <button v-for="g in myGruppi" @click="currentGroup = g.id">{{ g.nome }}</button>
-        <button @click="showGruppiWindow = true">Gestisci gruppi</button>
-      </div>
-    </div>
-  </div>
     <div class="taskContainer" v-if="!showCalendar">
       <!-- sezione DA FARE -->
       <div class="containerStati">
