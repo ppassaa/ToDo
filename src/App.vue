@@ -57,8 +57,8 @@
         <div class="showTitle">
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
           <div style="display: flex;">
-            <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool || modificaBool || showStorico"></button>
-            <button @click="showStoricoPuls()" class="storicoBtn" :disabled="rimuoviBool || modificaBool || showStorico"></button>
+            <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
+            <button @click="showStoricoPuls()" class="storicoBtn" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
           </div>
         </div>
       </div>
@@ -67,12 +67,12 @@
         <div class="showButton">
           <!-- sezione alta(pulsanti X e modifica) -->
           <div>
-            <button @click="rimuoviPuls(); rimuoviBool2 = true" class="modifica" :disabled="rimuoviBool || showStorico">Rimuovi</button>
+            <button @click="rimuoviPuls(); rimuoviBool2 = true" class="modifica" :disabled="rimuoviBool2 || rimuoviBool || showStorico">Rimuovi</button>
             <button v-if="modificaBool && !taskCompletaShow" @click="salvaPuls()" class="modifica">Salva</button>
-            <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Modifica</button>
+            <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool2 || rimuoviBool || showStorico">Modifica</button>
           </div>
           <div>
-            <button @click="notShowTaskPuls()" class="esciShowTsk" :disabled="rimuoviBool || showStorico "></button>
+            <button @click="notShowTaskPuls()" class="esciShowTsk" :disabled="rimuoviBool2 || rimuoviBool || showStorico "></button>
           </div>
         </div>
         <!-- sezione nella quale si visualizzano le date -->
