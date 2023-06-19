@@ -674,3 +674,25 @@ textarea::-webkit-scrollbar-thumb {
     margin-left: 3.5px;
 
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    width: 20%;
+}
+
+.dropdownContent{
+    display: none;
+    position: absolute;
+    flex-direction: column;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdownContent button:hover{
+    background-color: rgb(200, 200, 200);
+}
+
+.dropdown:hover .dropdownContent{
+    display: flex;
+}
