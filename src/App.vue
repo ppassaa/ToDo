@@ -92,16 +92,20 @@
   <!-- sezione commenti -->
   <div class="popup-overlay-commenti" v-if="showCommenti">
     <div class="showTsk" v-if="showCommenti">
-      <div class="sxShow" style="overflow-y: auto;">
+      <div class="sxShowCommenti">
         <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px;" v-for="c in oggetto.commenti">
-          {{ c.commento}} <br> <span style="font-size: small;">{{ c.utente }}</span>
+          {{ c.commento}} <br> 
+          <span style="font-size: small; height: 20px;">
+            {{ c.utente }} 
+            <button @click="rmCommento(c)" class="esciShowTskCommenti"></button>
+          </span>
         </div>
       </div>
       <div class="dxShowCommenti">
-        <button @click="showCommenti = false" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
+        <button @click="showCommenti = false; newCommento = ''" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
         <div style="text-align: center;">
           <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" placeholder="Commento(Max 500 caratteri)"></textarea>
-          <button class="allertRmRimuovi" @click="addCommento">Aggiungi</button>
+          <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento">Aggiungi</button>
         </div>
       </div>
     </div>
@@ -996,6 +1000,14 @@ export default {
         this.writeGroups();
         this.showInputPermessi = false;
       }
+    },
+    rmCommento(e){
+      const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
+      console.log(task.commenti);
+      task.commenti = task.commenti.filter(el => JSON.stringify(el) !== JSON.stringify(e));
+      this.oggetto.commenti = task.commenti;
+      this.sortTasks();
+      this.writeTasks();
     }
     
   }

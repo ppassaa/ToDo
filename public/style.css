@@ -408,6 +408,16 @@ div::-webkit-scrollbar-thumb {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.sxShowCommenti {
+    text-align: center;
+    min-height: 230px;
+    max-height: 230px;
+    margin-top: 7px;
+    min-width: 49%;
+    max-width: 49%;
+    overflow-y: auto;
+    padding-left: 10px;
+}
 
 /* sezione che contiene in bottoni nella sezione in cui si vedono le informazioni di ogni task */
 .showButton{
@@ -425,6 +435,19 @@ div::-webkit-scrollbar-thumb {
     background-position: center center;
     width: 30px;
     height: 30px;
+    z-index: 1001;
+}
+
+.esciShowTskCommenti {
+    flex: 1;
+    background-image: url("src/assets/rimuovi.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    min-width: 15px;
+    min-height: 15px;
+    max-width: 15px;
+    max-height: 15px;
     z-index: 1001;
 }
 
