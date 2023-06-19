@@ -79,8 +79,13 @@
         </div>
       </div>
       <div class="dxShow">
-        <button @click="showAddCommento = true" class="modifica" :disabled="rimuoviBool">Commenta</button>
-        <button @click="showCommenti = false" class="modifica" :disabled="rimuoviBool">Chiudi</button>
+        <div>
+          <button @click="showAddCommento = true" class="modifica" :disabled="rimuoviBool">Commenta</button>
+          <button @click="showCommenti = false" :disabled="rimuoviBool" class="esciShowTsk" style=""></button>
+        </div> 
+        <div>
+          
+        </div>
       </div>
     </div>
   </div>
