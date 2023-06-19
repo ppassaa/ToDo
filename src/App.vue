@@ -269,7 +269,7 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls();">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool2 = false">Annulla</button>
             </div>
         </div>
       </div>
