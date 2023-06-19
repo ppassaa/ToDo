@@ -53,7 +53,7 @@ th {
     display: solid;
     margin: 0;
     padding: 0;
-    height: 95%;
+    height: 92.5%;
     width: 100%;
     min-width: 600px;
     padding: 10px;
@@ -267,7 +267,8 @@ p::-webkit-scrollbar-thumb {
 /* style del body */
 @media (max-width: 600px) {
     body {
-      overflow: auto;
+      overflow-x: auto;
+      overflow-y: none;
     }
 }
 
@@ -277,7 +278,19 @@ body {
     padding: 0;
     height: 100vh;
     width: 100vw;
+    overflow: hidden;
     background-color: #1b242e;
+}
+body::-webkit-scrollbar {
+    background-color: #f1f1f1;
+    width: 5px;
+    z-index: 999;
+}
+
+/* style della scrollbar */
+body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    z-index: 999;
 }
 
 /* container di tutte le task e del loro stato */
@@ -286,28 +299,28 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    height: 95%;
+    height: 92.5%;
     overflow: hidden;
 }
 
 /* container di ogni stato */
 .containerStati {
     width: 100%;
-    margin-top: 10px;
     text-align: center;
     max-height: 100%;
     color: white;
+    border-top: 3px solid #424c57;
     display: flex;
     flex-direction: column;
 }
 
 /* container dello stato centrale(aggiunta dei bordi laterali) */
 .containerStatiCentrale {
-    margin-top: 10px;
     width: 100%;
     text-align: center;
     border-left: 3px solid #424c57;
     border-right: 3px solid #424c57;
+    border-top: 3px solid #424c57;
     max-height: 100%;
     color: white;
     max-width: 33.3%;
@@ -354,18 +367,12 @@ div::-webkit-scrollbar-thumb {
     }
 }
 /*contenitore task "IN CORSO" + pulsante */
-.contenitoreincorso {
+.contenitorestati {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 8px;
     margin-bottom: 5px;
-    @media (max-width: 684px) {
-        margin-bottom: 0px;
-        margin-top: 0px;
-        min-height: 73.6px;
-        max-height: 73.6px;
-    }
 }
 
 /* modifica il margine sinistro */
@@ -437,10 +444,24 @@ div::-webkit-scrollbar-thumb {
     background-color: #1B9DD9;
 }
 
+.modificafrecce{
+    flex: 1;
+    width: 90px;
+    height: 30px;
+    margin-right: 10px;
+    z-index: 1001;
+    background-color: #1B9DD9;
+}
 /* style off del bottone modifica/salva */
 .modifica:disabled {
     color: black;
     border-color: black;
+}
+
+.modificafrecce:disabled {
+    background-color: #0D4E6C;
+    border-color: #0D4E6C;
+    color: black;
 }
 
 /* sezione che contiene il testo della task nella sezione in cui si vedono le informazioni di ogni task */
@@ -657,6 +678,16 @@ textarea::-webkit-scrollbar-thumb {
 /*bottone che passa alla finestra delle informazioni*/
 .infoBtn{
     background-image: url("src/assets/info.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.calendarioBtn{
+    background-image: url("src/assets/calendario.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

@@ -1,7 +1,7 @@
 <!-- yuhu -->
 <template>
   <!-- contenitore di tutte le task e dei loro stati -->
-  <div class="" style="color: white;">
+  <div class="" style="color: white;display: flex;width: 100%; height: 7.5%; min-height: 46px;padding: 10px;">
     <div class="dropdown">
       {{ gruppi.find(g => g.id == currentGroup).nome }}
       <div class="dropdownContent">
@@ -9,13 +9,22 @@
         <button @click="showGruppiWindow = true">Gestisci gruppi</button>
       </div>
     </div>
+    <div style="margin-left: auto;">
+      <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn"></button>
+      <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
+      <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="toggleUtente" v-else></button>
+      <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls()" v-if="!showCalendar"></button>
+      <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else></button>
+      <button @click="showInfo = !showInfo" class="infoBtn"></button>
+    </div>
   </div>
   <!-- calendario -->
   <div class="calendar" v-if="showCalendar">
     <div style="display: flex; justify-content: space-between;">
   <div style="display: flex;">
-    <button @click="meseMeno()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡸</button>
-    <button @click="mesePiu()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡺</button>
+    <button @click="meseMeno()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow">🡸</button>
+    <button @click="mesePiu()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow">🡺</button>
     <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
   </div>
   <div>
@@ -274,15 +283,8 @@
     <div class="taskContainer" v-if="!showCalendar">
       <!-- sezione DA FARE -->
       <div class="containerStati">
-        <div class="contenitore">
-          <div style="margin-right: auto; margin-left: 12.5px;">
-            <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
-            <button @click="showCheckbox = true" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
-          </div>
-          <div style="width: 58%; text-align: left;">DA FARE</div>
-        </div>
-        <div class="containerTFS dafare" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
+        <div class="contenitorestati">DA FARE</div>
+        <div class="containerTFS dafare" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent >
           <ul>
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @touchstart="touchStartHandler(t)" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -303,7 +305,7 @@
       </div>
       <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
-        <div class="contenitoreincorso"  @auxclick="showCalendarPuls()">IN CORSO</div>
+        <div class="contenitorestati">IN CORSO</div>
         <div class="containerTFS incorso" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
@@ -314,7 +316,7 @@
                   <div style="flex-grow: 1;">
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" @change="salvaselezione()" @click.stop>
                   </div>
-                  <div style="width: 100%; text-align: right;">
+                  <div style="width: 70%; text-align: right;">
                     <p style="margin-right: 4%;font-size: small; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
@@ -326,15 +328,7 @@
       </div>
       <!-- sezione COMPLETATI -->
       <div class="containerStati">
-        <div class="contenitore">
-          <div style="width: 63%; text-align: right;">COMPLETATI</div>
-          <div style="margin-left:auto;margin-right: 10px;">
-            <!-- bottone per aggiungere una nota -->
-            <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
-            <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="toggleUtente" v-else></button>
-            <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
-          </div>
-        </div>
+        <div class="contenitorestati">COMPLETATI</div>
         <div class="containerTFS completati" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "COMPLETATI" -->
