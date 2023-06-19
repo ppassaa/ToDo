@@ -164,7 +164,7 @@
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
       <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
-        <option v-for="g in gruppi" :value="g.id">{{ g.nome }}</option>
+        <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
       </select>
     </div>
   </div>
@@ -416,6 +416,9 @@ export default {
     },
     taskDataSelez(){
       return this.tasks.filter(t => t.dataScadenza == this.scadenzaConfronto);
+    },
+    myGruppi(){
+      return this.gruppi.filter((gruppo) => gruppo.permessi.some(p => p == this.operatoreId));
     }
 
   },
@@ -528,6 +531,11 @@ export default {
       };
       let risposta = await axios.request(config);
       this.gruppi = JSON.parse(risposta.data.data.data).groups;
+      let min = 9999;
+      this.myGruppi.forEach(g => {
+        if(g.id < min) min = g.id;
+      });
+      this.currentGroup = min;
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
@@ -849,6 +857,7 @@ export default {
   
     gruppiHandler(){
       this.showGruppiWindow = !this.showGruppiWindow;
+      console.log(this.myGruppi);
     },
     creaGruppo(){
       if(this.nomeGruppo != ""){
