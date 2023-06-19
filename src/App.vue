@@ -196,7 +196,7 @@
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
             Inserisci il nome del gruppo
-            <input type="text" v-model="nomeGruppo" style="margin-top: 10px;" maxlength="20" placeholder="Nome(max 20 caratteri)">
+            <input type="text" v-model="nomeGruppo" style="margin-top: 10px; text-align: center;" maxlength="20" placeholder="Nome (max 20 caratteri)">
           </div>
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
@@ -212,7 +212,13 @@
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
             Aggiungi utente
-            <input type="number" v-model="utenteAggiunto" style="margin-top: 10px;" min="1" placeholder="Inserisci l'id utente">
+            <textarea 
+              type="number" 
+              v-model="utenteAggiunto" 
+              style="margin-top: 10px; height: 33px; text-align: center; word-wrap: break-word; word-break: break-all; white-space: pre-wrap;"
+              min="1" 
+              placeholder="Inserisci l'id utente">
+            </textarea>
           </div>
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
@@ -446,6 +452,9 @@ export default {
     },
     myGruppi(){
       return this.gruppi.filter((gruppo) => gruppo.permessi.some(p => p == this.operatoreId));
+    },
+    taskAttuali(){
+      return this.tasks.filter(t => t.gruppo === this.currentGroup);
     }
 
   },
@@ -829,15 +838,14 @@ export default {
       console.log("clickSi")
     },
     stampaTaskCalendario(){
-      let taskAttuali = this.tasks.filter(t => t.gruppo === this.currentGroup);
-      console.log(taskAttuali);
+      console.log(this.taskAttuali);
       let divFinale = '';
-      for(let i=0;i<taskAttuali.length;i++){
-        if(taskAttuali && Array.isArray(taskAttuali) && taskAttuali.length > 0){if(taskAttuali[i].dataScadenza == this.scadenzaConfronto){
-          if(taskAttuali[i].task.length > 10){
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(taskAttuali[' + i + '])">' + taskAttuali[i].task.substr(0,10) + '...</div>';
+      for(let i=0;i<this.taskAttuali.length;i++){
+        if(this.taskAttuali && Array.isArray(this.taskAttuali) && this.taskAttuali.length > 0){if(this.taskAttuali[i].dataScadenza == this.scadenzaConfronto){
+          if(this.taskAttuali[i].task.length > 10){
+            divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '...</div>';
           } else {
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(taskAttuali[' + i + '])">' + taskAttuali[i].task.substr(0,10) + '</div>';
+            divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
           }
           //divFinale = '<button @click="showTaskPuls(this.tasks[' + i + '])>ciao</button>';
         }}
