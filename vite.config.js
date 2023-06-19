@@ -32,6 +32,7 @@ export default defineConfig({
       "src/assets/pubblico.PNG",
       "src/assets/trash.png",
       "src/assets/commenti.PNG",
+      "src/assets/storico.PNG",
       ]
     }
   }

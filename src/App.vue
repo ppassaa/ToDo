@@ -38,7 +38,8 @@
         <div class="showTitle">
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
           <div style="display: flex;">
-            <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool"></button>
+            <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool || modificaBool || showStorico"></button>
+            <button @click="showStoricoPuls()" class="storicoBtn" :disabled="rimuoviBool || modificaBool || showStorico"></button>
           </div>
         </div>
       </div>
@@ -47,12 +48,12 @@
         <div class="showButton">
           <!-- sezione alta(pulsanti X e modifica) -->
           <div>
-            <button @click="rimuoviPuls()" class="modifica" :disabled="rimuoviBool">Rimuovi</button>
+            <button @click="rimuoviPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Rimuovi</button>
             <button v-if="modificaBool && !taskCompletaShow" @click="salvaPuls()" class="modifica">Salva</button>
-            <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool">Modifica</button>
+            <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Modifica</button>
           </div>
           <div>
-            <button @click="notShowTaskPuls()" class="esciShowTsk" :disabled="rimuoviBool"></button>
+            <button @click="notShowTaskPuls()" class="esciShowTsk" :disabled="rimuoviBool || showStorico "></button>
           </div>
         </div>
         <!-- sezione nella quale si visualizzano le date -->
@@ -71,7 +72,7 @@
     </div>
   </div>
   <!-- sezione commenti -->
-  <div class="popup-overlay" v-if="showCommenti">
+  <div class="popup-overlay-commenti" v-if="showCommenti">
     <div class="showTsk" v-if="showCommenti">
       <div class="sxShow" style="overflow-y: auto;">
         <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px;" v-for="c in oggetto.commenti">
@@ -169,19 +170,29 @@
   </div>
   <!-- alert rimozione gruppi -->
   <div class="showRm" v-if="rimuoviBoolGruppi">
-        <!-- sezione sinistra(testo della task) -->
-          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
-            Conferma di rimozione del gruppo
-          </div>
-        <!-- sezione destra(pulsanti X) -->
-          <div class="showButton">
-            <!-- sezione alta(pulsanti X) -->
-            <div>
-              <button class="allertRmRimuovi" @click="eliminaGruppo()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviBoolGruppi = false">Annulla</button>
-            </div>
-        </div>
+    <!-- sezione sinistra(testo della task) -->
+    <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
+      Conferma di rimozione del gruppo
+    </div>
+    <!-- sezione destra(pulsanti X) -->
+    <div class="showButton">
+      <!-- sezione alta(pulsanti X) -->
+      <div>
+        <button class="allertRmRimuovi" @click="eliminaGruppo()">Rimuovi</button>
+        <button class="allertRmAnnulla" @click="rimuoviBoolGruppi = false">Annulla</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Storico -->
+  <div class="showSto" v-if="showStorico">
+    <!-- sezione sinistra(testo della task) -->
+    <button @click="showStoricoPuls()" class="esciShowTsk" style="margin-left: 90%;max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
+    <div class="storicoInfo">
+      {{ oggetto.storico }}
+    </div>
+  </div>
+
   <!-- alert inserimento nome gruppo -->
   <div class="showRm" v-if="showInputGruppo">
         <!-- sezione sinistra(testo della task) -->
@@ -248,7 +259,7 @@
                 <p class="testoTask">{{ t.task }}</p>
                 <div style="max-height:35px;display: flex; align-items: center;justify-content: space-between;">
                   <div style="flex-grow: 1;">
-                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" v-if="showCheckbox" @change="salvaselezione()">
+                    <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" :class="{zindexBasso : !showCheckbox, zindexAlto : showCheckbox}" v-if="showCheckbox" @change="salvaselezione()">
                   </div>
                   <div style="width: 70%;margin-right: 10px;text-align: right;">
                     <p style="margin-right: 4%;font-size: small; text-align: right; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
@@ -352,6 +363,7 @@ export default {
       oggettodragdrop:'',
       mostraBottone: false,
       showInfo: false,
+      showStorico: false,
       showGruppiWindow: false,
       showCheckbox: false,
       taskSelezionate: [],
@@ -557,7 +569,7 @@ export default {
     aggiungiTask() {
       console.log(this.scadenza)
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
-        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup, commenti: []})
+        this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup, commenti: [], storico: ""})
         this.taskText = '';
         this.scadenza = '';
         this.sortTasks();
@@ -629,6 +641,9 @@ export default {
     },
     showCalendarPuls() {
       this.showCalendar = true;
+    },
+    showStoricoPuls() {
+      this.showStorico = !this.showStorico;
     },
     /* chiude la sezione che contiene le informazioni della task cliccata */
     notShowTaskPuls() {
@@ -723,27 +738,30 @@ export default {
       clearInterval(this.timer);
       console.log(this.oggettodragdrop)
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
       if(this.oggettodragdrop.dafare == true && dest === "incorso"){
         task.incorso = true
         task.dafare = false
+        task.storico += 'Spostato in IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
         this.sortTasks();
         this.writeTasks();
       }
       if(this.oggettodragdrop.incorso == true && dest === "completati"){
-        let oggi = new Date();
-        let anno = oggi.getFullYear();
-        let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
-        let giorno = oggi.getDate().toString().padStart(2, '0');
-        let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
         task.dataFine = dataYYYYMMDD;
         task.completati = true
         task.incorso = false
+        task.storico += 'Spostato in COMPLETATI" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
         this.sortTasks();
         this.writeTasks();
       }
       if(this.oggettodragdrop.incorso == true && dest === "dafare"){
         task.incorso = false
         task.dafare = true
+        task.storico += 'Spostato in DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
         this.sortTasks();
         this.writeTasks();
       }
@@ -810,7 +828,6 @@ export default {
       const firstDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7;
       let calendar = '';
       let week = '';
-      let id = '';
       let temp = "";
       let temp2 = "";
     
@@ -825,7 +842,6 @@ export default {
         else temp2=(this.month+1);
         this.scadenzaConfronto=this.year+'-'+temp2+'-'+temp;
         week += '<td>' + '<p style="font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
-    // t.task </div>
         if ((firstDayOfWeek + day) % 7 === 0) {
           calendar += '<tr>' + week + '</tr>';
           week = '';
@@ -874,20 +890,29 @@ export default {
       console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       let destinazione = this.getTfs(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
       if(destinazione === "dafare"){
         task.completati = false;
         task.incorso = false;
         task.dafare = true;
+        task.storico += 'Spostato in DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "incorso"){
         task.completati = false;
         task.incorso = true;
         task.dafare = false;
+        console.log("pipo")
+        task.storico += 'Spostato in IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "completati"){
         task.completati = true;
         task.incorso = false;
         task.dafare = false;
+        task.storico += 'Spostato in "COMPLETATI" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       this.writeTasks();
       this.timer = setInterval(() => {

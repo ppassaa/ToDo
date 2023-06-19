@@ -1,6 +1,7 @@
 table {
     width: 100%;
     height: 90%;
+    min-height: 435px;
     table-layout: fixed;
 }
 .calendarBox{
@@ -72,6 +73,18 @@ th {
     background-color: #424C57;
     border: none;
 }
+.storicoBtn{
+    background-image: url("src/assets/storico.PNG");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    width: 25px;
+    height: 25px;
+    background-color: #424C57;
+    margin-left: 10px;
+    border: none;
+}
+
 
 
 /* style task completate */
@@ -465,8 +478,8 @@ div::-webkit-scrollbar-thumb {
 /* textarea quando si modifica il testo con il pulsante modifica */
 .modificaTesto{
     width: 100%;
-    min-height: 193px;
-    max-height: 193px;
+    min-height: 187px;
+    max-height: 187px;
     background-color: transparent;
     border: none;
     font-weight: bold;
@@ -538,12 +551,40 @@ textarea::-webkit-scrollbar-thumb {
     z-index: 1001;
 }
 
+.showSto{
+    border:3px solid #A1A1A1;
+    color: white;
+    background-color: #1b242e;
+    max-width: 300px;
+    min-width: 300px;
+    max-height: 180px;
+    min-height: 180px;
+    position: absolute;
+    padding: 10px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001;
+}
+
 .showRm.addCommenti{
     max-height: 300px;
     min-height: 300px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.storicoInfo {
+    max-height: 100px;
+    min-height: 100px;
+    padding-right: 10px;
+    z-index:1001;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    text-align: center;
+    margin-top:20px;
+    font-size: 14px;
 }
 
 .allertRmText {
@@ -571,6 +612,16 @@ textarea::-webkit-scrollbar-thumb {
     width: 120px;
     height: 30px;
     z-index: 1001;
+}
+
+.popup-overlay-commenti {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000; 
+    pointer-events: auto;
 }
 
 .popup-overlay {
