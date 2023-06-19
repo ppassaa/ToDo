@@ -4,12 +4,16 @@ table {
     min-height: 435px;
     table-layout: fixed;
 }
+
+/*riquadro singolo del calendario*/
 .calendarBox{
     word-wrap: break-word;
     height: 80%;
     word-break: break-all;
     overflow-y: auto;
 }
+
+/*task singola dentro la box del calendario*/
 .calendarTask{
     border-bottom: 3px solid #424c57;
     background-color: #293542;
@@ -43,6 +47,8 @@ th {
     height: 28px;
     color: white;
 }
+
+/*style calendario*/
 .calendar {
     display: solid;
     margin: 0;
@@ -63,6 +69,7 @@ th {
     cursor: pointer;
 }
 
+/*bottone per i commenti dentro la task*/
 .commentiBtn{
     background-image: url("src/assets/commenti.PNG");
     background-size: cover;
@@ -86,30 +93,9 @@ th {
 }
 
 
-
 /* style task completate */
 .taskCompletate {
     list-style: none;
-}
-
-/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
-.riduci {
-    margin-left: 250px;
-}
-
-/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
-.riduciBottone {
-    margin-left: 180px;
-}
-
-/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
-.riduciAggiungi {
-    margin-top: -248px;
-}
-
-/* utilizzato quando compaiono i pulsanti fatto/sezione Aggiungi */
-.riduciRimuovi {
-    margin-top: -248px;
 }
 
 /* bordo dei pulsanti */
@@ -201,6 +187,8 @@ ul {
     max-height: 110px;
     min-height: 110px;
 }
+
+
 .zindexAlto{
     z-index: 9999;
 }
@@ -222,12 +210,15 @@ ul {
     padding-right: 10px;
     margin-right: 4%;
 }
+
+/*style della scrollbar che esce quando ci sono tante task*/
 p::-webkit-scrollbar {
     background-color: #f1f1f1;
     width: 5px;
     z-index: 999;
 }
 
+/*style della scrollbar che esce quando ci sono tante task*/
 p::-webkit-scrollbar-thumb {
     background-color: #888;
     z-index: 999;
@@ -271,16 +262,15 @@ p::-webkit-scrollbar-thumb {
     width: 20px;
     height: 20px;
 }
-html{
-    min-width: 510px;
-}
+
 /* style del body */
 @media (max-width: 510px) {
     body {
       overflow-x: hidden;
     }
-  }
+}
 
+/*style del body pt.2*/
 body {
     margin: 0;
     padding: 0;
@@ -363,7 +353,7 @@ div::-webkit-scrollbar-thumb {
         max-height: 73.6px;
     }
 }
-
+/*contenitore task "IN CORSO" + pulsante */
 .contenitoreincorso {
     display: flex;
     justify-content: center;
@@ -430,6 +420,8 @@ div::-webkit-scrollbar-thumb {
     height: 30px;
     z-index: 1001;
 }
+
+/*style della X off*/
 .esciShowTsk:disabled {
     color: black;
     border-color: black;
@@ -444,10 +436,12 @@ div::-webkit-scrollbar-thumb {
     z-index: 1001;
     background-color: #1B9DD9;
 }
+
+/* style off del bottone modifica/salva */
 .modifica:disabled {
     color: black;
     border-color: black;
-  }
+}
 
 /* sezione che contiene il testo della task nella sezione in cui si vedono le informazioni di ogni task */
 .showTitle {
@@ -488,6 +482,8 @@ div::-webkit-scrollbar-thumb {
     white-space: pre-wrap;
     text-align: center;
 }
+
+
 .inserisciTesto{
     width: 100%;
     min-height: 220px;
@@ -500,25 +496,21 @@ div::-webkit-scrollbar-thumb {
     text-align: center;
     color: white;
 }
+
+/*style textarea commenti*/
 textarea::-webkit-scrollbar {
     background-color: #f1f1f1;
     width: 5px;
     z-index: 999;
 }
 
+/*style textarea commenti*/
 textarea::-webkit-scrollbar-thumb {
     background-color: #888;
     z-index: 999;
 }
 
-.spostainBtn{ 
-    width: 90%;
-    height: 30px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    z-index: 999;
-    background-color: #1B9DD9;
-}
+
 .form{
     border:3px solid magenta;
     text-align: center;
@@ -535,6 +527,8 @@ textarea::-webkit-scrollbar-thumb {
     z-index: 1000;
     overflow: hidden;
 }
+
+
 .showRm{
     border:3px solid #A1A1A1;
     color: white;
@@ -587,6 +581,7 @@ textarea::-webkit-scrollbar-thumb {
     font-size: 14px;
 }
 
+/*finestra di conferma eliminazione / aggiungimento*/
 .allertRmText {
     word-wrap: break-word;
     max-height: 100px;
@@ -597,6 +592,7 @@ textarea::-webkit-scrollbar-thumb {
     font-weight: bold;
 }
 
+/*bottone rimuovi nella finestra di conferma eliminazione*/
 .allertRmRimuovi{
     margin-top: 3px;
     margin-right: 15px;
@@ -606,6 +602,7 @@ textarea::-webkit-scrollbar-thumb {
     background-color: #1B9DD9;
 }
 
+/*bottone annulla nella finestra di conferma eliminazione / aggiungimento */
 .allertRmAnnulla{
     margin-top: 3px;
     margin-left: 15px;
@@ -633,12 +630,14 @@ textarea::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.5); 
     z-index: 1000; 
     pointer-events: auto;
-  }
+}
 
+/*assegnazione del font a tutto*/
 * {
     font-family: "Roboto", sans-serif;
 }
 
+/*bottone informazioni*/
 .informazioni{
     height: 70%;
     width: 70%;
@@ -656,6 +655,7 @@ textarea::-webkit-scrollbar-thumb {
     overflow: hidden;
 }
 
+/*bottone che passa alla finestra delle informazioni*/
 .infoBtn{
     background-image: url("src/assets/info.PNG");
     background-size: cover;
@@ -666,19 +666,7 @@ textarea::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
-.informazioni{
-    border:3px solid #A1A1A1;
-    color: white;
-    background-color: #424C57;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    z-index: 1001;
-}
-
+/*bottone per la rimozione veloce delle task*/
 .selectBtn{
     background-image: url("src/assets/trash.PNG");
     background-size: cover;
@@ -689,6 +677,7 @@ textarea::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
+/*bottone per la conferma di rimozione veloce delle tasks*/
 .confermaBtn{
     background-image: url("src/assets/conferma.PNG");
     background-size: cover;
@@ -699,6 +688,7 @@ textarea::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
+/*bottone per passare in modalità privata*/
 .toggleUtente{
     background-image: url("src/assets/pubblico.PNG");
     background-size: cover;
@@ -709,6 +699,7 @@ textarea::-webkit-scrollbar-thumb {
     cursor: pointer;
 }
 
+/*bottone per passare in modalità pubblica*/
 .togglePubblico{
     background-image: url("src/assets/privato.PNG"); 
     background-size: cover;
