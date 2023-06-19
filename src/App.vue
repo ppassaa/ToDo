@@ -408,6 +408,7 @@ export default {
       showAddCommento : false,
       showInputPermessi: false,
       utenteAggiunto: null,
+      refresh: true,
     }
   },
   mounted(){
@@ -529,6 +530,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        this.refresh = true;
     },
     /* legge il DB */
     async readTasks() {
@@ -569,11 +571,14 @@ export default {
       };
       let risposta = await axios.request(config);
       this.gruppi = JSON.parse(risposta.data.data.data).groups;
-      let min = 9999;
-      this.myGruppi.forEach(g => {
-        if(g.id < min) min = g.id;
-      });
-      this.currentGroup = min;
+      if(this.refresh){ 
+         let min = 9999;
+        this.myGruppi.forEach(g => {
+          if(g.id < min) min = g.id;
+        });
+        this.currentGroup = min;
+        this.refresh = false;
+      }
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
