@@ -33,6 +33,7 @@ export default defineConfig({
       "src/assets/trash.png",
       "src/assets/commenti.PNG",
       "src/assets/storico.PNG",
+      "src/assets/calendario.PNG",
       ]
     }
   }

@@ -1,11 +1,30 @@
 <!-- yuhu -->
 <template>
+  <!-- contenitore di tutte le task e dei loro stati -->
+  <div class="" style="color: white;display: flex;width: 100%; height: 7.5%; min-height: 46px;padding: 10px;">
+    <div class="dropdown">
+      {{ gruppi.find(g => g.id == currentGroup).nome }}
+      <div class="dropdownContent">
+        <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
+        <button @click="showGruppiWindow = true">Gestisci gruppi</button>
+      </div>
+    </div>
+    <div style="margin-left: auto;">
+      <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn"></button>
+      <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
+      <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="toggleUtente" v-else></button>
+      <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls()"></button>
+      <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else></button>
+      <button @click="showInfo = !showInfo" class="infoBtn"></button>
+    </div>
+  </div>
   <!-- calendario -->
   <div class="calendar" v-if="showCalendar">
     <div style="display: flex; justify-content: space-between;">
   <div style="display: flex;">
-    <button @click="meseMeno()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡸</button>
-    <button @click="mesePiu()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡺</button>
+    <button @click="meseMeno()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow || showInfo || aggiungiBool">🡸</button>
+    <button @click="mesePiu()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow || showInfo || aggiungiBool">🡺</button>
     <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
   </div>
   <div>
@@ -48,7 +67,7 @@
         <div class="showButton">
           <!-- sezione alta(pulsanti X e modifica) -->
           <div>
-            <button @click="rimuoviPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Rimuovi</button>
+            <button @click="rimuoviPuls(); rimuoviBool2 = true" class="modifica" :disabled="rimuoviBool || showStorico">Rimuovi</button>
             <button v-if="modificaBool && !taskCompletaShow" @click="salvaPuls()" class="modifica">Salva</button>
             <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool || showStorico">Modifica</button>
           </div>
@@ -168,7 +187,7 @@
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputPermessi = true">permessi</button>
-      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
+      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
         <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
       </select>
     </div>
@@ -252,7 +271,7 @@
         </div>
       </div>
   <!-- allert di rimozione -->
-  <div class="showRm" v-if="rimuoviBool">
+  <div class="showRm" v-if="(rimuoviBool && tasks.some(t => t.selezionatoDel)) || rimuoviBool2">
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
             Conferma di rimozione della task
@@ -262,23 +281,15 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls()">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool = rimuoviBool2 = false">Annulla</button>
             </div>
         </div>
       </div>
-  <!-- contenitore di tutte le task e dei loro stati -->
     <div class="taskContainer" v-if="!showCalendar">
       <!-- sezione DA FARE -->
       <div class="containerStati">
-        <div class="contenitore">
-          <div style="margin-right: auto; margin-left: 12.5px;">
-            <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="rimuoviPuls()" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
-            <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
-          </div>
-          <div style="width: 58%; text-align: left;">DA FARE</div>
-        </div>
-        <div class="containerTFS dafare" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent @auxclick.prevent="gruppiHandler">
+        <div class="contenitorestati">DA FARE</div>
+        <div class="containerTFS dafare" @drop="onDrop($event, 'dafare')" @dragenter.prevent @dragover.prevent >
           <ul>
             <!-- stampa delle task "DA FARE" -->
             <li draggable="true" v-for="t in dafareTasks" @touchstart="touchStartHandler(t)" @touchend="touchEndHandler($event)" @dragstart="startDrag($event, t)" :class="{ rmStyle: incorsoBool || rimuoviBool, scaduto: !isNotScaduto(t), inscadenza: isScadenzaOggi(t) }">
@@ -299,7 +310,7 @@
       </div>
       <!-- sezione IN CORSO --> 
       <div class="containerStatiCentrale">
-        <div class="contenitoreincorso"  @auxclick="showCalendarPuls()">IN CORSO</div>
+        <div class="contenitorestati">IN CORSO</div>
         <div class="containerTFS incorso" @drop="onDrop($event, 'incorso')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "IN CORSO" -->
@@ -310,7 +321,7 @@
                   <div style="flex-grow: 1;">
                     <input type="checkbox" style="margin-left: 10px;width: 20px;height: 20px;" v-model="t.selezionatoDel" v-if="showCheckbox" :class="{zindexBasso : showCheckbox, zindexAlto : !showCheckbox}" @change="salvaselezione()" @click.stop>
                   </div>
-                  <div style="width: 100%; text-align: right;">
+                  <div style="width: 70%; text-align: right;">
                     <p style="margin-right: 4%;font-size: small; margin-top: 15px;">Scadenza: {{ t.dataScadenza }} <p style="margin-right: 1%;">{{ `${t.nome} ${t.cognome}` }}</p></p>
                   </div>
                 </div>
@@ -322,15 +333,7 @@
       </div>
       <!-- sezione COMPLETATI -->
       <div class="containerStati">
-        <div class="contenitore">
-          <div style="width: 63%; text-align: right;">COMPLETATI</div>
-          <div style="margin-left:auto;margin-right: 10px;">
-            <!-- bottone per aggiungere una nota -->
-            <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
-            <button @click="taskUtente = !taskUtente" style="margin-top: 3px; margin-right: 4px;" class="toggleUtente" v-else></button>
-            <button @click="aggiungiPuls()" style="margin-top: 3px;" class="aggiungiBtn"></button>
-          </div>
-        </div>
+        <div class="contenitorestati">COMPLETATI</div>
         <div class="containerTFS completati" @drop="onDrop($event, 'completati')" @dragenter.prevent @dragover.prevent>
           <ul>
             <!-- stampa delle task "COMPLETATI" -->
@@ -372,6 +375,7 @@ export default {
       fattoDafare: false,
       aggiungiBool: false,
       rimuoviBool: false,
+      rimuoviBool2: false,
       incorsoBool: false,
       dafareBool: false,
       completatiBool: false,
@@ -413,6 +417,7 @@ export default {
       showAddCommento : false,
       showInputPermessi: false,
       utenteAggiunto: null,
+      refresh: true,
     }
   },
   mounted(){
@@ -470,7 +475,6 @@ export default {
     this.readTasks();
     this.readGroups();
     this.sortTasks();
-    console.log(this.tasks);
   },
   watch: {
     showCalendar(newVal) {
@@ -534,6 +538,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        this.refresh = true;
     },
     /* legge il DB */
     async readTasks() {
@@ -574,11 +579,14 @@ export default {
       };
       let risposta = await axios.request(config);
       this.gruppi = JSON.parse(risposta.data.data.data).groups;
-      let min = 9999;
-      this.myGruppi.forEach(g => {
-        if(g.id < min) min = g.id;
-      });
-      this.currentGroup = min;
+      if(this.refresh){ 
+         let min = 9999;
+        this.myGruppi.forEach(g => {
+          if(g.id < min) min = g.id;
+        });
+        this.currentGroup = min;
+        this.refresh = false;
+      }
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
@@ -604,10 +612,13 @@ export default {
       this.dafareBool = false;
       this.completatiBool = false;
       this.rimuoviBoolGruppi = false;
+      if(!this.tasks.some(t => t.selezionatoDel)) {
+        this.showCheckbox = false;
+        this.rimuoviBool = false;
+      };
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
-      console.log(this.scadenza)
       if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup, commenti: [], storico: ""})
         this.taskText = '';
@@ -616,6 +627,7 @@ export default {
         this.notShowTaskPuls();
         this.writeTasks();
       }
+      this.createCalendar();
       this.writeTasks();
     },
     /* rimuove la task dall'array e aggiorna il DB */
@@ -626,7 +638,7 @@ export default {
       } else{
         this.tasks = this.tasks.filter((t) => JSON.stringify(t) !== JSON.stringify(this.oggetto));
         this.notShowTaskPuls();
-        this.rimuoviBool = false;
+        this.rimuoviBool = this.rimuoviBool2 = false;
         this.sortTasks();
         this.writeTasks();
       }
@@ -703,7 +715,6 @@ export default {
     },
     /* salva le modifiche effettuate alla task */
     salvaPuls() {
-      console.log(this.newContent);
       const oggDiTasks = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggetto));
       let modificaScadenza = false;
       if(this.newContent!=0){
@@ -769,14 +780,12 @@ export default {
       });
     },
     startDrag (event, task) {
-      console.log(task)
       event.dataTransfer.dropEffect = 'move'
       event.dataTransfer.effectAllowed = 'move'
       this.oggettodragdrop=task;
     },
     onDrop (event, dest) {
       clearInterval(this.timer);
-      console.log(this.oggettodragdrop)
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       let oggi = new Date();
       let anno = oggi.getFullYear();
@@ -845,7 +854,6 @@ export default {
       console.log("clickSi")
     },
     stampaTaskCalendario(){
-      console.log(this.taskAttuali);
       let divFinale = '';
       for(let i=0;i<this.taskAttuali.length;i++){
         if(this.taskAttuali && Array.isArray(this.taskAttuali) && this.taskAttuali.length > 0){if(this.taskAttuali[i].dataScadenza == this.scadenzaConfronto){
@@ -869,7 +877,7 @@ export default {
       let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
       let giorno = oggi.getDate().toString().padStart(2, '0');
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
-      
+
       let calendar = '';
       let week = '';
       let temp = "";
@@ -902,10 +910,18 @@ export default {
     
       calendarBody.innerHTML = calendar;
       const taskElements = document.querySelectorAll('.calendarTask');
+      var arrayDiStringhe = Array.from(taskElements).map(function(el) {
+        return el.outerHTML;
+      });
+      console.log(arrayDiStringhe);
       for (let k = 0; k < taskElements.length; k++) {
         const taskElement = taskElements[k];
+        let sium = arrayDiStringhe[k];
+        let sium1 = sium.split("[")[1];
+        let sium2 = sium1.split("]")[0];
+        console.log(sium2);
         taskElement.addEventListener('click', () => {
-          this.showTaskPuls(this.taskAttuali[k]);
+          this.showTaskPuls(this.taskAttuali[sium2]);
         });
       }
     },
