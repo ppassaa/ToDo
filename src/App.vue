@@ -231,7 +231,7 @@
         </div>
       </div>
   <!-- allert di rimozione -->
-  <div class="showRm" v-if="rimuoviBool">
+  <div class="showRm" v-if="rimuoviBool && tasks.some(t => t.selezionatoDel)">
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 25px;border-bottom:3px solid #A1A1A1;">
             Conferma di rimozione della task
@@ -241,7 +241,7 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls()">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool = false">Annulla</button>
             </div>
         </div>
       </div>
@@ -588,6 +588,10 @@ export default {
       this.dafareBool = false;
       this.completatiBool = false;
       this.rimuoviBoolGruppi = false;
+      if(!this.tasks.some(t => t.selezionatoDel)) {
+        this.showCheckbox = false;
+        this.rimuoviBool = false;
+      };
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
