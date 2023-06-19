@@ -393,6 +393,7 @@ export default {
       showCalendar: false,
       scadenzaConfronto: "",
       currentGroup: 1,
+      idCommenti: 0,
       timer: setInterval(() => {
         this.readTasks();
       }, 1000),
@@ -986,9 +987,10 @@ export default {
     },
     addCommento(){
       console.log(this.newCommento);
+      this.idCommenti++;
       const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
-      this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
-      task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
+      this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
+      task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
       this.writeTasks();
       this.newCommento = "";
       this.showAddCommento = false;
