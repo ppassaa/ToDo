@@ -162,8 +162,9 @@
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
       <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
+      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputPermessi = true">permessi</button>
       <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup" @change="showGruppiWindow = !showGruppiWindow">
-        <option v-for="g in gruppi" :value="g.id">{{ g.nome }}</option>
+        <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
       </select>
     </div>
   </div>
@@ -195,6 +196,22 @@
             <div>
               <button class="allertRmRimuovi" @click="creaGruppo()">Conferma</button>
               <button class="allertRmAnnulla" @click="showInputGruppo = false">Annulla</button>
+            </div>
+        </div>
+      </div>
+  <!-- alert inserimento permessi -->
+  <div class="showRm" v-if="showInputPermessi">
+        <!-- sezione sinistra(testo della task) -->
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
+            Aggiungi utente
+            <input type="number" v-model="utenteAggiunto" style="margin-top: 10px;" min="1" placeholder="Inserisci l'id utente">
+          </div>
+        <!-- sezione destra(pulsanti X) -->
+          <div class="showButton">
+            <!-- sezione alta(pulsanti X) -->
+            <div>
+              <button class="allertRmRimuovi" @click="addPermesso()">Conferma</button>
+              <button class="allertRmAnnulla" @click="showInputPermessi = false">Annulla</button>
             </div>
         </div>
       </div>
@@ -372,6 +389,8 @@ export default {
       newCommento: "",
       showCommenti: false,
       showAddCommento : false,
+      showInputPermessi: false,
+      utenteAggiunto: null,
     }
   },
   mounted(){
@@ -415,6 +434,9 @@ export default {
     },
     taskDataSelez(){
       return this.tasks.filter(t => t.dataScadenza == this.scadenzaConfronto);
+    },
+    myGruppi(){
+      return this.gruppi.filter((gruppo) => gruppo.permessi.some(p => p == this.operatoreId));
     }
 
   },
@@ -527,6 +549,11 @@ export default {
       };
       let risposta = await axios.request(config);
       this.gruppi = JSON.parse(risposta.data.data.data).groups;
+      let min = 9999;
+      this.myGruppi.forEach(g => {
+        if(g.id < min) min = g.id;
+      });
+      this.currentGroup = min;
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
@@ -848,10 +875,11 @@ export default {
   
     gruppiHandler(){
       this.showGruppiWindow = !this.showGruppiWindow;
+      console.log(this.myGruppi);
     },
     creaGruppo(){
       if(this.nomeGruppo != ""){
-        this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:this.nomeGruppo});
+        this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:this.nomeGruppo, permessi: [this.operatoreId]});
         this.writeGroups();
         this.showInputGruppo = false;
         this.nomeGruppo = "";
@@ -913,6 +941,14 @@ export default {
       task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento});
       this.writeTasks();
       this.showAddCommento = false;
+    },
+    addPermesso(){
+      if(this.utenteAggiunto){
+        const gruppo = this.gruppi.find((g) => g.id == this.currentGroup);
+        gruppo.permessi.push(this.utenteAggiunto);
+        this.writeGroups();
+        this.showInputPermessi = false;
+      }
     }
     
   }
