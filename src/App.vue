@@ -7,9 +7,7 @@
     <button @click="meseMeno()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡸</button>
     <button @click="mesePiu()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡺</button>
     <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
-  </div>
-  <div>
-    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" style="max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
+    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk float-left" style="max-width: 30px; max-height: 30px;margin-top: 8px" :disabled="rimuoviBool"></button>
   </div>
 </div>
     <div style="display: flex;height: 100%">
@@ -62,7 +60,6 @@
           </div>
           <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
             <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
-            <p v-if="showCalendar">Gruppo: {{ gruppi[oggetto.gruppo].nome }}</p>
             <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
           </div>
           <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
@@ -853,6 +850,12 @@ export default {
       const lastDayOfMonth = new Date(this.year, this.month + 1, 0);
       const numDays = lastDayOfMonth.getDate();
       const firstDayOfWeek = (firstDayOfMonth.getDay() + 6) % 7;
+      let oggi = new Date();
+      let anno = oggi.getFullYear();
+      let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
+      let giorno = oggi.getDate().toString().padStart(2, '0');
+      let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
+      
       let calendar = '';
       let week = '';
       let temp = "";
@@ -868,7 +871,11 @@ export default {
         if(this.month < 9) temp2="0"+(this.month+1);
         else temp2=(this.month+1);
         this.scadenzaConfronto=this.year+'-'+temp2+'-'+temp;
-        week += '<td>' + '<p style="font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
+        if(this.scadenzaConfronto==dataYYYYMMDD) {
+          week += '<td style="border: solid #1B9DD9;">' + '<p style="color: #1B9DD9;font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
+        } else {
+          week += '<td>' + '<p style="font-size: small;text-align: left;margin-bottom: -3px">'+ day +'</p>'+ '<div class="calendarBox">'+ this.stampaTaskCalendario() +'</div>' + '</td>';
+        }
         if ((firstDayOfWeek + day) % 7 === 0) {
           calendar += '<tr>' + week + '</tr>';
           week = '';
@@ -933,13 +940,13 @@ export default {
         task.completati = false;
         task.incorso = true;
         task.dafare = false;
-        console.log("pipo")
         task.storico += 'Spostato in IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "completati"){
         task.completati = true;
         task.incorso = false;
         task.dafare = false;
+        task.dataFine = dataYYYYMMDD;
         task.storico += 'Spostato in "COMPLETATI" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       this.writeTasks();
