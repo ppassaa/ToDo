@@ -845,9 +845,9 @@ export default {
       for(let i=0;i<this.taskAttuali.length;i++){
         if(this.taskAttuali && Array.isArray(this.taskAttuali) && this.taskAttuali.length > 0){if(this.taskAttuali[i].dataScadenza == this.scadenzaConfronto){
           if(this.taskAttuali[i].task.length > 10){
-            divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '...</div>';
+            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '...</div>';
           } else {
-            divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
+            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
           }
         }}
       }
@@ -900,7 +900,7 @@ export default {
       for (let k = 0; k < taskElements.length; k++) {
         const taskElement = taskElements[k];
         taskElement.addEventListener('click', () => {
-          this.showTaskPuls(this.tasks[k]);
+          this.showTaskPuls(this.taskAttuali[k]);
         });
       }
     },
