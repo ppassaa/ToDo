@@ -62,7 +62,6 @@
           </div>
           <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
             <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
-            <p v-if="showCalendar">Gruppo: {{ gruppi[oggetto.gruppo].nome }}</p>
             <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
           </div>
           <div v-if="taskCompletaShow">Data di fine: <p>{{ oggetto.dataFine }}</p>
@@ -455,6 +454,9 @@ export default {
     },
     myGruppi(){
       return this.gruppi.filter((gruppo) => gruppo.permessi.some(p => p == this.operatoreId));
+    },
+    taskAttuali(){
+      return this.tasks.filter(t => t.gruppo === this.currentGroup);
     }
 
   },
@@ -838,15 +840,14 @@ export default {
       console.log("clickSi")
     },
     stampaTaskCalendario(){
-      let taskAttuali = this.tasks.filter(t => t.gruppo === this.currentGroup);
-      console.log(taskAttuali);
+      console.log(this.taskAttuali);
       let divFinale = '';
-      for(let i=0;i<taskAttuali.length;i++){
-        if(taskAttuali && Array.isArray(taskAttuali) && taskAttuali.length > 0){if(taskAttuali[i].dataScadenza == this.scadenzaConfronto){
-          if(taskAttuali[i].task.length > 10){
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(taskAttuali[' + i + '])">' + taskAttuali[i].task.substr(0,10) + '...</div>';
+      for(let i=0;i<this.taskAttuali.length;i++){
+        if(this.taskAttuali && Array.isArray(this.taskAttuali) && this.taskAttuali.length > 0){if(this.taskAttuali[i].dataScadenza == this.scadenzaConfronto){
+          if(this.taskAttuali[i].task.length > 10){
+            divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '...</div>';
           } else {
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(taskAttuali[' + i + '])">' + taskAttuali[i].task.substr(0,10) + '</div>';
+            divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
           }
           //divFinale = '<button @click="showTaskPuls(this.tasks[' + i + '])>ciao</button>';
         }}
