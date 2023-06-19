@@ -864,7 +864,7 @@ export default {
       let mese = (oggi.getMonth() + 1).toString().padStart(2, '0');
       let giorno = oggi.getDate().toString().padStart(2, '0');
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
-      
+
       let calendar = '';
       let week = '';
       let temp = "";
@@ -897,10 +897,18 @@ export default {
     
       calendarBody.innerHTML = calendar;
       const taskElements = document.querySelectorAll('.calendarTask');
+      var arrayDiStringhe = Array.from(taskElements).map(function(el) {
+        return el.outerHTML;
+      });
+      console.log(arrayDiStringhe);
       for (let k = 0; k < taskElements.length; k++) {
         const taskElement = taskElements[k];
+        let sium = arrayDiStringhe[k];
+        let sium1 = sium.split("[")[1];
+        let sium2 = sium1.split("]")[0];
+        console.log(sium2);
         taskElement.addEventListener('click', () => {
-          this.showTaskPuls(this.taskAttuali[k]);
+          this.showTaskPuls(this.taskAttuali[sium2]);
         });
       }
     },
