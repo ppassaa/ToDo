@@ -79,7 +79,7 @@
         <div class="dataShow">
           <div style="margin-top: 5px;">Data di creazione: <p>{{ oggetto.dataCreazione }}</p>
           </div>
-          <div :class="{riduciTop: oggetto.incorso}">Data di scadenza: 
+          <div>Data di scadenza: 
             <p v-if="!modificaBool">{{ oggetto.dataScadenza }}</p>
             <input v-if="modificaBool" style="margin-right: 4px;z-index:999" type="date" v-model="scadenza" :min="todayStr">
           </div>
