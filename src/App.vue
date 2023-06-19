@@ -268,8 +268,8 @@
         <div class="contenitore">
           <div style="margin-right: auto; margin-left: 12.5px;">
             <button @click="showInfo = !showInfo" style="margin-top: 3px;" class="infoBtn"></button>
-            <button @click="rimuoviPuls()" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
-            <button @click="showCheckbox = !showCheckbox" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
+            <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-top: 3px;" class="confermaBtn" v-if="showCheckbox"></button>
+            <button @click="showCheckbox = true" style="margin-top: 3px; margin-left: 4px;" class="selectBtn" v-else></button>
           </div>
           <div style="width: 58%; text-align: left;">DA FARE</div>
         </div>
@@ -408,6 +408,7 @@ export default {
       showAddCommento : false,
       showInputPermessi: false,
       utenteAggiunto: null,
+      refresh: true,
     }
   },
   mounted(){
@@ -529,6 +530,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+        this.refresh = true;
     },
     /* legge il DB */
     async readTasks() {
@@ -569,11 +571,14 @@ export default {
       };
       let risposta = await axios.request(config);
       this.gruppi = JSON.parse(risposta.data.data.data).groups;
-      let min = 9999;
-      this.myGruppi.forEach(g => {
-        if(g.id < min) min = g.id;
-      });
-      this.currentGroup = min;
+      if(this.refresh){ 
+         let min = 9999;
+        this.myGruppi.forEach(g => {
+          if(g.id < min) min = g.id;
+        });
+        this.currentGroup = min;
+        this.refresh = false;
+      }
     },
     /* azione di quando si clicca il pulsante Aggiungi, apre la sezione Aggiungi */
     aggiungiPuls() {
