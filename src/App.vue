@@ -13,7 +13,7 @@
       <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn"></button>
       <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
       <button @click="taskUtente = !taskUtente" style="margin-right: 4px;" class="toggleUtente" v-else></button>
-      <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls()" v-if="!showCalendar"></button>
+      <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls()"></button>
       <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
             <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else></button>
       <button @click="showInfo = !showInfo" class="infoBtn"></button>
@@ -23,8 +23,8 @@
   <div class="calendar" v-if="showCalendar">
     <div style="display: flex; justify-content: space-between;">
   <div style="display: flex;">
-    <button @click="meseMeno()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow">🡸</button>
-    <button @click="mesePiu()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow">🡺</button>
+    <button @click="meseMeno()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow || showInfo || aggiungiBool">🡸</button>
+    <button @click="mesePiu()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showGruppiWindow || showInfo || aggiungiBool">🡺</button>
     <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
   </div>
   <div>
@@ -622,6 +622,7 @@ export default {
         this.notShowTaskPuls();
         this.writeTasks();
       }
+      this.createCalendar();
       this.writeTasks();
     },
     /* rimuove la task dall'array e aggiorna il DB */
