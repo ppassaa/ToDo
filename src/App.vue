@@ -7,7 +7,9 @@
     <button @click="meseMeno()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡸</button>
     <button @click="mesePiu()" class="modifica" style="max-width: 100px;margin-top: 8px;">🡺</button>
     <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
-    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk float-left" style="max-width: 30px; max-height: 30px;margin-top: 8px" :disabled="rimuoviBool"></button>
+  </div>
+  <div>
+    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" style="max-width: 30px; max-height: 30px;margin-top: 8px" :disabled="rimuoviBool"></button>
   </div>
 </div>
     <div style="display: flex;height: 100%">
@@ -847,7 +849,6 @@ export default {
           } else {
             divFinale += '<div class="calendarTask" @click="showTaskPuls(taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
           }
-          //divFinale = '<button @click="showTaskPuls(this.tasks[' + i + '])>ciao</button>';
         }}
       }
       return divFinale;
