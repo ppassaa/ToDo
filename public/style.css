@@ -459,8 +459,8 @@ div::-webkit-scrollbar-thumb {
 /* textarea quando si modifica il testo con il pulsante modifica */
 .modificaTesto{
     width: 100%;
-    min-height: 180px;
-    max-height: 180px;
+    min-height: 193px;
+    max-height: 193px;
     background-color: transparent;
     border: none;
     font-weight: bold;
