@@ -98,8 +98,10 @@
   <div class="popup-overlay-commenti" v-if="showCommenti">
     <div class="showTsk" v-if="showCommenti">
       <div class="sxShowCommenti">
-        <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px; word-break: break-all; word-wrap: break-word; overflow-y: auto; max-height: 100px;" v-for="c in oggetto.commenti">
-          {{ c.commento}} <br> 
+        <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px; max-height: 100px;" v-for="c in oggetto.commenti">
+          <div style="word-break: break-all; word-wrap: break-word; overflow-y: auto; height: 70px;margin-bottom: 5px; padding: 5px;">
+            {{ c.commento}}
+          </div> 
           <span style="font-size: small; height: 20px;">
             {{ c.utente }} 
             <button @click="rmCommento(c)" class="esciShowTskCommenti" :disabled="c.idUtente != operatoreId" :hidden="c.idUtente != operatoreId"></button>
