@@ -3,7 +3,7 @@
   <!-- contenitore di tutte le task e dei loro stati -->
   <div class="" style="color: white;display: flex;width: 100%; height: 7.5%; min-height: 46px;padding: 10px;">
     <div class="dropdown">
-      {{ gruppi.find(g => g.id == currentGroup).nome }}
+      {{ currentGroupNome }}
       <div class="dropdownContent">
         <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
         <button @click="showGruppiWindow = true">Gestisci gruppi</button>
@@ -269,7 +269,7 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls();rimuoviBool2 = false">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls();">Annulla</button>
             </div>
         </div>
       </div>
@@ -407,6 +407,7 @@ export default {
       showInputPermessi: false,
       utenteAggiunto: null,
       refresh: true,
+      currentGroupNome: "",
     }
   },
   mounted(){
@@ -464,6 +465,9 @@ export default {
     this.readTasks();
     this.readGroups();
     this.sortTasks();
+    setTimeout(() => {
+      this.currentGroupNome = this.gruppi.find(g => g.id == this.currentGroup).nome;
+    }, 500);
   },
   watch: {
     showCalendar(newVal) {
