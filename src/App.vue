@@ -110,7 +110,7 @@
         <button @click="showCommenti = false; newCommento = ''" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
         <div style="text-align: center;">
           <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" minlength="1" placeholder="Commento(Max 500 caratteri)"></textarea>
-          <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento">Aggiungi</button>
+          <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento();newCommento=''">Aggiungi</button>
         </div>
       </div>
     </div>
@@ -1032,7 +1032,6 @@ export default {
       else return this.getTfs(elemento.parentElement);
     },
     addCommento(){
-      
       if(this.newCommento.trim()){
         console.log(this.newCommento);
         this.idCommenti++;
