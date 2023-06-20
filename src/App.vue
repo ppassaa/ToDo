@@ -102,7 +102,7 @@
           {{ c.commento}} <br> 
           <span style="font-size: small; height: 20px;">
             {{ c.utente }} 
-            <button @click="rmCommento(c)" class="esciShowTskCommenti"></button>
+            <button @click="rmCommento(c)" class="esciShowTskCommenti" :disabled="c.id != operatoreId" :hidden="c.id != operatoreId"></button>
           </span>
         </div>
       </div>
@@ -1037,8 +1037,8 @@ export default {
         console.log(this.newCommento);
         this.idCommenti++;
         const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
-        this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
-        task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
+        this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti, idUtente: this.operatoreId});
+        task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti, idUtente: this.operatoreId});
         this.writeTasks();
         this.newCommento = "";
         this.showAddCommento = false;
