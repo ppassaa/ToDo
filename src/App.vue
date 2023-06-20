@@ -1,7 +1,7 @@
 <!-- yuhu -->
 <template>
   <!-- contenitore di tutte le task e dei loro stati -->
-  <div class="" style="color: white;display: flex;width: 100%; height: 7.5%; min-height: 46px;padding: 10px;">
+  <div class="" style="color: white;display: flex;width: 100%; height: 6.5%; min-height: 30px;padding: 10px">
     <div class="dropdown">
       {{ gruppi.find(g => g.id == currentGroup).nome }}
       <div class="dropdownContent">
