@@ -5,12 +5,12 @@
     <div class="dropdown" @mouseover="freccia='▼'" @mouseleave="freccia='▲'">
         <div style="display: flex;">
           <div>
-            {{ currentGroupNome == "" ? "Caricando..." : currentGroupNome}}
+            {{ gruppi.find(g => g.id == currentGroup) == undefined ? "Caricando..." : gruppi.find(g => g.id == currentGroup).nome}}
           </div>
           <div id="freccia" style="color:white; margin-left: auto;">{{ freccia }}</div>
         </div>
       <div class="dropdownContent">
-        <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
+        <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar();">{{ g.nome }}</button>
         <button @click="showGruppiWindow = true">Gestisci gruppi</button>
       </div>
     </div>
@@ -418,7 +418,6 @@ export default {
       showInputPermessi: false,
       utenteAggiunto: null,
       refresh: true,
-      currentGroupNome: "",
     }
   },
   mounted(){
@@ -476,9 +475,6 @@ export default {
     this.readTasks();
     this.readGroups();
     this.sortTasks();
-    setTimeout(() => {
-      this.currentGroupNome = this.gruppi.find(g => g.id == this.currentGroup).nome;
-    }, 500);
   },
   watch: {
     showCalendar(newVal) {
