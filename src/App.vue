@@ -956,11 +956,21 @@ export default {
       console.log(this.myGruppi);
     },
     creaGruppo(){
-      if(this.nomeGruppo != ""){
+      if(this.nomeGruppo.trim() && !this.gruppi.some(g => g.nome == this.nomeGruppo) && this.nomeGruppo.trim().toLowerCase() != "gestisci gruppi"){
         this.gruppi.push({id: this.gruppi[this.gruppi.length-1].id+1, nome:this.nomeGruppo, permessi: [this.operatoreId]});
         this.writeGroups();
         this.showInputGruppo = false;
         this.nomeGruppo = "";
+      }
+      else if(this.nomeGruppo.trim().toLowerCase() == "gestisci gruppi"){
+        alert("Nome invalido");
+      }
+      else if(this.nomeGruppo.trim()){
+        alert("Il nome del gruppo è già utilizzato");
+        console.log(this.gruppi);
+      }
+      else{
+        alert("Il nome del gruppo non deve essere vuoto");
       }
     },
     eliminaGruppo(){
