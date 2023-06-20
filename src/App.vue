@@ -3,15 +3,15 @@
   <!-- contenitore di tutte le task e dei loro stati -->
   <div class="" style="color: white;display: flex;width: 100%; height: 6.5%; min-height: 30px;padding: 10px">
     <div class="dropdown" @mouseover="freccia='▼'" @mouseleave="freccia='▲'">
-        <div style="display: flex;">
+        <div style="display: flex; height: 100%; padding: 2px;">
           <div>
             {{ currentGroupNome == "" ? "Caricando..." : currentGroupNome}}
           </div>
           <div id="freccia" style="color:white; margin-left: auto;">{{ freccia }}</div>
         </div>
       <div class="dropdownContent">
-        <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
-        <button @click="showGruppiWindow = true">Gestisci gruppi</button>
+        <button style="text-align: left;" v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
+        <button style="text-align: left;" @click="showGruppiWindow = true">Gestisci gruppi</button>
       </div>
     </div>
     <div style="margin-left: auto;">
