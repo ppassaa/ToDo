@@ -5,7 +5,7 @@
     <div class="dropdown" @mouseover="freccia='▼'" @mouseleave="freccia='▲'">
         <div style="display: flex; height: 100%; padding: 2px;">
           <div>
-            {{ currentGroupNome == "" ? "Caricando..." : currentGroupNome}}
+            {{ gruppi.find(g => g.id == currentGroup) == undefined ? "Caricando..." : gruppi.find(g => g.id == currentGroup).nome}}
           </div>
           <div id="freccia" style="color:white; margin-left: auto;">{{ freccia }}</div>
         </div>
@@ -189,9 +189,9 @@
     </div>
   </div>
   <div v-if="showGruppiWindow" class="popup-overlay"> 
-    <div class="informazioni" style="height: 12%; width: 20%; max-width: 500px; min-width: 350px;">
+    <div class="informazioni" style="padding: 10px; height: 15%; width: 25%; max-width: 500px; min-width: 350px;">
       <div style="display: flex;flex-direction: row;">
-        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" ></button>
+        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-right: 2px; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" ></button>
         <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
           <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
         </select>
@@ -418,7 +418,6 @@ export default {
       showInputPermessi: false,
       utenteAggiunto: null,
       refresh: true,
-      currentGroupNome: "",
     }
   },
   mounted(){
@@ -476,9 +475,6 @@ export default {
     this.readTasks();
     this.readGroups();
     this.sortTasks();
-    setTimeout(() => {
-      this.currentGroupNome = this.gruppi.find(g => g.id == this.currentGroup).nome;
-    }, 500);
   },
   watch: {
     showCalendar(newVal) {
