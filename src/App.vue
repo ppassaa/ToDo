@@ -189,9 +189,9 @@
     </div>
   </div>
   <div v-if="showGruppiWindow" class="popup-overlay"> 
-    <div class="informazioni" style="height: 12%; width: 20%; max-width: 500px; min-width: 350px;">
+    <div class="informazioni" style="padding: 10px; height: 15%; width: 25%; max-width: 500px; min-width: 350px;">
       <div style="display: flex;flex-direction: row;">
-        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" ></button>
+        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-right: 2px; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" ></button>
         <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
           <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
         </select>
