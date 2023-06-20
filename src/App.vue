@@ -374,7 +374,7 @@ export default {
       incorsoBool: false,
       dafareBool: false,
       completatiBool: false,
-      freccia: '▲',
+      freccia: '▼',
       scadenzaStr: "",
       scadenza: "",
       showTask: false,
@@ -420,7 +420,7 @@ export default {
     }
   },
   mounted(){
-    sessionStorage.setItem("operatorID", 104);
+    sessionStorage.setItem("operatorID", 1);
     sessionStorage.setItem("operatorName", "Silvio");
     sessionStorage.setItem("operatorSurname", "Berlusconi");
     // setTimeout(() => {
