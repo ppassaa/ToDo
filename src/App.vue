@@ -4,7 +4,7 @@
   <div class="" style="color: white;display: flex;width: 100%; height: 6.5%; min-height: 30px;padding: 10px">
     <div class="dropdown" :class="{dropdownhover: clickTendina}" @click="clickTendina=!clickTendina;cambiaFreccia()">
         <div style="display: flex; height: 100%; padding: 2px;">
-          <div>
+          <div style="height: 100%;overflow-y: auto;">
             {{ gruppi.find(g => g.id == currentGroup) == undefined ? "Caricando..." : gruppi.find(g => g.id == currentGroup).nome}}
           </div>
           <div id="freccia" style="color:white; margin-left: auto;">{{ freccia }}</div>
