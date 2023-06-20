@@ -109,7 +109,7 @@
       <div class="dxShowCommenti">
         <button @click="showCommenti = false; newCommento = ''" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
         <div style="text-align: center;">
-          <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" placeholder="Commento(Max 500 caratteri)"></textarea>
+          <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" minlength="1" placeholder="Commento(Max 500 caratteri)"></textarea>
           <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento">Aggiungi</button>
         </div>
       </div>
@@ -275,7 +275,7 @@
             <!-- sezione alta(pulsanti X) -->
             <div>
               <button class="allertRmRimuovi" @click="rimuoviTask()">Rimuovi</button>
-              <button class="allertRmAnnulla" @click="rimuoviPuls();">Annulla</button>
+              <button class="allertRmAnnulla" @click="rimuoviPuls(); rimuoviBool2 = false;">Annulla</button>
             </div>
         </div>
       </div>
@@ -640,13 +640,16 @@ export default {
     },
     /* aggiunge la task all'array e aggiorna il DB  */
     aggiungiTask() {
-      if (this.taskText.length != 0 && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
+      if (this.taskText.trim() && this.scadenza.length != 0 && this.isNotScadutoAdd(this.scadenza)) {
         this.tasks.push({ task: this.taskText, dafare: true, incorso: false, completati: false, dataCreazione: this.todayStr, dataScadenza: this.scadenza, scaduta: false, selezionatoDel: false, nome: this.operatoreNome, cognome: this.operatoreCognome, id: this.operatoreId, privata: this.taskUtente, gruppo: this.currentGroup, commenti: [], storico: ""})
         this.taskText = '';
         this.scadenza = '';
         this.sortTasks();
         this.notShowTaskPuls();
         this.writeTasks();
+      }
+      else{
+        alert("Il testo della task non deve essere vuoto");
       }
       this.createCalendar();
       this.writeTasks();
@@ -1018,14 +1021,17 @@ export default {
       else return this.getTfs(elemento.parentElement);
     },
     addCommento(){
-      console.log(this.newCommento);
-      this.idCommenti++;
-      const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
-      this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
-      task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
-      this.writeTasks();
-      this.newCommento = "";
-      this.showAddCommento = false;
+      
+      if(this.newCommento.trim()){
+        console.log(this.newCommento);
+        this.idCommenti++;
+        const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
+        this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
+        task.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti});
+        this.writeTasks();
+        this.newCommento = "";
+        this.showAddCommento = false;
+    }
     },
     addPermesso(){
       console.log(this.utenteAggiunto);
