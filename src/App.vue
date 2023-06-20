@@ -2,15 +2,15 @@
 <template>
   <!-- contenitore di tutte le task e dei loro stati -->
   <div class="" style="color: white;display: flex;width: 100%; height: 6.5%; min-height: 30px;padding: 10px">
-    <div class="dropdown" @mouseover="freccia='▼'" @mouseleave="freccia='▲'">
+    <div class="dropdown" :class="{dropdownhover: clickTendina}" @mouseover="freccia='▼'" @mouseleave="freccia='▲';clickTendina = false" @click="clickTendina=!clickTendina;">
         <div style="display: flex; height: 100%; padding: 2px;">
           <div>
             {{ gruppi.find(g => g.id == currentGroup) == undefined ? "Caricando..." : gruppi.find(g => g.id == currentGroup).nome}}
           </div>
           <div id="freccia" style="color:white; margin-left: auto;">{{ freccia }}</div>
         </div>
-      <div class="dropdownContent">
-        <button style="text-align: left;" v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
+      <div class="dropdownContent" :class="{dropdownContentVisibile: clickTendina, dropdownContentNotVisibile: !clickTendina}">
+        <button style="text-align: left;" v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar();clickTendina = false">{{ g.nome }}</button>
         <button style="text-align: left;" @click="showGruppiWindow = true">Gestisci gruppi</button>
       </div>
     </div>
@@ -363,6 +363,7 @@ export default {
   data() {
     return {
       tasks: [],
+      clickTendina: false,
       tendinaShow: false,
       taskText: "",
       month: new Date().getMonth(),
@@ -1021,6 +1022,13 @@ export default {
       this.oggetto.commenti = task.commenti;
       this.sortTasks();
       this.writeTasks();
+    },
+    cambiaFrecci(){
+      if(this.clickTendina){
+        freccia='▲';
+      } else {
+        freccia='▼';
+      }
     }
     
   }
