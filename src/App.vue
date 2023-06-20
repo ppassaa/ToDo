@@ -404,6 +404,7 @@ export default {
       idCommenti: 0,
       timer: setInterval(() => {
         this.readTasks();
+        this.readGroups();
       }, 1000),
       gruppi: [],
       rimuoviBoolGruppi : false,
