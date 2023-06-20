@@ -2,8 +2,13 @@
 <template>
   <!-- contenitore di tutte le task e dei loro stati -->
   <div class="" style="color: white;display: flex;width: 100%; height: 6.5%; min-height: 30px;padding: 10px">
-    <div class="dropdown">
-      {{ currentGroupNome == "" ? "Caricando..." : currentGroupNome}}
+    <div class="dropdown" @mouseover="freccia='▼'" @mouseleave="freccia='▲'">
+        <div style="display: flex;">
+          <div>
+            {{ currentGroupNome == "" ? "Caricando..." : currentGroupNome}}
+          </div>
+          <div id="freccia" style="color:white; margin-left: auto;">{{ freccia }}</div>
+        </div>
       <div class="dropdownContent">
         <button v-for="g in myGruppi" @click="currentGroup = g.id; createCalendar()">{{ g.nome }}</button>
         <button @click="showGruppiWindow = true">Gestisci gruppi</button>
@@ -367,6 +372,7 @@ export default {
       incorsoBool: false,
       dafareBool: false,
       completatiBool: false,
+      freccia: '▲',
       scadenzaStr: "",
       scadenza: "",
       showTask: false,
@@ -1018,7 +1024,7 @@ export default {
     
   }
 }
-  
+
 </script>
 
 <style>
