@@ -251,13 +251,9 @@
         <!-- sezione sinistra(testo della task) -->
           <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
             Aggiungi utente
-            <textarea 
-              type="number" 
-              v-model="utenteAggiunto" 
-              style="margin-top: 10px; height: 33px; text-align: center; word-wrap: break-word; word-break: break-all; white-space: pre-wrap;"
-              min="1" 
-              placeholder="Inserisci l'id utente">
-            </textarea>
+            <select name="" id="" v-model="utenteAggiunto">
+              <option :value="op.id" v-for="op in operatori">{{ op.email }}</option>
+            </select>
           </div>
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
@@ -418,6 +414,7 @@ export default {
       showInputPermessi: false,
       utenteAggiunto: null,
       refresh: true,
+      operatori: [],
     }
   },
   mounted(){
@@ -475,6 +472,7 @@ export default {
     this.readTasks();
     this.readGroups();
     this.sortTasks();
+    this.getOperators();
   },
   watch: {
     showCalendar(newVal) {
@@ -559,6 +557,28 @@ export default {
       };
       let risposta = await axios.request(config);
       this.tasks = JSON.parse(risposta.data.data.data).tasks ?? [];
+    },
+
+    async getOperators(){
+      let data = JSON.stringify({
+        "appCode" : "ONOINT-0002",
+      });
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: "http://64.227.120.171:7576/grpc/GetOperators",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6LTEsImlzcyI6Im9ub1NlcnZlciIsInN1YiI6InNvbWVvbmUiLCJleHAiOjE2ODYzMDQwMDksIm5iZiI6MTY4NjIxOTQwOSwiaWF0IjoxNjg2MjE3NjA5LCJqdGkiOiJvbm8tc2VydmVyIn0.VtfbfToSXSekUVEKtViannwS2O4MUdkLKlQsqpuOnUY'
+        },
+        data: data
+
+      }
+
+      let risposta = await axios.request(config);
+      console.log(risposta.data.operators, "operatori");
+      this.operatori = risposta.data.operators;
     },
 
     async readGroups() {
@@ -1007,6 +1027,7 @@ export default {
       this.showAddCommento = false;
     },
     addPermesso(){
+      console.log(this.utenteAggiunto);
       if(this.utenteAggiunto){
         const gruppo = this.gruppi.find((g) => g.id == this.currentGroup);
         gruppo.permessi.push(this.utenteAggiunto);
