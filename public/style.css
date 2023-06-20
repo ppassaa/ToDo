@@ -424,7 +424,6 @@ div::-webkit-scrollbar-thumb {
 
 /* style della X della sezione in cui si vedono le informazioni di ogni task */
 .esciShowTsk {
-    flex: 1;
     background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
@@ -772,8 +771,9 @@ textarea::-webkit-scrollbar-thumb {
 
 .select {
     margin-top: 5px;
-    width: 98%;
+    width: 95%;
     margin-left: 3.5px;
+    margin-right: 3.5px;
 
 }
 

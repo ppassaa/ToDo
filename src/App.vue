@@ -189,14 +189,19 @@
     </div>
   </div>
   <div v-if="showGruppiWindow" class="popup-overlay"> 
-    <div class="informazioni" style="height: 50%; width: 20%; max-width: 500px; min-width: 350px;">
-      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 5px; margin-top: 5px;" class="aggiungiBtn" ></button>
-      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 5px; margin-top: 5px;"></button>
-      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">elimina</button>
-      <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputPermessi = true">permessi</button>
-      <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
-        <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
-      </select>
+    <div class="informazioni" style="height: 12%; width: 20%; max-width: 500px; min-width: 350px;">
+      <div style="display: flex;flex-direction: row;">
+        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" ></button>
+        <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
+          <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
+        </select>
+        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 2px; margin-top: 5px;"></button>
+      </div>
+      <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 10px;">
+        <button style="color: white; padding-left: 30px; padding-right: 30px; background-color: rgb(27,157,217);" :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">Elimina</button>
+        <button style="color: white; padding-left: 30px; padding-right: 30px; background-color: rgb(27,157,217);" :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputPermessi = true">Permessi</button>
+      </div>
+      
     </div>
   </div>
   <!-- alert rimozione gruppi -->
