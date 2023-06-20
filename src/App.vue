@@ -60,7 +60,7 @@
       <!-- sezione sinistra(testo della task) -->
       <div class="sxShow">
         <div class="showTitle">
-          <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool">{{ newContent }}</textarea>
+          <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool" maxlength="2000">{{ newContent }}</textarea>
           <div style="display: flex;">
             <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
             <button @click="showStoricoPuls()" class="storicoBtn" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
@@ -122,7 +122,7 @@
         <!-- sezione sinistra(testo della task) -->
         <div class="sxShow">
           <div class="showTitle">
-            <textarea class="inserisciTesto" v-model="taskText" placeholder="Task" required>{{ taskText }}</textarea>
+            <textarea class="inserisciTesto" v-model="taskText" placeholder="Task" required maxlength="2000">{{ taskText }}</textarea>
           </div>
         </div>
         <!-- sezione destra(pulsanti X e modifica e date) -->
