@@ -317,7 +317,7 @@
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
             <!-- sezione alta(pulsanti X) -->
-            <div>
+            <div style="display: flex; justify-items: center; flex-direction: row; margin-right: -45px;">
               <button class="allertRmRimuovi" @click="addPermesso()">Conferma</button>
               <button class="allertRmAnnulla" @click="showInputPermessi = false">Annulla</button>
             </div>
