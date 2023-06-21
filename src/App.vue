@@ -16,8 +16,8 @@
     </div>
     <div style="margin-left: auto;">
       <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn"></button>
-      <button @click="taskUtente = !taskUtente;" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
-      <button @click="taskUtente = !taskUtente;" style="margin-right: 4px;" class="toggleUtente" v-else></button>
+      <button @click="taskUtente = !taskUtente;createCalendar()" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
+      <button @click="taskUtente = !taskUtente;createCalendar()" style="margin-right: 4px;" class="toggleUtente" v-else></button>
       <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls();showCheckbox = false"></button>
       <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
       <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else :disabled="showCalendar"></button>
@@ -492,7 +492,7 @@ export default {
   mounted(){
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Mario");
-    sessionStorage.setItem("operatorSurname", "Rossi");
+    sessionStorage.setItem("operatorSurname", "ROssi");
     // setTimeout(() => {
     //   let maxGroup = 1;
     //   console.log(maxGroup);
@@ -535,8 +535,14 @@ export default {
       return this.gruppi.filter((gruppo) => gruppo.permessi.some(p => p == this.operatoreId));
     },
     taskAttuali(){
-      return this.tasks.filter(t => t.gruppo === this.currentGroup);
+      if(this.taskUtente) {
+        return this.tasks.filter(t => t.gruppo === this.currentGroup  && t.id == this.operatoreId);  
+      }
+      else{
+        return this.tasks.filter(t => t.gruppo === this.currentGroup);
+      }
     }
+    
 
   },
   beforeMount() {
@@ -924,7 +930,6 @@ export default {
       this.tasks = this.tasks.filter((t) => t.selezionatoDel == false)
       this.writeTasks()
     },
-
     mesePiu(){
       this.month++;
       if(this.month==12){
@@ -1004,13 +1009,11 @@ export default {
       var arrayDiStringhe = Array.from(taskElements).map(function(el) {
         return el.outerHTML;
       });
-      //console.log(arrayDiStringhe);
       for (let k = 0; k < taskElements.length; k++) {
         const taskElement = taskElements[k];
         let sium = arrayDiStringhe[k];
         let sium1 = sium.split("[")[1];
         let sium2 = sium1.split("]")[0];
-        //console.log(sium2);
         taskElement.addEventListener('click', () => {
           this.showTaskPuls(this.taskAttuali[sium2]);
         });
@@ -1019,7 +1022,6 @@ export default {
   
     gruppiHandler(){
       this.showGruppiWindow = !this.showGruppiWindow;
-      //console.log(this.myGruppi);
     },
     creaGruppo(){
       if(this.nomeGruppo.trim() && !this.gruppi.some(g => g.nome == this.nomeGruppo) && this.nomeGruppo.trim().toLowerCase() != "gestisci gruppi"){
@@ -1046,14 +1048,11 @@ export default {
         this.writeTasks();
         this.gruppi = this.gruppi.filter(g => g.id !== this.currentGroup);
         this.writeGroups();
-        //console.log(gruppo);
         this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ].id : gruppo+1;
         this.rimuoviBoolGruppi = false;
       }
     },
     touchEndHandler(e){
-      //console.log(e);
-      //console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       let destinazione = this.getTfs(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       let oggi = new Date();
@@ -1130,7 +1129,6 @@ export default {
     },
     rmCommento(e){
       const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
-      //console.log(task.commenti);
       task.commenti = task.commenti.filter(el => JSON.stringify(el) !== JSON.stringify(e));
       this.oggetto.commenti = task.commenti;
       this.sortTasks();
