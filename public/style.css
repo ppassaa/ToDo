@@ -419,7 +419,7 @@ div::-webkit-scrollbar-thumb {
 .showButton{
     display: flex;
     justify-content: end;
-    width: 250px;
+    min-width: 250px;
     padding: 10px;
 }
 
