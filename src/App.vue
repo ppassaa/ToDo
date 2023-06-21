@@ -160,6 +160,9 @@
           </div>
       </div>
       <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
+
+
+
         <ol>
           <li>
             <b>Aggiungere una task</b> <br>
@@ -167,10 +170,8 @@
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img1.PNG"><br><br>
             Nel riquadro sinistro andrà inserita la nostra task e nel riquadro destro la data di scadenza. Sono entrambi dei campi obbligatori
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img2.PNG"><br><br>
-            In questo caso, come task è stata inserita "task1" e come data di scadenza il 15/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
+            In questo caso, come task è stata inserita "Task1" e come data di scadenza il 20/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img3.PNG"><br><br>
-            Dopo aver premuto il pulsante aggiungi la lista sarà così:
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img4.PNG"><br><br>
           </li>
           <li>
             <b>Visualizzare le informazioni di una task</b> <br>
@@ -180,12 +181,62 @@
           <li>
             <b>Modificare una task</b> <br>
             Per modificare le informazioni di una task premere sul tasto modifica. E' possibile modificare il testo della task e la data di scadenza.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img6.PNG"><br><br>
-            In questo caso è stato aggiunto il testo "modificata" a "task1" e modificata la data inserendo 16/062023. Successivamente è stato premuto il pulsante Salva. 
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img7.PNG"><br><br>
+            In questo caso è stato aggiunto il testo "modificata" a "task1" e modificata la data. Successivamente è stato premuto il pulsante Salva. 
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img21.PNG"><br><br>
             Dopo che è stato premuto Salva, le informazioni saranno cambiate.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img8.PNG"><br><br>
           </li>
+          <br>
+          <li>
+            <b>Rimuovere una task</b><br>
+            Per rimuovere una task creata, premere sul tasto rimuovi. Spunterà sullo schermo un bottone per confermermare l'eliminazione della task. 
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img6.PNG"><br>
+            <b>Eliminazione multipla</b><br>
+            Per rimuovere più task contemporaneamente cliccare sul bottone col cestino in alto a destra.
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img22.PNG">
+            Così facendo si potranno eliminare tutte le task che si vorranno soltanto cliccando la checkbox che sarà spuntata di fianco ad ogni Task <br>
+            <img style="width: 100%;max-width: 435px;" src="src\assets\img9.PNG">
+          </li>
+          <li>
+            <b>Stati delle task</b><br>
+            Le task possono avere stati diversi a seconda della scadenza. Tutti gli stati sono identificati dai dei colori. <br><br>
+            <i>Bianco</i> se la scadenza è a più di un giorno di distanza dal giorno stesso. <br>
+            <i style="color: yellow;">Giallo</i> se la scadenza avverrà oggi. <br>
+            <i style="color: red;">Rosso</i> se la task è scaduta <br>
+            <i style="color: #32CD32;">Verde</i> se la task è stata spostata nella sezione completati in tempo <br><br>
+          </li>
+          <li>
+            <b>Storico delle task create</b><br>
+            Lo storico delle task quindi da chi sono state modificate, può essere visto cliccando il bottone in basso a sinistra della task con il simbolo della freccia curva.
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img18.PNG">
+          </li>
+          <li>
+            <b>Commenti delle task</b><br>
+            Un'ulteriore funzionalità sono i commenti alle task. Per accedervici basta cliccare il bottone con il simbolo del commento in basso a sinistra della task
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img19.PNG">
+            <br>appena cliccato il bottone aggiungi comparirà il commento sulla sinistra con in basso il nome di chi l'ha creato.
+            Per eliminare il commento basta cliccare la x rossa di fianco.
+            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img23.PNG">
+          </li>
+          <li>
+            <b>Modalità privata e pubblica</b><br>
+            Cliccando il bottone in alto a destra mostrato in figura si può accedere alla modalità privata, quindi uno spazio privato per l'utente per mettersi task singole che nessuno può vedere.<br>
+            <br>Nella modalità privata saranno comunque visibili le task personali inserite in modalità pubblica. <br>
+            <img style="width: 100%;max-width: 435px;" src="src\assets\img17.PNG"><br>
+            per tornare alla modalità pubblica basterà cliccare un'altra volta il bottone. L'immagine farà vedere più persone<br>
+            <img style="width: 100%;max-width: 435px;" src="src\assets\img24.PNG">
+          </li>
+          <li>
+            <b>Calendario</b><br>
+            Il bottone in alto a destra con l'immagine del calendario mostrerà un calendario dove si possono vedere tutte le task e cliccandoci sopra visualizzarle completamente come dal menù principale. <br>
+            <img style="width: 100%;max-width: 435px;" src="src\assets\img16.PNG"><br>
+            Con le freccie in alto a sinistra si potrà andare avanti di mese in mese. Per tornare al menù principale basta cliccare la x in alto a destra. <br>
+            <img style="width: 100%;max-width: 435px;" src="src\assets\img15.PNG">
+          </li>
+
+        
+        
+        
         </ol>
       </div>
     </div>
@@ -430,8 +481,8 @@ export default {
   },
   mounted(){
     sessionStorage.setItem("operatorID", 104);
-    sessionStorage.setItem("operatorName", "Silvio");
-    sessionStorage.setItem("operatorSurname", "Berlusconi");
+    sessionStorage.setItem("operatorName", "Mario");
+    sessionStorage.setItem("operatorSurname", "Rossi");
     // setTimeout(() => {
     //   let maxGroup = 1;
     //   console.log(maxGroup);
