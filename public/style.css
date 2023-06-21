@@ -651,6 +651,16 @@ textarea::-webkit-scrollbar-thumb {
     background-color: #1B9DD9;
 }
 
+/*bottone per cambiare da aggiungi a rimuovi utente*/
+.allertSwitchMode{
+    margin-top: 8px;
+    width: 150px;
+    height: 30px;
+    z-index: 1001;
+    margin-left: auto;
+    background-color: #1B9DD9;
+}
+
 /*bottone annulla nella finestra di conferma eliminazione / aggiungimento */
 .allertRmAnnulla{
     margin-top: 3px;

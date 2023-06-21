@@ -251,11 +251,17 @@
   <!-- alert inserimento permessi -->
   <div class="showRm" v-if="showInputPermessi">
         <!-- sezione sinistra(testo della task) -->
-          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px;font-size: 18px;border-bottom:3px solid #A1A1A1;">
-            Aggiungi utente
-            <select name="" id="" v-model="utenteAggiunto">
-              <option :value="op.id" v-for="op in operatori">{{ op.email }}</option>
+          <div class="allertRmText" style="margin-top:20px;padding-left: 20px;padding-right: 20px; padding-bottom: 20px; border-bottom:3px solid #A1A1A1;">
+            <span v-if="!rimuoviUtente"  style="font-size: 18px;">Aggiungi utente</span>
+            <span v-else  style="font-size: 18px;">Rimuovi utente</span>
+            <select name="" id="" v-model="utenteAggiunto" v-if="!rimuoviUtente">
+              <option :value="op.id" v-for="op in operatori.filter(o => !(gruppi.find(g => g.id == currentGroup)).permessi.some(p => p == o.id))">{{ op.email }}</option>
             </select>
+            <select name="" id="" v-model="utenteAggiunto" v-else>
+              <option :value="op.id" v-for="op in operatori.filter(o => (gruppi.find(g => g.id == currentGroup)).permessi.some(p => p == o.id))">{{ op.email }}</option>
+            </select>
+            <button class="allertSwitchMode" @click="rimuoviUtente = true" v-if="!rimuoviUtente">Rimuovi utente</button>
+            <button class="allertSwitchMode" @click="rimuoviUtente = false" v-else>Aggiungi utente</button>
           </div>
         <!-- sezione destra(pulsanti X) -->
           <div class="showButton">
@@ -419,6 +425,7 @@ export default {
       utenteAggiunto: null,
       refresh: true,
       operatori: [],
+      rimuoviUtente : false, 
     }
   },
   mounted(){
@@ -1050,10 +1057,21 @@ export default {
     addPermesso(){
       console.log(this.utenteAggiunto);
       if(this.utenteAggiunto){
-        const gruppo = this.gruppi.find((g) => g.id == this.currentGroup);
-        gruppo.permessi.push(this.utenteAggiunto);
-        this.writeGroups();
-        this.showInputPermessi = false;
+        if(!this.rimuoviUtente){
+          const gruppo = this.gruppi.find((g) => g.id == this.currentGroup);
+          gruppo.permessi.push(this.utenteAggiunto);
+          this.writeGroups();
+          this.showInputPermessi = false;
+          this.utenteAggiunto = "";
+        }
+        else{
+          const gruppo = this.gruppi.find((g) => g.id == this.currentGroup);
+          console.log(gruppo, gruppo.permessi.filter(p => p != this.utenteAggiunto))
+          gruppo.permessi = gruppo.permessi.filter(p => p != this.utenteAggiunto);
+          this.writeGroups();
+          this.showInputPermessi = false;
+          this.utenteAggiunto = "";
+        }
       }
     },
     rmCommento(e){
