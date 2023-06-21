@@ -535,12 +535,8 @@ export default {
       return this.gruppi.filter((gruppo) => gruppo.permessi.some(p => p == this.operatoreId));
     },
     taskAttuali(){
-      if(this.taskUtente) {
-        return this.tasks.filter(t => t.gruppo === this.currentGroup  && t.id == this.operatoreId);  
-      }
-      else{
-        return this.tasks.filter(t => t.gruppo === this.currentGroup);
-      }
+        return this.tasks.filter(t => t.gruppo === this.currentGroup).filter(t => !(t.privata && t.id != this.operatoreId));  
+
     }
     
 
