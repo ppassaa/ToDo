@@ -153,18 +153,28 @@
     <div class="informazioni" style="height: 80%; width: 70%; max-width: 500px;">
       <div style="display: flex; align-items: center; padding: 10px;">
           <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
-            <h1 style="color:white;margin-right: -40px;">Informazioni</h1> 
+            <h1 style="color:white;margin-right: -40px;">Istruzioni</h1> 
           </div>
           <div style="margin-left: auto;margin-right: 10px;">
             <button @click="showInfo =! showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
           </div>
       </div>
       <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
-
-
-
+      <b style="margin-left: 15px;">Indice</b>
         <ol>
-          <li>
+          <li><a style="color: white" href="#addTask"><u>Aggiungere una task</u></a></li>
+          <li><a style="color: white" href="#infoTask"><u>Visualizzare le informazioni di una task</u></a></li>
+          <li><a style="color: white" href="#changeTask"><u>Modificare una task</u></a></li>
+          <li><a style="color: white" href="#rmTask"><u>Rimuovere una task</u></a></li>
+          <li><a style="color: white" href="#stateTask"><u>Stati delle task</u></a></li>
+          <li><a style="color: white" href="#stoTask"><u>Storico delle task create</u></a></li>
+          <li><a style="color: white" href="#commTask"><u>Commenti delle task</u></a></li>
+          <li><a style="color: white" href="#modeTask"><u>Modalità privata e pubblica</u></a></li>
+          <li><a style="color: white" href="#calendar"><u>Calendario</u></a></li>
+        </ol>
+        <br>
+        <ol>
+          <li id="addTask">
             <b>Aggiungere una task</b> <br>
             Per aggiungere una task premere il pulsante in alto a destra:
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img1.PNG"><br><br>
@@ -173,12 +183,12 @@
             In questo caso, come task è stata inserita "Task1" e come data di scadenza il 20/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img3.PNG"><br><br>
           </li>
-          <li>
+          <li  id="infoTask">
             <b>Visualizzare le informazioni di una task</b> <br>
             Per visualizzare le informazioni di una task basterà effettuare un doppio tocco sulla task desiderata, in questo caso task1. Nel riquadro sinistro è visualizzata la task, nel riquadro destro è visualizzata la data di creazione e la data di scadenza. Inoltre è possibile modificare la nota ed eliminarla.
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img5.PNG"><br><br>
           </li>
-          <li>
+          <li  id="changeTask">
             <b>Modificare una task</b> <br>
             Per modificare le informazioni di una task premere sul tasto modifica. E' possibile modificare il testo della task e la data di scadenza.
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img7.PNG"><br><br>
@@ -187,7 +197,7 @@
             Dopo che è stato premuto Salva, le informazioni saranno cambiate.
           </li>
           <br>
-          <li>
+          <li  id="rmTask">
             <b>Rimuovere una task</b><br>
             Per rimuovere una task creata, premere sul tasto rimuovi. Spunterà sullo schermo un bottone per confermermare l'eliminazione della task. 
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img6.PNG"><br>
@@ -197,7 +207,7 @@
             Così facendo si potranno eliminare tutte le task che si vorranno soltanto cliccando la checkbox che sarà spuntata di fianco ad ogni Task <br>
             <img style="width: 100%;max-width: 435px;" src="src\assets\img9.PNG">
           </li>
-          <li>
+          <li  id="stateTask">
             <b>Stati delle task</b><br>
             Le task possono avere stati diversi a seconda della scadenza. Tutti gli stati sono identificati dai dei colori. <br><br>
             <i>Bianco</i> se la scadenza è a più di un giorno di distanza dal giorno stesso. <br>
@@ -205,12 +215,12 @@
             <i style="color: red;">Rosso</i> se la task è scaduta <br>
             <i style="color: #32CD32;">Verde</i> se la task è stata spostata nella sezione completati in tempo <br><br>
           </li>
-          <li>
+          <li  id="stoTask">
             <b>Storico delle task create</b><br>
             Lo storico delle task quindi da chi sono state modificate, può essere visto cliccando il bottone in basso a sinistra della task con il simbolo della freccia curva.
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img18.PNG">
           </li>
-          <li>
+          <li  id="commTask">
             <b>Commenti delle task</b><br>
             Un'ulteriore funzionalità sono i commenti alle task. Per accedervici basta cliccare il bottone con il simbolo del commento in basso a sinistra della task
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img19.PNG">
@@ -218,7 +228,7 @@
             Per eliminare il commento basta cliccare la x rossa di fianco.
             <br><img style="width: 100%;max-width: 435px;" src="src\assets\img23.PNG">
           </li>
-          <li>
+          <li  id="modeTask">
             <b>Modalità privata e pubblica</b><br>
             Cliccando il bottone in alto a destra mostrato in figura si può accedere alla modalità privata, quindi uno spazio privato per l'utente per mettersi task singole che nessuno può vedere.<br>
             <br>Nella modalità privata saranno comunque visibili le task personali inserite in modalità pubblica. <br>
@@ -226,7 +236,7 @@
             per tornare alla modalità pubblica basterà cliccare un'altra volta il bottone. L'immagine farà vedere più persone<br>
             <img style="width: 100%;max-width: 435px;" src="src\assets\img24.PNG">
           </li>
-          <li>
+          <li  id="calendar">
             <b>Calendario</b><br>
             Il bottone in alto a destra con l'immagine del calendario mostrerà un calendario dove si possono vedere tutte le task e cliccandoci sopra visualizzarle completamente come dal menù principale. <br>
             <img style="width: 100%;max-width: 435px;" src="src\assets\img16.PNG"><br>
@@ -702,11 +712,7 @@ export default {
         this.notShowTaskPuls();
         this.writeTasks();
       }
-      else{
-        alert("Il testo della task non deve essere vuoto");
-      }
       this.createCalendar();
-      this.writeTasks();
     },
     /* rimuove la task dall'array e aggiorna il DB */
     rimuoviTask() {
@@ -929,16 +935,16 @@ export default {
       this.createCalendar();
     },
     metodo(){
-      console.log("clickSi")
+      //console.log("clickSi")
     },
     stampaTaskCalendario(){
       let divFinale = '';
       for(let i=0;i<this.taskAttuali.length;i++){
         if(this.taskAttuali && Array.isArray(this.taskAttuali) && this.taskAttuali.length > 0){if(this.taskAttuali[i].dataScadenza == this.scadenzaConfronto){
           if(this.taskAttuali[i].task.length > 10){
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '...</div>';
+            divFinale += '<div style="color:' + this.coloreText(this.taskAttuali[i]) + '" class="calendarTask" onclick="this.showTaskPuls(this.taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '...</div>';
           } else {
-            divFinale += '<div class="calendarTask" onclick="this.showTaskPuls(this.taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
+            divFinale += '<div style="color:' + this.coloreText(this.taskAttuali[i]) + '" class="calendarTask" onclick="this.showTaskPuls(this.taskAttuali[' + i + '])">' + this.taskAttuali[i].task.substr(0,10) + '</div>';
           }
         }}
       }
@@ -991,13 +997,13 @@ export default {
       var arrayDiStringhe = Array.from(taskElements).map(function(el) {
         return el.outerHTML;
       });
-      console.log(arrayDiStringhe);
+      //console.log(arrayDiStringhe);
       for (let k = 0; k < taskElements.length; k++) {
         const taskElement = taskElements[k];
         let sium = arrayDiStringhe[k];
         let sium1 = sium.split("[")[1];
         let sium2 = sium1.split("]")[0];
-        console.log(sium2);
+        //console.log(sium2);
         taskElement.addEventListener('click', () => {
           this.showTaskPuls(this.taskAttuali[sium2]);
         });
@@ -1006,7 +1012,7 @@ export default {
   
     gruppiHandler(){
       this.showGruppiWindow = !this.showGruppiWindow;
-      console.log(this.myGruppi);
+      //console.log(this.myGruppi);
     },
     creaGruppo(){
       if(this.nomeGruppo.trim() && !this.gruppi.some(g => g.nome == this.nomeGruppo) && this.nomeGruppo.trim().toLowerCase() != "gestisci gruppi"){
@@ -1020,7 +1026,7 @@ export default {
       }
       else if(this.nomeGruppo.trim()){
         alert("Il nome del gruppo è già utilizzato");
-        console.log(this.gruppi);
+        //console.log(this.gruppi);
       }
       else{
         alert("Il nome del gruppo non deve essere vuoto");
@@ -1033,14 +1039,14 @@ export default {
         this.writeTasks();
         this.gruppi = this.gruppi.filter(g => g.id !== this.currentGroup);
         this.writeGroups();
-        console.log(gruppo);
+        //console.log(gruppo);
         this.currentGroup = gruppo!=1 ? this.gruppi[this.gruppi.length - 1 ].id : gruppo+1;
         this.rimuoviBoolGruppi = false;
       }
     },
     touchEndHandler(e){
-      console.log(e);
-      console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
+      //console.log(e);
+      //console.log(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       let destinazione = this.getTfs(document.elementFromPoint(e.changedTouches[0].pageX, e.changedTouches[0].pageY));
       const task = this.tasks.find(e => JSON.stringify(e) === JSON.stringify(this.oggettodragdrop));
       let oggi = new Date();
@@ -1086,9 +1092,6 @@ export default {
     },
     addCommento(){
       if(this.newCommento.trim()){
-        console.log(this.newCommento);
-        console.log({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti, idUtente: this.operatoreId});
-
         this.idCommenti++;
         const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
         this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti, idUtente: this.operatoreId});
@@ -1099,7 +1102,7 @@ export default {
     }
     },
     addPermesso(){
-      console.log(this.utenteAggiunto);
+      //console.log(this.utenteAggiunto);
       if(this.utenteAggiunto){
         const gruppo = this.gruppi.find((g) => g.id == this.currentGroup);
         gruppo.permessi.push(this.utenteAggiunto);
@@ -1109,7 +1112,7 @@ export default {
     },
     rmCommento(e){
       const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
-      console.log(task.commenti);
+      //console.log(task.commenti);
       task.commenti = task.commenti.filter(el => JSON.stringify(el) !== JSON.stringify(e));
       this.oggetto.commenti = task.commenti;
       this.sortTasks();
@@ -1122,6 +1125,15 @@ export default {
       } else {
         this.freccia='▼';
       }
+    },
+    coloreText(e){
+      if(this.isScadutoCompletati(e) && e.dataFine != undefined){
+        return "red";
+      }
+      if(!this.isScadutoCompletati(e) && e.dataFine != undefined){
+        return '#32CD32';
+      }
+      return 'white';
     }
     
   }
