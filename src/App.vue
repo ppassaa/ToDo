@@ -98,11 +98,13 @@
   <div class="popup-overlay-commenti" v-if="showCommenti">
     <div class="showTsk" v-if="showCommenti">
       <div class="sxShowCommenti">
-        <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px;" v-for="c in oggetto.commenti">
-          {{ c.commento}} <br> 
+        <div style="border: 1px solid white; margin-right: 10px; margin-bottom: 10px; max-height: 100px;" v-for="c in oggetto.commenti">
+          <div style="word-break: break-all; word-wrap: break-word; overflow-y: auto; height: 70px;margin-bottom: 5px; padding: 5px;">
+            {{ c.commento}}
+          </div> 
           <span style="font-size: small; height: 20px;">
             {{ c.utente }} 
-            <button @click="rmCommento(c)" class="esciShowTskCommenti" :disabled="c.id != operatoreId" :hidden="c.id != operatoreId"></button>
+            <button @click="rmCommento(c)" class="esciShowTskCommenti" :disabled="c.idUtente != operatoreId" :hidden="c.idUtente != operatoreId"></button>
           </span>
         </div>
       </div>
@@ -110,7 +112,7 @@
         <button @click="showCommenti = false; newCommento = ''" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
         <div style="text-align: center;">
           <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" minlength="1" placeholder="Commento(Max 500 caratteri)"></textarea>
-          <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento">Aggiungi</button>
+          <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento();newCommento=''">Aggiungi</button>
         </div>
       </div>
     </div>
@@ -425,7 +427,7 @@ export default {
       incorsoBool: false,
       dafareBool: false,
       completatiBool: false,
-      freccia: '▲',
+      freccia: '▼',
       scadenzaStr: "",
       scadenza: "",
       showTask: false,
@@ -1083,9 +1085,10 @@ export default {
       else return this.getTfs(elemento.parentElement);
     },
     addCommento(){
-      
       if(this.newCommento.trim()){
         console.log(this.newCommento);
+        console.log({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti, idUtente: this.operatoreId});
+
         this.idCommenti++;
         const task = this.tasks.find((t) => JSON.stringify(t) === JSON.stringify(this.oggetto));
         this.oggetto.commenti.push({utente: `${this.operatoreNome} ${this.operatoreCognome}`, commento: this.newCommento, id: this.idCommenti, idUtente: this.operatoreId});
