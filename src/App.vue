@@ -1057,16 +1057,20 @@ export default {
       let giorno = oggi.getDate().toString().padStart(2, '0');
       let dataYYYYMMDD = `${anno}-${mese}-${giorno}`;
       if(destinazione === "dafare"){
+        if(!task.dafare){
+          task.storico += 'Spostato in "DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        }
         task.completati = false;
         task.incorso = false;
         task.dafare = true;
-        task.storico += 'Spostato in "DA FARE" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "incorso"){
+        if(!task.incorso){
+          task.storico += 'Spostato in "IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
+        }
         task.completati = false;
         task.incorso = true;
         task.dafare = false;
-        task.storico += 'Spostato in "IN CORSO" il ' + dataYYYYMMDD + "\n da " + this.operatoreNome + " " + this.operatoreCognome + "\n \n";
       }
       if(destinazione === "completati"){
         task.completati = true;
