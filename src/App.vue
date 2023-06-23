@@ -25,7 +25,7 @@
     </div>
   </div>
   <!-- calendario -->
-  <div class="calendar" v-if="showCalendar">
+  <div class="calendar" v-if="showCalendar" @touchstart="initalPosition = $event" @touchend="swipe($event)">
     <div style="display: flex; justify-content: space-between;">
   <div style="display: flex;">
     <button @click="meseMeno()" class="modificafrecce" style="max-width: 100px;margin-top: 8px;" :disabled="showTask || showGruppiWindow || showInfo || aggiungiBool">🡸</button>
@@ -487,6 +487,7 @@ export default {
       refresh: true,
       operatori: [],
       rimuoviUtente : false, 
+      initalPosition : null, 
     }
   },
   mounted(){
@@ -1150,6 +1151,17 @@ export default {
         return '#32CD32';
       }
       return 'white';
+    },
+    swipe(e){
+      console.log(this.initalPosition.changedTouches[0].pageX - e.changedTouches[0].pageX);
+      let diff = this.initalPosition.changedTouches[0].pageX - e.changedTouches[0].pageX;
+
+      if(diff > 135){
+        this.mesePiu();
+      }
+      else if(diff < -135){
+        this.meseMeno();
+      }
     }
     
   }
