@@ -240,7 +240,7 @@
             <b>Calendario</b><br>
             Il bottone in alto a destra con l'immagine del calendario mostrerà un calendario dove si possono vedere tutte le task e cliccandoci sopra visualizzarle completamente come dal menù principale. <br>
             <img style="width: 100%;max-width: 435px;" :src="images[14]"><br>
-            Con le freccie in alto a sinistra si potrà andare avanti di mese in mese. Per tornare al menù principale basta cliccare la x in alto a destra. <br>
+            Con le freccie in alto a sinistra oppure facendo swipe col dito si potrà andare avanti di mese in mese. Per tornare al menù principale basta cliccare la x in alto a destra. <br>
             <img style="width: 100%;max-width: 435px;" :src="images[13]">
           </li>
 
