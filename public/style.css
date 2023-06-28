@@ -61,7 +61,6 @@ th {
 }
 /* bottone aggiungi */
 .aggiungiBtn{
-    background-image: url("src/assets/aggiungi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -72,7 +71,6 @@ th {
 
 /*bottone per i commenti dentro la task*/
 .commentiBtn{
-    background-image: url("src/assets/commenti.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -82,7 +80,6 @@ th {
     border: none;
 }
 .storicoBtn{
-    background-image: url("src/assets/storico.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -136,28 +133,6 @@ th {
     margin-right: 4px;
 }
 
-/* style dei bottoni rimuovi che compaiono di fianco alle task */
-.rimuoviBtn {
-    background-image: url("src/assets/rimuovi.PNG");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 20px;
-    height: 20px;
-}
-
-/* style dei bottoni rimuovi che compaiono di fianco alle task(con z-index alto) */
-.rimuoviBtnZindex {
-    background-image: url("src/assets/rimuovi.PNG");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    width: 20px;
-    margin-left: 1px;
-    height: 20px;
-    z-index: 999;
-    position: relative;
-}
 
 /* style delle task */
 .containerTFS li {
@@ -425,7 +400,6 @@ div::-webkit-scrollbar-thumb {
 
 /* style della X della sezione in cui si vedono le informazioni di ogni task */
 .esciShowTsk {
-    background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -436,7 +410,6 @@ div::-webkit-scrollbar-thumb {
 
 .esciShowTskCommenti {
     flex: 1;
-    background-image: url("src/assets/rimuovi.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -717,7 +690,6 @@ textarea::-webkit-scrollbar-thumb {
 
 /*bottone che passa alla finestra delle informazioni*/
 .infoBtn{
-    background-image: url("src/assets/info.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -727,7 +699,6 @@ textarea::-webkit-scrollbar-thumb {
 }
 
 .calendarioBtn{
-    background-image: url("src/assets/calendario.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -738,7 +709,6 @@ textarea::-webkit-scrollbar-thumb {
 
 /*bottone per la rimozione veloce delle task*/
 .selectBtn{
-    background-image: url("src/assets/trash.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -749,7 +719,6 @@ textarea::-webkit-scrollbar-thumb {
 
 /*bottone per la conferma di rimozione veloce delle tasks*/
 .confermaBtn{
-    background-image: url("src/assets/conferma.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -760,7 +729,6 @@ textarea::-webkit-scrollbar-thumb {
 
 /*bottone per passare in modalità privata*/
 .toggleUtente{
-    background-image: url("src/assets/pubblico.PNG");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -771,7 +739,6 @@ textarea::-webkit-scrollbar-thumb {
 
 /*bottone per passare in modalità pubblica*/
 .togglePubblico{
-    background-image: url("src/assets/privato.PNG"); 
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;

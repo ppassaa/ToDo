@@ -10,6 +10,8 @@
   "dependencies": {
     "@fontsource/roboto": "^5.0.3",
     "axios": "^1.4.0",
+    "http-server": "^14.1.1",
+    "serve": "^14.2.0",
     "vue": "^3.3.2",
     "vue-click-outside": "^1.1.0"
   },

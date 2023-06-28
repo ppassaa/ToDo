@@ -15,13 +15,13 @@
       </div>
     </div>
     <div style="margin-left: auto;">
-      <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn"></button>
-      <button @click="taskUtente = !taskUtente;createCalendar()" style="margin-right: 4px;" class="togglePubblico" v-if="taskUtente"></button>
-      <button @click="taskUtente = !taskUtente;createCalendar()" style="margin-right: 4px;" class="toggleUtente" v-else></button>
-      <button class="calendarioBtn" style="margin-right: 4px;" @click="showCalendarPuls();showCheckbox = false"></button>
-      <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" v-if="showCheckbox"></button>
-      <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" v-else :disabled="showCalendar"></button>
-      <button @click="showInfo = !showInfo" class="infoBtn"></button>
+      <button @click="aggiungiPuls()" style="margin-top: -5px;" class="aggiungiBtn" :style="{ backgroundImage : 'url(' + imgAggiungi + ')'  }"></button>
+      <button @click="taskUtente = !taskUtente;createCalendar()" style="margin-right: 4px;" class="togglePubblico" :style="{ backgroundImage : 'url(' + imgPrivato + ')'  }" v-if="taskUtente"></button>
+      <button @click="taskUtente = !taskUtente;createCalendar()" style="margin-right: 4px;" class="toggleUtente" :style="{ backgroundImage : 'url(' + imgPubblico + ')'  }" v-else></button>
+      <button class="calendarioBtn" :style="{ backgroundImage : 'url(' + imgCalendario + ')'  }" style="margin-right: 4px;" @click="showCalendarPuls();showCheckbox = false"></button>
+      <button @click="if(taskAttuali.some(t => t.selezionatoDel)) rimuoviPuls(); else showCheckbox = false;" style="margin-right: 4px;" class="confermaBtn" :style="{ backgroundImage : 'url(' + imgConferma + ')'  }" v-if="showCheckbox"></button>
+      <button style="margin-right: 4px" @click="showCheckbox = true" class="selectBtn" :style="{ backgroundImage : 'url(' + imgTrash + ')'  }" v-else :disabled="showCalendar"></button>
+      <button @click="showInfo = !showInfo" class="infoBtn" :style="{ backgroundImage : 'url(' + imgInfo + ')'  }"></button>
     </div>
   </div>
   <!-- calendario -->
@@ -33,7 +33,7 @@
     <h1 style="color: white; min-width: 300px; max-width: 300px; text-align: center;">{{ mesi[month] }} {{ year }}</h1> 
   </div>
   <div>
-    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" style="max-width: 30px; max-height: 30px;margin-top: 8px" :disabled="rimuoviBool"></button>
+    <button @click="notShowTaskPuls();showCalendar = false;" class="esciShowTsk" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }" style="max-width: 30px; max-height: 30px;margin-top: 8px" :disabled="rimuoviBool"></button>
   </div>
 </div>
     <div style="display: flex;height: 100%">
@@ -62,8 +62,8 @@
         <div class="showTitle">
           <textarea class="modificaTesto" style="color: white;" v-model="newContent" :readonly="!modificaBool" maxlength="2000">{{ newContent }}</textarea>
           <div style="display: flex;">
-            <button @click="showCommenti = true" class="commentiBtn" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
-            <button @click="showStoricoPuls()" class="storicoBtn" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
+            <button @click="showCommenti = true" class="commentiBtn" :style="{ backgroundImage : 'url(' + imgCommenti + ')'  }" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
+            <button @click="showStoricoPuls()" class="storicoBtn" :style="{ backgroundImage : 'url(' + imgStorico + ')'  }" :disabled="rimuoviBool2 || rimuoviBool || modificaBool || showStorico"></button>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
             <button v-if="!modificaBool && !taskCompletaShow" @click="modificaPuls()" class="modifica" :disabled="rimuoviBool2 || rimuoviBool || showStorico">Modifica</button>
           </div>
           <div>
-            <button @click="notShowTaskPuls()" class="esciShowTsk" :disabled="rimuoviBool2 || rimuoviBool || showStorico "></button>
+            <button @click="notShowTaskPuls()" class="esciShowTsk" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }" :disabled="rimuoviBool2 || rimuoviBool || showStorico "></button>
           </div>
         </div>
         <!-- sezione nella quale si visualizzano le date -->
@@ -104,12 +104,12 @@
           </div> 
           <span style="font-size: small; height: 20px;">
             {{ c.utente }} 
-            <button @click="rmCommento(c)" class="esciShowTskCommenti" :disabled="c.idUtente != operatoreId" :hidden="c.idUtente != operatoreId"></button>
+            <button @click="rmCommento(c)" class="esciShowTskCommenti" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }" :disabled="c.idUtente != operatoreId" :hidden="c.idUtente != operatoreId"></button>
           </span>
         </div>
       </div>
       <div class="dxShowCommenti">
-        <button @click="showCommenti = false; newCommento = ''" class="esciShowTsk float-right" style="margin-right: 10px;margin-top: 10px"></button>
+        <button @click="showCommenti = false; newCommento = ''" class="esciShowTsk float-right" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }" style="margin-right: 10px;margin-top: 10px"></button>
         <div style="text-align: center;">
           <textarea v-model="newCommento" style="margin-top: 10px; width: 90%; max-height: 135px;min-height: 135px;" maxlength="500" minlength="1" placeholder="Commento(Max 500 caratteri)"></textarea>
           <button class="allertRmRimuovi" style="margin-left: 15px;" @click="addCommento();newCommento=''">Aggiungi</button>
@@ -135,7 +135,7 @@
               <button @click="aggiungiTask()" class="modifica" type="submit">Aggiungi</button>
             </div>
             <div>
-              <button @click="notShowTaskPuls()" class="esciShowTsk"></button>
+              <button @click="notShowTaskPuls()" class="esciShowTsk" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }"></button>
             </div>
           </div>
           <!-- sezione nella quale si visualizzano le date -->
@@ -156,7 +156,7 @@
             <h1 style="color:white;margin-right: -40px;">Istruzioni</h1> 
           </div>
           <div style="margin-left: auto;margin-right: 10px;">
-            <button @click="showInfo =! showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk"></button>
+            <button @click="showInfo =! showInfo" style="max-height: 30px;max-width: 30px;" class="esciShowTsk" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }"></button>
           </div>
       </div>
       <div style="color:white; padding: 10px;text-align: justify;overflow-y: auto; margin-bottom: 20px;">
@@ -177,35 +177,35 @@
           <li id="addTask">
             <b>Aggiungere una task</b> <br>
             Per aggiungere una task premere il pulsante in alto a destra:
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img1.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" :src="images[0]"><br><br>
             Nel riquadro sinistro andrà inserita la nostra task e nel riquadro destro la data di scadenza. Sono entrambi dei campi obbligatori
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img2.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" :src="images[1]"><br><br>
             In questo caso, come task è stata inserita "Task1" e come data di scadenza il 20/06/2023. Premere il pulsante aggiungi per aggiungere la task.            
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img3.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" :src="images[2]"><br><br>
           </li>
           <li  id="infoTask">
             <b>Visualizzare le informazioni di una task</b> <br>
-            Per visualizzare le informazioni di una task basterà effettuare un doppio tocco sulla task desiderata, in questo caso task1. Nel riquadro sinistro è visualizzata la task, nel riquadro destro è visualizzata la data di creazione e la data di scadenza. Inoltre è possibile modificare la nota ed eliminarla.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img5.PNG"><br><br>
+            Per visualizzare le informazioni di una task basterà effettuare un tocco sulla task desiderata, in questo caso task1. Nel riquadro sinistro è visualizzata la task, nel riquadro destro è visualizzata la data di creazione e la data di scadenza. Inoltre è possibile modificare la nota ed eliminarla.
+            <br><img style="width: 100%;max-width: 435px;" :src="images[3]"><br><br>
           </li>
           <li  id="changeTask">
             <b>Modificare una task</b> <br>
             Per modificare le informazioni di una task premere sul tasto modifica. E' possibile modificare il testo della task e la data di scadenza.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img7.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" :src="images[5]"><br><br>
             In questo caso è stato aggiunto il testo "modificata" a "task1" e modificata la data. Successivamente è stato premuto il pulsante Salva. 
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img21.PNG"><br><br>
+            <br><img style="width: 100%;max-width: 435px;" :src="images[18]"><br><br>
             Dopo che è stato premuto Salva, le informazioni saranno cambiate.
           </li>
           <br>
           <li  id="rmTask">
             <b>Rimuovere una task</b><br>
             Per rimuovere una task creata, premere sul tasto rimuovi. Spunterà sullo schermo un bottone per confermermare l'eliminazione della task. 
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img6.PNG"><br>
+            <br><img style="width: 100%;max-width: 435px;" :src="images[4]"><br>
             <b>Eliminazione multipla</b><br>
             Per rimuovere più task contemporaneamente cliccare sul bottone col cestino in alto a destra.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img22.PNG">
+            <br><img style="width: 100%;max-width: 435px;" :src="images[19]">
             Così facendo si potranno eliminare tutte le task che si vorranno soltanto cliccando la checkbox che sarà spuntata di fianco ad ogni Task <br>
-            <img style="width: 100%;max-width: 435px;" src="src\assets\img9.PNG">
+            <img style="width: 100%;max-width: 435px;" :src="images[7]">
           </li>
           <li  id="stateTask">
             <b>Stati delle task</b><br>
@@ -218,30 +218,30 @@
           <li  id="stoTask">
             <b>Storico delle task create</b><br>
             Lo storico delle task quindi da chi sono state modificate, può essere visto cliccando il bottone in basso a sinistra della task con il simbolo della freccia curva.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img18.PNG">
+            <br><img style="width: 100%;max-width: 435px;" :src="images[16]">
           </li>
           <li  id="commTask">
             <b>Commenti delle task</b><br>
             Un'ulteriore funzionalità sono i commenti alle task. Per accedervici basta cliccare il bottone con il simbolo del commento in basso a sinistra della task
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img19.PNG">
+            <br><img style="width: 100%;max-width: 435px;" :src="images[17]">
             <br>appena cliccato il bottone aggiungi comparirà il commento sulla sinistra con in basso il nome di chi l'ha creato.
             Per eliminare il commento basta cliccare la x rossa di fianco.
-            <br><img style="width: 100%;max-width: 435px;" src="src\assets\img23.PNG">
+            <br><img style="width: 100%;max-width: 435px;" :src="images[20]">
           </li>
           <li  id="modeTask">
             <b>Modalità privata e pubblica</b><br>
             Cliccando il bottone in alto a destra mostrato in figura si può accedere alla modalità privata, quindi uno spazio privato per l'utente per mettersi task singole che nessuno può vedere.<br>
             <br>Nella modalità privata saranno comunque visibili le task personali inserite in modalità pubblica. <br>
-            <img style="width: 100%;max-width: 435px;" src="src\assets\img17.PNG"><br>
+            <img style="width: 100%;max-width: 435px;" :src="images[15]"><br>
             per tornare alla modalità pubblica basterà cliccare un'altra volta il bottone. L'immagine farà vedere più persone<br>
-            <img style="width: 100%;max-width: 435px;" src="src\assets\img24.PNG">
+            <img style="width: 100%;max-width: 435px;" :src="images[21]">
           </li>
           <li  id="calendar">
             <b>Calendario</b><br>
             Il bottone in alto a destra con l'immagine del calendario mostrerà un calendario dove si possono vedere tutte le task e cliccandoci sopra visualizzarle completamente come dal menù principale. <br>
-            <img style="width: 100%;max-width: 435px;" src="src\assets\img16.PNG"><br>
+            <img style="width: 100%;max-width: 435px;" :src="images[14]"><br>
             Con le freccie in alto a sinistra si potrà andare avanti di mese in mese. Per tornare al menù principale basta cliccare la x in alto a destra. <br>
-            <img style="width: 100%;max-width: 435px;" src="src\assets\img15.PNG">
+            <img style="width: 100%;max-width: 435px;" :src="images[13]">
           </li>
 
         
@@ -254,11 +254,11 @@
   <div v-if="showGruppiWindow" class="popup-overlay"> 
     <div class="informazioni" style="padding: 10px; height: 15%; width: 25%; max-width: 500px; min-width: 350px;">
       <div style="display: flex;flex-direction: row;">
-        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-right: 2px; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" ></button>
+        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="showInputGruppo = true" style="margin-left: auto; margin-right: 2px; margin-bottom: 2px; margin-top: 5px;" class="aggiungiBtn" :style="{ backgroundImage : 'url(' + imgAggiungi + ')'  }" ></button>
         <select :disabled="rimuoviBoolGruppi || showInputGruppo" class="select" name="" id="" v-model="currentGroup">
           <option v-for="g in myGruppi" :value="g.id">{{ g.nome }}</option>
         </select>
-        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" style="position: inherit; margin-left: 2px; margin-top: 5px;"></button>
+        <button :disabled="rimuoviBoolGruppi || showInputGruppo" @click="gruppiHandler()" class="esciShowTsk" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }" style="position: inherit; margin-left: 2px; margin-top: 5px;"></button>
       </div>
       <div style="display: flex; flex-direction: row; justify-content: space-evenly; margin-top: 10px;">
         <button style="color: white; padding-left: 30px; padding-right: 30px; background-color: rgb(27,157,217);" :disabled="rimuoviBoolGruppi || showInputGruppo" @click="rimuoviBoolGruppi = true">Elimina</button>
@@ -287,7 +287,7 @@
   <div class="showSto" v-if="showStorico">
     <!-- sezione sinistra(testo della task) -->
     <b style="margin-left: 70px;">Storico della task</b>
-    <button @click="showStoricoPuls()" class="esciShowTsk float-right" style="max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
+    <button @click="showStoricoPuls()" class="esciShowTsk float-right" :style="{ backgroundImage : 'url(' + imgRimuovi + ')'  }" style="max-width: 30px; max-height: 30px;" :disabled="rimuoviBool"></button>
     <div class="storicoInfo">
       {{ oggetto.storico }}
     </div>
@@ -422,7 +422,39 @@
 <script>
 
 import axios from 'axios';
-import { toRaw } from 'vue';
+
+import Img1 from '@/assets/img1.png';
+import Img2 from '@/assets/img2.png';
+import Img3 from '@/assets/img3.png';
+import Img5 from '@/assets/img5.png';
+import Img6 from '@/assets/img6.png';
+import Img7 from '@/assets/img7.png';
+import Img8 from '@/assets/img8.png';
+import Img9 from '@/assets/img9.png';
+import Img10 from '@/assets/img10.png';
+import Img11 from '@/assets/img11.png';
+import Img12 from '@/assets/img12.png';
+import Img13 from '@/assets/img13.png';
+import Img14 from '@/assets/img14.png';
+import Img15 from '@/assets/img15.png';
+import Img16 from '@/assets/img16.png';
+import Img17 from '@/assets/img17.png';
+import Img18 from '@/assets/img18.png';
+import Img19 from '@/assets/img19.png';
+import Img21 from '@/assets/img21.png';
+import Img22 from '@/assets/img22.png';
+import Img23 from '@/assets/img23.png';
+import Img24 from '@/assets/img24.png';
+import ImgAggiungi from '@/assets/aggiungi.PNG';
+import ImgCommenti from '@/assets/commenti.PNG';
+import ImgStorico from '@/assets/storico.png';
+import ImgRimuovi from '@/assets/rimuovi.png';
+import ImgInfo from '@/assets/info.png';
+import ImgCalendario from '@/assets/calendario.png';
+import ImgConferma from '@/assets/conferma.png';
+import ImgTrash from '@/assets/trash.png';
+import ImgPubblico from '@/assets/pubblico.png';
+import ImgPrivato from '@/assets/privato.png';
 
 export default {
   data() {
@@ -488,8 +520,20 @@ export default {
       operatori: [],
       rimuoviUtente : false, 
       initalPosition : null, 
+      imgAggiungi : ImgAggiungi,
+      imgCommenti: ImgCommenti,
+      imgStorico: ImgStorico,
+      imgInfo: ImgInfo,
+      imgCalendario: ImgCalendario,
+      imgConferma: ImgConferma,
+      imgTrash: ImgTrash,
+      imgPubblico: ImgPubblico,
+      imgPrivato: ImgPrivato,
+      imgRimuovi: ImgRimuovi,
+      images: [Img1, Img2, Img3, Img5, Img6, Img7, Img8, Img9, Img10, Img11, Img12, Img13, Img14, Img15, Img16, Img17, Img18, Img19, Img21, Img22, Img23, Img24],
     }
   },
+  
   mounted(){
     sessionStorage.setItem("operatorID", 104);
     sessionStorage.setItem("operatorName", "Mario");
