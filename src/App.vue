@@ -495,7 +495,7 @@ export default {
       showGruppiWindow: false,
       showCheckbox: false,
       taskSelezionate: [],
-      operatoreId: sessionStorage.getItem("operatorID"),
+      operatoreId: null,
       operatoreNome: sessionStorage.getItem("operatorName"),
       operatoreCognome: sessionStorage.getItem("operatorSurname"),
       taskUtente: false,
@@ -535,9 +535,6 @@ export default {
   },
   
   mounted(){
-    sessionStorage.setItem("operatorID", 104);
-    sessionStorage.setItem("operatorName", "Mario");
-    sessionStorage.setItem("operatorSurname", "ROssi");
     // setTimeout(() => {
     //   let maxGroup = 1;
     //   console.log(maxGroup);
@@ -587,6 +584,12 @@ export default {
 
   },
   beforeMount() {
+    sessionStorage.setItem("operatorID", 104);
+    while(this.operatoreId == null){
+      this.operatoreId = sessionStorage.getItem("operatorID");
+    }
+    sessionStorage.setItem("operatorName", "Mario");
+    sessionStorage.setItem("operatorSurname", "ROssi");
     this.tasks = [];
     this.readTasks();
     this.readGroups();
@@ -1083,7 +1086,7 @@ export default {
       }
     },
     eliminaGruppo(){
-      if(this.gruppi.length > 1){
+      if(this.myGruppi.length > 1){
         let gruppo = this.currentGroup;
         this.tasks = this.tasks.filter(task => task.gruppo !== this.currentGroup);
         this.writeTasks();
